@@ -1,0 +1,22 @@
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    hsla(0, 0%, 100%, 0.15) 25%,
+    transparent 0,
+    transparent 50%,
+    hsla(0, 0%, 100%, 0.15) 0,
+    hsla(0, 0%, 100%, 0.15) 75%,
+    transparent 0,
+    transparent
+  );
+  background-size:  1rem 1rem;
+}
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+  0% {
+    background-position-x: 1rem;
+  }
+}
