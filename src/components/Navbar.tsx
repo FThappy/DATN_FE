@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 import toastifyUtils from "../utils/toastify";
 import { logout } from "@/actions/logout";
+import { MdEventAvailable } from "react-icons/md";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -33,7 +34,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="flex px-8 bg-white w-screen h-24 items-center justify-between">
+    <div className="flex px-8 bg-white w-screen h-24 items-center justify-between sticky top-0 z-[99]">
       <div className="flex justify-center items-center ">
         <Image
           src="/logo.png"
@@ -51,11 +52,11 @@ const Navbar = () => {
       <div className="flex gap-4 w-3/4 items-center justify-end">
         {menu.map((item, index) => (
           <Link
-            href={"/"}
+            href={item.url}
             key={index}
             className="font-normal text-2xl text-slate-800 "
           >
-            {item}
+            {item.name}
           </Link>
         ))}
         <Image
@@ -71,15 +72,15 @@ const Navbar = () => {
           <>
             <Popover>
               <PopoverTrigger asChild>
-                <div className="w-[120px] h-[60px] cursor-pointer flex items-center gap-2">
+                <div className="h-[60px] cursor-pointer flex items-center gap-2">
                   <div className="w-[60px] h-[60px]">
                     <Image
-                      src={user?.img}
+                      src={user?.img ? user?.img : "/twitter.png"}
                       alt="logo-user"
                       loading="lazy"
                       height={60}
                       width={60}
-                      className="cursor-pointer rounded-full  h-full"
+                      className="cursor-pointer rounded-full w-full h-full"
                     />
                   </div>
                   <p className="font-normal text-2xl text-slate-800 mr-[1rem]">
@@ -87,28 +88,33 @@ const Navbar = () => {
                   </p>
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="mr-4 w-[25rem]">
+              <PopoverContent className="mr-4 w-[25rem] z-[100]">
                 <div className="p-2 shadow-beutifull rounded-[0.5rem]	">
                   {" "}
-                  <div className="w-full h-[60px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem]">
-                    <div className="w-[50px] h-[50px]">
-                      <Image
-                        src={user?.img}
-                        alt="logo-user"
-                        loading="lazy"
-                        height={50}
-                        width={50}
-                        className="cursor-pointer rounded-full  h-full"
-                      />
+                  <Link href={`/profile/${user?.id}`}>
+                    <div className="w-full h-[60px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem]">
+                      <div className="w-[50px] h-[50px]">
+                        <Image
+                          src={user?.img ? user?.img : "/twitter.png"}
+                          alt="logo-user"
+                          loading="lazy"
+                          height={50}
+                          width={50}
+                          className="cursor-pointer rounded-full  h-full"
+                        />
+                      </div>
+
+                      <p className="font-normal text-[1.5rem] text-slate-800 mr-[1rem]">
+                        {user.username}
+                      </p>
                     </div>
-                    <p className="font-normal text-[1.5rem] text-slate-800 mr-[1rem]">
-                      {user.username}
-                    </p>
-                  </div>
+                  </Link>
                   <div className="w-full border-b-2 border-gray-300	mt-2 mb-2	"></div>
-                  <button className="text-sky-400 text-[1rem] hover:bg-gray-100 p-2 rounded-[0.8rem] w-full text-left border-none outline-none">
-                    Xem trang cá nhân
-                  </button>
+                  <Link href={`/profile/${user?.id}`}>
+                    <button className="text-sky-400 text-[1rem] hover:bg-gray-100 p-2 rounded-[0.8rem] w-full text-left border-none outline-none">
+                      Xem trang cá nhân
+                    </button>
+                  </Link>
                 </div>
                 <div className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 ">
                   <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
@@ -125,6 +131,17 @@ const Navbar = () => {
                     Cài đặt & quyền riêng tư
                   </p>
                 </div>
+                <Link
+                  href={"/social/event-owner"}
+                  className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 "
+                >
+                  <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
+                    <MdEventAvailable size={24}/>
+                  </div>
+                  <p className="font-bold text-[1.2rem] text-black">
+                    Sự kiện của bạn
+                  </p>
+                </Link>
                 <button
                   className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 "
                   onClick={handleLogout}

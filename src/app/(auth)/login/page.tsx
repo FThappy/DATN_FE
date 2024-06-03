@@ -135,7 +135,7 @@ const LoginPage = () => {
       <p className="text-white text-center mt-8">Bạn chưa có tài khoản?</p>
       <Link
         href="/register"
-        className="text-blue-600 text-center text-[1.2rem]"
+        className="text-sky-600 text-center text-[1.2rem]"
       >
         Đăng ký
       </Link>

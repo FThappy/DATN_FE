@@ -24,6 +24,7 @@ const OTPPage = () => {
     const formData = new FormData(event.currentTarget);
     try {
       const res = await register(inforRegister, formData);
+      console.log(res)
       if (res.code === 1) {
         return toastifyUtils("error", "OTP không chính xác");
       }
@@ -42,6 +43,8 @@ const OTPPage = () => {
       if (res.code === 7) {
         return toastifyUtils("warning", "Không có thông tin người dùng");
       }
+      toastifyUtils("success", "Đăng ký thành công");
+      router.push("/accessRegister");
     } catch (error) {
       toastifyUtils("error", "Lỗi Server");
     }
@@ -59,7 +62,6 @@ const OTPPage = () => {
         return toastifyUtils("warning", "Email này đã được sử dụng");
       }
       return toastifyUtils("success", "Đã gửi lại otp");
-      router.push("/accessRegister");
     } catch (error) {
       return toast.warning("Lỗi server", {
         position: "bottom-right",

@@ -6,6 +6,12 @@ export const userStore = create(
     (set, get) => ({
       user:null,
       updateUser : (newUser:any) => set((state: any)=>(newUser)),
+updateImage: (newImage: string) => set((state: any) => ({
+  user: {
+    ...state.user,
+    img: newImage
+  }
+})),
       deleteUser : () => set((state: any)=>({user:null}))
     }),
     {

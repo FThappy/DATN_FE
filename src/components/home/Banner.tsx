@@ -31,7 +31,7 @@ const Banner = () => {
         </p>
         <div className="mt-8 flex items-center justify-center gap-8">
           <ButtonHome link="/" title="DONATE NOW" width="10" color="#F84D42" />
-          <ButtonHome link="/" title="CONTAC US" width="8.75" color="#FFB840" />
+          <ButtonHome link="/" title="CONTACT US" width="8.75" color="#FFB840" />
         </div>
       </div>
     </div>

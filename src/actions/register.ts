@@ -11,11 +11,12 @@ export const register = async (
     otp: formData.get("otp"),
   };
   try {
-    await userRequest.post("/api/auth/register", data, {
+    const res = await userRequest.post("/api/auth/register", data, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+    return res.data
   } catch (error) {
     return error.response.data
   }

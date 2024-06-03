@@ -27,6 +27,7 @@ const config = {
         red: "#F84D42",
         green: "#20b86d",
         yellow: "#FFB840",
+        blue :"#0766FF",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -88,6 +89,11 @@ const config = {
       },
       boxShadow: {
         beutifull: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
+      },
+      gridTemplateColumns: {
+        gallery: "repeat(auto-fit, minmax(150px, 1fr))",
+        gallerys: "repeat(auto-fit, minmax(200px, 1fr))",
+        gallerydesktop : "repeat(auto-fit, minmax(250px, 1fr))"
       },
     },
   },

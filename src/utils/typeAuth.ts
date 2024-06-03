@@ -15,5 +15,23 @@ export type UserRegister = {
   phone: string;
   address: string;
   type: string;
-  birth: Date ;
+  birth: Date;
+};
+
+export type User = {
+  _id: string;
+  username: string;
+  email: string;
+  birth: Date;
+  phone: string;
+  type: string;
+  address: string;
+  isAdmin: false;
+  isLock: false;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  img: string;
+  wall: string;
+  displayname: string;
 };

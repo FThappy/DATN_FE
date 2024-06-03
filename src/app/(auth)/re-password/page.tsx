@@ -15,17 +15,17 @@ const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
 const RePassword = () => {
-    const router = useRouter();
+  const router = useRouter();
 
   const email = authStore((state: any) => state.email);
   const tokenRePassword = authStore((state: any) => state.tokenRePassword);
   const [password, setPassword] = useState<string>();
   const [rePassword, setRepassword] = useState<string>();
-  const [pending , setPending] = useState(false)
+  const [pending, setPending] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPending(true)
+    setPending(true);
     try {
       if (password !== rePassword) {
         return toastifyUtils("warning", "Nhập lại mật khẩu không chính xác");
@@ -35,7 +35,7 @@ const RePassword = () => {
         process.env.NEXT_PUBLIC_KEY_AES
       ).toString();
       const res = await rePasswordAction(email, tokenRePassword, _password);
-          setPending(false)
+      setPending(false);
 
       if (res.code === 1) {
         return toastifyUtils("warning", "Chưa được xác thực");
@@ -43,11 +43,10 @@ const RePassword = () => {
       if (res.code === 2) {
         return toastifyUtils("warning", "Email không tồn tại");
       }
-       toastifyUtils("success", "Mật khẩu đã được thay đổi");
-       router.push("/login");
-
+      toastifyUtils("success", "Mật khẩu đã được thay đổi");
+      router.push("/login");
     } catch (error) {
-                setPending(false);
+      setPending(false);
 
       return toastifyUtils("error", "Lỗi server");
     }
