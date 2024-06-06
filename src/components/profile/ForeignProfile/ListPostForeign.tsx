@@ -12,50 +12,48 @@ type Props = {
 };
 
 const ListPostForeign = (props: Props) => {
- 
-const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
-const { user } = props;
+  const { user } = props;
 
-const { ref, inView } = useInView();
+  const { ref, inView } = useInView();
 
-const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
 
-const [endPost, setEndPost] = useState<boolean>(true);
+  const [endPost, setEndPost] = useState<boolean>(true);
 
-const [posts, setPosts] = useState<PostProps[]>([]);
+  const [posts, setPosts] = useState<PostProps[]>([]);
 
-const getListPost = async (): Promise<void> => {
-  try {
-    const res = await getPostByUserId(page, user._id);
-    if (res.code === 4) {
+  const getListPost = async (): Promise<void> => {
+    try {
+      const res = await getPostByUserId(page, user._id);
+      if (res.code === 4) {
+        toastifyUtils("error", "Lỗi server");
+      }
+      if (res.code === 3) {
+        toastifyUtils("error", "Không có người dùng này");
+      }
+      if (res.data.length === 0) {
+        setEndPost(false);
+      }
+      setPosts((prevPost) => [...prevPost, ...res.data]);
+      setPage(page + 1);
+    } catch (error) {
+      console.log(error);
       toastifyUtils("error", "Lỗi server");
     }
-    if (res.code === 3) {
-      toastifyUtils("error", "Không có người dùng này");
-    }
-    if (res.data.length === 0) {
-      setEndPost(false);
-    }
-    setPosts((prevPost) => [...prevPost, ...res.data]);
-    setPage(page + 1);
-  } catch (error) {
-    console.log(error);
-    toastifyUtils("error", "Lỗi server");
-  }
-};
+  };
 
-useEffect(() => {
-  // Hàm để gọi listPost và cập nhật state posts
-  if (inView) {
-    getListPost();
-  }
-}, [inView]);
-
+  useEffect(() => {
+    // Hàm để gọi listPost và cập nhật state posts
+    if (inView) {
+      getListPost();
+    }
+  }, [inView]);
 
   return (
     <div className="w-1/2 ml-[5rem]">
-      <div className="p-4 shadow-beutifull rounded-[0.5rem]	bg-white ">
+      <div className="p-4 shadow-beautiful rounded-[0.5rem]	bg-white ">
         <div className="flex items-center">
           <div className="w-[40px] h-[40px] ">
             <Image

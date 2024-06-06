@@ -1,0 +1,21 @@
+export type ProjectProps = {
+  _id: string;
+  userId: string;
+  projectName: string;
+  timeEnd: Date;
+  city: string;
+  description: string;
+  cardNumber : string;
+  content: Object;
+  filePath: string;
+  type: string[];
+  rise: number;
+  goal: number;
+  carNumber: string;
+  image: string[];
+  isLock: boolean;
+  isDelete: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+};

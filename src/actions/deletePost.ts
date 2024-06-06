@@ -12,12 +12,12 @@ export const deletePost = async (userId : string, postId : string) => {
         Cookie: `Authorization=${cookie?.value}`,
       },
       params: {
-        userId : userId,
-        postId : postId
+        userId: userId,
+        postId: postId,
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

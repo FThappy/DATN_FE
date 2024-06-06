@@ -2,8 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { Inter, Dancing_Script } from "next/font/google";
 import TextUnderline from "../../utils/TextUnderline";
-import "./contactUs.css";
-import ButtonHome from "../../utils/ButtonHome/ButtonHome";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });

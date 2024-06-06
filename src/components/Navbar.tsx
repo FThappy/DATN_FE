@@ -89,7 +89,7 @@ const Navbar = () => {
                 </div>
               </PopoverTrigger>
               <PopoverContent className="mr-4 w-[25rem] z-[100]">
-                <div className="p-2 shadow-beutifull rounded-[0.5rem]	">
+                <div className="p-2 shadow-beautiful rounded-[0.5rem]	">
                   {" "}
                   <Link href={`/profile/${user?.id}`}>
                     <div className="w-full h-[60px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem]">
@@ -136,7 +136,7 @@ const Navbar = () => {
                   className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 "
                 >
                   <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
-                    <MdEventAvailable size={24}/>
+                    <MdEventAvailable size={24} />
                   </div>
                   <p className="font-bold text-[1.2rem] text-black">
                     Sự kiện của bạn

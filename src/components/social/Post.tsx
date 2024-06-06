@@ -103,7 +103,7 @@ const Post = (props: Props) => {
   };
 
   return (
-    <div className="py-4 shadow-beutifull rounded-[0.5rem]	bg-white mt-4">
+    <div className="py-4 shadow-beautiful rounded-[0.5rem]	bg-white mt-4">
       <div className="flex justify-between items-center w-full px-4">
         <div className="flex items-center">
           <Link href={`/profile/${poster?._id}`}>
@@ -184,7 +184,7 @@ const Post = (props: Props) => {
                       <DeletePost
                         pending={pending}
                         handleDelete={handleDeletePost}
-                        type= "bài viết"
+                        type="bài viết"
                       />
                     </DialogContentCustom>
                   </Dialog>

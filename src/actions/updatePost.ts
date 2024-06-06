@@ -12,11 +12,11 @@ export const updatePost = async (formData: FormData, postId : string, userId : s
       },
       params: {
         postId: postId,
-        userId: userId
+        userId: userId,
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

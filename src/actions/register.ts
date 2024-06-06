@@ -16,8 +16,8 @@ export const register = async (
         "Content-Type": "application/json",
       },
     });
-    return res.data
-  } catch (error) {
-    return error.response.data
+    return res.data;
+  } catch (error: any) {
+    return error.response.data;
   }
 };

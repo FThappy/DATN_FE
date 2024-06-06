@@ -16,7 +16,7 @@ export const getPostByUserId = async (page: number,userId : string) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

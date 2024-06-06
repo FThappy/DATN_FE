@@ -31,11 +31,11 @@ const EventCard = (props: Props) => {
         return toastifyUtils("error", "Lỗi server");
       }
     };
-    getTotal()
+    getTotal();
   }, [event._id]);
 
   return (
-    <div className="w-full h-[23rem] shadow-beutifull bg-white rounded-[8px] hover:bg-gray-200 cursor-pointer">
+    <div className="w-full h-[23rem] shadow-beautiful bg-white rounded-[8px] hover:bg-gray-200 cursor-pointer">
       <Link href={`/event/${event._id}`} className="w-full h-[23rem]">
         {event.wallImg.length > 0 && event.wallImg ? (
           <img

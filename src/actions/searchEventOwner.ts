@@ -21,7 +21,7 @@ export const searchEventOwner = async (dataSend: DataSearch) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

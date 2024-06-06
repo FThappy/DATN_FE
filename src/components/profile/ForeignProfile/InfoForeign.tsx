@@ -14,7 +14,7 @@ const InfoForeign = (props: Props) => {
   const { user } = props;
 
   return (
-    <div className="w-[30rem]  bg-white shadow-beutifull rounded-[0.5rem] p-3 mb-2">
+    <div className="w-[30rem]  bg-white shadow-beautiful rounded-[0.5rem] p-3 mb-2">
       <p className="font-bold text-[1.5rem]">Giới thiệu & Liên lạc :</p>
       <div className="flex justify-center items-center  mt-3 mb-3">
         <MdEmail size={28} color="gray" />

@@ -64,13 +64,19 @@ const ModalCreateEvent = (props: Props) => {
         setPending(false);
         return toastifyUtils("warning", "Thiếu thông tin");
       }
-      if(dateStart <= new Date()){
+      if (dateStart <= new Date()) {
         setPending(false);
-        return toastifyUtils("warning", "Ngày bắt đầu và kết thúc không hợp lệ");
+        return toastifyUtils(
+          "warning",
+          "Ngày bắt đầu và kết thúc không hợp lệ"
+        );
       }
-      if(dateStart >= dateEnd) {
+      if (dateStart >= dateEnd) {
         setPending(false);
-        return toastifyUtils("warning", "Ngày bắt đầu và kết thúc không hợp lệ");
+        return toastifyUtils(
+          "warning",
+          "Ngày bắt đầu và kết thúc không hợp lệ"
+        );
       }
       const formData = new FormData();
       formData.append("eventName", eventName);
@@ -131,12 +137,12 @@ const ModalCreateEvent = (props: Props) => {
             }
           }}
         >
-          <div className="shadow-beutifull bg-white w-[4rem] h-[4rem] cursor-pointer flex items-center justify-center hover:bg-gray-100 p-2  rounded-full">
+          <div className="shadow-beautiful bg-white w-[4rem] h-[4rem] cursor-pointer flex items-center justify-center hover:bg-gray-100 p-2  rounded-full">
             <IoCreateOutline size={24} />
           </div>
         </DialogTrigger>
         <DialogContent
-          className="w-[40rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white p-0 m-0 gap-0"
+          className="w-[40rem] h-auto shadow-beautiful rounded-[0.5rem]	bg-white p-0 m-0 gap-0"
           // onInteractOutside={(e) => e.preventDefault()}
         >
           <div className="p-2 pt-4 flex items-center w-full justify-center relative">
@@ -331,10 +337,10 @@ const ModalCreateEvent = (props: Props) => {
             />
           </form>
           <div className="border-slate-400 w-full h-[1px] border-b-[1px] mt-1"></div>
-          <div className="px-4 flex flex-col items-center shadow-beutifull bg-white  w-full rounded-b-[8px] ">
+          <div className="px-4 flex flex-col items-center shadow-beautiful bg-white  w-full rounded-b-[8px] ">
             <button
               type="submit"
-              className="h-[40px] w-[98%] mr-4 mb-2 mt-2 bg-green rounded flex justify-center shadow-beutifull items-center font-bold text-white text-[1.2rem] cursor-pointer"
+              className="h-[40px] w-[98%] mr-4 mb-2 mt-2 bg-green rounded flex justify-center shadow-beautiful items-center font-bold text-white text-[1.2rem] cursor-pointer"
               disabled={
                 !user ||
                 !eventName ||

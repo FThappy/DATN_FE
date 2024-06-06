@@ -17,3 +17,11 @@ export const timeFormatCustom = (date : Date)=>{
     date.getMinutes() < 10 ? 0 : ""
   }${date.getMinutes()} `;
 }
+
+export const timeCountDown = (timeEnd: Date) => {
+  return differenceInHours(new Date(timeEnd),new Date()) <= 0
+    ? "0"
+    : differenceInHours(new Date(timeEnd),new Date()) >= 24
+    ? differenceInDays(new Date(timeEnd),new Date() )
+    : differenceInHours(new Date(timeEnd),new Date()) + "h";
+};

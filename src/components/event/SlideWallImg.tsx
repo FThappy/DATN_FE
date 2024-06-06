@@ -17,13 +17,13 @@ const SlideWallImg = (props: Props) => {
     <>
       {listWallImg.length > 0 ? (
         <Carousel>
-          <CarouselContent className="w-full desktop:h-[30rem] laptop:h-[25rem] ml-0 pl-0">
+          <CarouselContent className="w-full desktop:h-[35rem] laptop:h-[30rem] ml-0 pl-0">
             {listWallImg.map((url, index) => (
               <CarouselItem key={index} className="ml-0 pl-0 relative">
                 <img
                   src={url}
                   alt="image"
-                  className="w-full desktop:h-[30rem] laptop:h-[25rem]  cursor-pointer object-cover "
+                  className="w-full desktop:h-[35rem] laptop:h-[30rem]  cursor-pointer object-cover "
                   loading="lazy"
                 />
               </CarouselItem>
@@ -39,7 +39,7 @@ const SlideWallImg = (props: Props) => {
           )}
         </Carousel>
       ) : (
-        <div className="bg-gray-200 w-full desktop:h-[30rem] laptop:h-[25rem] relative"></div>
+        <div className="bg-gray-200 w-full desktop:h-[35rem] laptop:h-[30rem] relative"></div>
       )}
     </>
   );

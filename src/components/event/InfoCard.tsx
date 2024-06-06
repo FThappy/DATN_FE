@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { getTotalJoinEventById } from "@/actions/getTotalJoinEventById";
 import { getUser } from "@/actions/getUser";
 import toastifyUtils from "@/utils/toastify";
@@ -19,7 +19,15 @@ type Props = {
 };
 
 const InfoCard = (props: Props) => {
-  const { address, city, description, userId , eventId , totalJoin , setTotalJoin } = props;
+  const {
+    address,
+    city,
+    description,
+    userId,
+    eventId,
+    totalJoin,
+    setTotalJoin,
+  } = props;
 
   const [user, setUser] = useState<User>();
 
@@ -41,27 +49,26 @@ const InfoCard = (props: Props) => {
     getUserData();
   }, [userId]);
 
-
-    useEffect(() => {
-      const getTotal = async () => {
-        try {
-          const res = await getTotalJoinEventById(eventId);
-          if (res.code === 4) {
-            toastifyUtils("error", "Lỗi server");
-          }
-          if (res.code === 0) {
-            setTotalJoin(res.data);
-          }
-        } catch (error) {
-          console.log(error);
-          return toastifyUtils("error", "Lỗi server");
+  useEffect(() => {
+    const getTotal = async () => {
+      try {
+        const res = await getTotalJoinEventById(eventId);
+        if (res.code === 4) {
+          toastifyUtils("error", "Lỗi server");
         }
-      };
-      getTotal();
-    }, [eventId]);
+        if (res.code === 0) {
+          setTotalJoin(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+        return toastifyUtils("error", "Lỗi server");
+      }
+    };
+    getTotal();
+  }, [eventId]);
 
   return (
-    <div className="flex shadow-beutifull bg-white p-2 rounded-[8px] px-4 gap-2">
+    <div className="flex shadow-beautiful bg-white p-2 rounded-[8px] px-4 gap-2">
       <div className="w-1/2">
         <p className="font-bold text-[1.2rem]">Chi tiết</p>
         <div className="flex gap-2 items-center mt-4">
@@ -98,7 +105,10 @@ const InfoCard = (props: Props) => {
         <p className="text-[1rem] text-gray-400">{user?.email}</p>
         <div className="border-slate-300 w-full h-[1px] border-t-[1px] mt-1"></div>
         <button className="h-[3rem] w-full flex items-center p-2 px-4 gap-2 bg-blue text-white  rounded-[8px] mt-2 justify-center ">
-          <Link href={`/profile/${userId}`} className="font-bold text-[1.1rem] ">
+          <Link
+            href={`/profile/${userId}`}
+            className="font-bold text-[1.1rem] "
+          >
             Xem trang cá nhân
           </Link>
         </button>

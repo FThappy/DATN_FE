@@ -14,7 +14,7 @@ export const getPostByEventId = async (page: number, organizationId :string) => 
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

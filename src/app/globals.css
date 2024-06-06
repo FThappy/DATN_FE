@@ -145,3 +145,55 @@
     background-position-x: 1rem;
   }
 }
+
+.ProseMirror {
+  padding: 10px;
+  background: white;
+  border-radius: 0 0 5px 5px;
+  min-height: 100px;
+}
+
+.ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+
+.ProseMirror ul {
+  padding: 0 1rem;
+  list-style: disc !important;
+}
+.ProseMirror ol {
+  padding: 0 2rem;
+  list-style: decimal !important;
+}
+.ProseMirror blockquote {
+    padding-left: 1rem;
+}
+
+.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight : bold;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight : bold;
+}
+.ProseMirror h3 {
+  font-size: 1.2rem;
+  font-weight : bold;
+}
+
+.animaties::after{
+    transition:  0.25s ease-out;
+    border-color: var(--color);
+}
+
+
+.inputContact::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+}
+.animatie::after{
+    transition:  0.25s ease-out;
+}
+
+
+

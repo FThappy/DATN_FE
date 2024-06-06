@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ReportModal = (props: Props) => {
-  const { postId, userId, setOpenPopover, type , children } = props;
+  const { postId, userId, setOpenPopover, type, children } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -50,12 +50,12 @@ const ReportModal = (props: Props) => {
       reason: reason,
       detail: detail,
     };
-        if (!userId) {
-          return toastifyUtils(
-            "warning",
-            "Bạn phải đăng nhập để thực hiện chức năng này"
-          );
-        }
+    if (!userId) {
+      return toastifyUtils(
+        "warning",
+        "Bạn phải đăng nhập để thực hiện chức năng này"
+      );
+    }
     setPending(true);
     try {
       const res = await createReport(dataSend);
@@ -90,7 +90,7 @@ const ReportModal = (props: Props) => {
           {children}
         </DialogTrigger>
         <DialogContent
-          className="w-[36rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white p-0 m-0"
+          className="w-[36rem] h-auto shadow-beautiful rounded-[0.5rem]	bg-white p-0 m-0"
           // onInteractOutside={(e) => e.preventDefault()}
         >
           <div className="p-2 pt-4 flex items-center w-full justify-center relative">

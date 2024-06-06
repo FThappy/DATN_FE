@@ -1,12 +1,12 @@
-import React, { ChangeEvent } from 'react'
-import { IoIosSearch } from 'react-icons/io';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { format } from 'date-fns';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { FaCalendarAlt } from 'react-icons/fa';
-import { Calendar } from './ui/calendar';
-import { cityDummy } from '@/lib/placeholder-data';
-import { Id } from 'react-toastify';
+import React, { ChangeEvent } from "react";
+import { IoIosSearch } from "react-icons/io";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { format } from "date-fns";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { FaCalendarAlt } from "react-icons/fa";
+import { Calendar } from "./ui/calendar";
+import { cityDummy } from "@/lib/placeholder-data";
+import { Id } from "react-toastify";
 
 type Props = {
   qSearch: string | undefined;
@@ -29,17 +29,25 @@ type Props = {
 };
 
 const SearchContainer = (props: Props) => {
-
-
-  const {setQSearch , setQDate, setQSort , setQCity , qDate ,page , setIsSearch , handleSearch , qSearch , qCity , qSort,
-    handlePushParams
+  const {
+    setQSearch,
+    setQDate,
+    setQSort,
+    setQCity,
+    qDate,
+    page,
+    setIsSearch,
+    handleSearch,
+    qSearch,
+    qCity,
+    qSort,
+    handlePushParams,
   } = props;
-
 
   return (
     <div className="flex justify-between w-full  mt-2">
       <form
-        className="flex shadow-beutifull bg-white items-center justify-center rounded-[12px] p-2"
+        className="flex shadow-beautiful bg-white items-center justify-center rounded-[12px] p-2"
         onSubmit={(e) => {
           e.preventDefault();
           handlePushParams(qDate, qSearch, qSort, qCity);
@@ -63,17 +71,20 @@ const SearchContainer = (props: Props) => {
         <Popover>
           <PopoverTrigger asChild>
             {!qDate ? (
-              <button className="flex shadow-beutifull bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4">
+              <button className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4">
                 <FaCalendarAlt size={24} />
                 <p>Ngày tổ chức sự kiện</p>
               </button>
             ) : (
-              <div className="flex shadow-beutifull bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4 w-[10rem]">
+              <div className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4 w-[10rem]">
                 {" "}
                 {format(qDate, "dd/MM/yyyy")}
-                <AiOutlineCloseCircle onClick={() => {setQDate(undefined)
-                                  handlePushParams(undefined, qSearch, qSort, qCity);}
-                } />
+                <AiOutlineCloseCircle
+                  onClick={() => {
+                    setQDate(undefined);
+                    handlePushParams(undefined, qSearch, qSort, qCity);
+                  }}
+                />
               </div>
             )}
           </PopoverTrigger>
@@ -90,11 +101,11 @@ const SearchContainer = (props: Props) => {
           </PopoverContent>
         </Popover>
         <select
-          className="flex shadow-beutifull bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
+          className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
             setQCity(e.target.value);
-             handlePushParams(qDate, qSearch, qSort, e.target.value);
+            handlePushParams(qDate, qSearch, qSort, e.target.value);
           }}
           defaultValue={qCity}
         >
@@ -106,7 +117,7 @@ const SearchContainer = (props: Props) => {
           ))}
         </select>
         <select
-          className="flex shadow-beutifull bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
+          className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
             setQSort(e.target.value);
@@ -114,13 +125,15 @@ const SearchContainer = (props: Props) => {
           }}
           defaultValue={qSort}
         >
-          <option value="" disabled hidden>Ngày đăng sự kiện giảm dần</option>
+          <option value="" disabled hidden>
+            Ngày đăng sự kiện giảm dần
+          </option>
           <option value="new">Ngày đăng sự kiện giảm dần</option>
           <option value="old">Ngày đăng sự kiện tăng dần </option>
         </select>
       </div>
     </div>
   );
-}
+};
 
-export default SearchContainer
+export default SearchContainer;

@@ -34,7 +34,6 @@ const SocialMain = () => {
 
   //   getListPost();
   // }, []);
-  
 
   return (
     <div
@@ -42,7 +41,7 @@ const SocialMain = () => {
         open && `max-h-screen overflow-hidden`
       }`}
     >
-      <div className="p-4 shadow-beutifull rounded-[0.5rem]	bg-white ">
+      <div className="p-4 shadow-beautiful rounded-[0.5rem]	bg-white ">
         <div className="flex items-center">
           <div className="w-[40px] h-[40px] ">
             <Image
@@ -124,7 +123,7 @@ const SocialMain = () => {
           posts={posts}
           setPosts={setPosts}
           organizationId={undefined}
-          type= {undefined}
+          type={undefined}
         />
       )}
     </div>

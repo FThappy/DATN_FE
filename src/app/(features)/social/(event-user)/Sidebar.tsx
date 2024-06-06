@@ -14,9 +14,8 @@ const Sidebar = () => {
 
   const pathname = usePathname().split("/")[2];
 
-
   return (
-    <div className="w-1/6 pr-4 pl-2 pt-4 flex flex-col gap-4 shadow-beutifull  h-auto bg-white">
+    <div className="w-1/6 pr-4 pl-2 pt-4 flex flex-col gap-4 shadow-beautiful  h-auto bg-white">
       <div className="fixed w-1/6 pr-6">
         <div className="w-full h-[60px] cursor-pointer flex items-center gap-2 hover:bg-gray-300 p-2 rounded-[0.8rem] mb-2">
           <div className="w-[50px] h-[50px]">
@@ -38,7 +37,10 @@ const Sidebar = () => {
           className="w-full h-[60px] cursor-pointer flex items-center gap-1 hover:bg-gray-300 pl-2 rounded-[0.8rem] mb-2"
         >
           <div className="w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-200">
-            <FaUser size={24} color={pathname ==="event-owner" ? "#0766FF" : "black"}/>
+            <FaUser
+              size={24}
+              color={pathname === "event-owner" ? "#0766FF" : "black"}
+            />
           </div>
           <p className="font-normal text-[1.2rem] text-slate-800 mr-[1rem]">
             Sự kiện của bạn
@@ -49,7 +51,10 @@ const Sidebar = () => {
           className="w-full h-[60px] cursor-pointer flex items-center gap-1 hover:bg-gray-300 pl-2 rounded-[0.8rem] mb-2"
         >
           <div className="w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-200">
-            <FaCheckCircle size={24} color={pathname ==="event-join" ? "#0766FF" : "black"}/>
+            <FaCheckCircle
+              size={24}
+              color={pathname === "event-join" ? "#0766FF" : "black"}
+            />
           </div>
           <p className="font-normal text-[1.2rem] text-slate-800 mr-[1rem]">
             Đăng ký tham gia

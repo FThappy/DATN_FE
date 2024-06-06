@@ -40,13 +40,13 @@ const PostProfile = (props: Props) => {
 
   const [pending, setPending] = useState(false);
 
-  const [openDeleteModal ,setOpenDeleteModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const [openPopover, setOpenPopover] = useState(false);
 
   const removePost = (index: number) => {
-    setPosts((prev : PostProps[]) => {
-      const posts : PostProps[] = [...prev]
+    setPosts((prev: PostProps[]) => {
+      const posts: PostProps[] = [...prev];
       posts.splice(index, 1);
       return posts;
     });
@@ -78,7 +78,7 @@ const PostProfile = (props: Props) => {
   };
 
   return (
-    <div className="py-4 shadow-beutifull bg-white rounded-[0.5rem] mt-4">
+    <div className="py-4 shadow-beautiful bg-white rounded-[0.5rem] mt-4">
       <div className="flex justify-between items-center w-full px-4">
         <div className="flex items-center">
           <div className="h-12 w-12 rounded-full  flex justify-center items-center ">

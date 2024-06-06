@@ -90,7 +90,7 @@ const ModalPost = (props: Props) => {
           </div>
         </DialogTrigger>
         <DialogContent
-          className="w-[45rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white p-0 m-0"
+          className="w-[45rem] h-auto shadow-beautiful rounded-[0.5rem]	bg-white p-0 m-0"
           onInteractOutside={(e) => {
             e.preventDefault();
             setOpen(false);

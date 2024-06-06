@@ -1,6 +1,6 @@
 export const menu = [
   { name: "Trang chủ", url: "/" },
-  { name: "Dự án", url: "/" },
+  { name: "Dự án", url: "/project" },
   { name: "Sự kiện", url: "/event?page=0" },
   { name: "Cộng đồng", url: "/social" },
 ];
@@ -282,3 +282,5 @@ export const cityDummy = [
     { "idProvince": "95", "name": "Tỉnh Bạc Liêu" },
     { "idProvince": "96", "name": "Tỉnh Cà Mau" }
   ]
+
+export const typeProjectDefault : string[] = ["Xã hội", "Môi trường" , "Y tế", "Giáo dục" , "Học bổng","Quần áo" ,"Thực phẩm" ,"Xây dựng", "Nhà ở"]

@@ -17,7 +17,7 @@ export const getPost = async (page : number) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

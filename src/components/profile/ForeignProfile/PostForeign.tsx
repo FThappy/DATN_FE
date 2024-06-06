@@ -12,7 +12,11 @@ import Readmore from "@/components/utils/Readmore";
 import ImageGroup from "@/components/utils/ImageGroup";
 import Image from "next/image";
 import { User } from "@/utils/typeAuth";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { BiSolidCommentError } from "react-icons/bi";
 import ReportModal from "@/components/ReportModal";
 import ModalPost from "@/components/ModalPost";
@@ -22,13 +26,13 @@ type Props = {
   user: User;
 };
 
-const PostForeign= (props: Props) => {
+const PostForeign = (props: Props) => {
   const { post, user } = props;
 
   const [openPopover, setOpenPopover] = useState(false);
 
   return (
-    <div className="py-4 shadow-beutifull bg-white rounded-[0.5rem] mt-4">
+    <div className="py-4 shadow-beautiful bg-white rounded-[0.5rem] mt-4">
       <div className="flex justify-between items-center w-full px-4">
         <div className="flex items-center">
           <div className="h-12 w-12 rounded-full  flex justify-center items-center ">

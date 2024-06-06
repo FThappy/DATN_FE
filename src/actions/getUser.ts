@@ -10,7 +10,8 @@ export const getUser = async (userId: string) => {
       },
     });
     return res.data;
-  } catch (error) {
-    console.log("a")
+  } catch (error: any) {
+        console.log(error);
+        return error.response.data;
   }
 };

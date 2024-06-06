@@ -8,12 +8,11 @@ import ModalCreatePost from "../ModalCreatePost";
 import LoadMoreDisscuss from "../profile/ForeignProfile/LoadMoreDisscuss";
 
 type Props = {
-    eventId : string
+  eventId: string;
 };
 
 const DiscussContainer = (props: Props) => {
-
-  const {eventId} = props
+  const { eventId } = props;
   const user = userStore((state: any) => state?.user);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -25,7 +24,7 @@ const DiscussContainer = (props: Props) => {
         open && `max-h-screen overflow-hidden`
       }`}
     >
-      <div className="p-4 shadow-beutifull rounded-[0.5rem]	bg-white ">
+      <div className="p-4 shadow-beautiful rounded-[0.5rem]	bg-white ">
         <div className="flex items-center">
           <div className="w-[40px] h-[40px] ">
             <Image

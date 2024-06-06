@@ -14,8 +14,8 @@ export const createPost = async (
       },
     });
     return res.data;
-  } catch (error) {
-    console.log(error)
-    return error.response.data
+  } catch (error: any) {
+    console.log(error);
+    return error.response.data;
   }
 };

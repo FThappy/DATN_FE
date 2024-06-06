@@ -13,7 +13,7 @@ export const sendOTP = async (dataSend: string) => {
       }
     );
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return error.response.data;
   }
 };

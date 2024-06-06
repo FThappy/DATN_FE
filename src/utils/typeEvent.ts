@@ -10,6 +10,7 @@ export type EventProps = {
   address: string;
   description: string;
   isLock: boolean;
+  isDelete: boolean;
   createdAt: Date;
   updatedAt: Date;
   __v: number;

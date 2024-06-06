@@ -9,6 +9,7 @@ export type PostProps = {
   filePath: string;
   privacy: string;
   isLock: boolean;
+  isDelete : boolean;
   createdAt : Date;
   updatedAt : Date;
   __v : number;

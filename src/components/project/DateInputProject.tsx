@@ -17,7 +17,7 @@ const DateInputProject = (props: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="flex border-2 border-gray-400 bg-white items-center h-[2.5rem]  gap-2 rounded-[8px] p-2 px-4  w-[22rem]">
+        <div className="flex border-2 border-gray-400 bg-white items-center h-[2.5rem]  gap-2 rounded-[8px] p-2 px-4  w-[27rem]">
           <FaCalendarAlt size={24} color="gray" />
           <div className="flex flex-col gap-1 ml-2 items-start">
             {date ? (

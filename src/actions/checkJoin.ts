@@ -12,12 +12,12 @@ export const checkJoin = async (userId : string , eventId : string) => {
         Cookie: `Authorization=${cookie?.value}`,
       },
       params: {
-        userId : userId,
-        eventId : eventId
+        userId: userId,
+        eventId: eventId,
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return error.response.data;
   }
 };

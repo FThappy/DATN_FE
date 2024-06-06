@@ -17,7 +17,7 @@ export const deleteJoinEvent = async (userId: string, eventId: string) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

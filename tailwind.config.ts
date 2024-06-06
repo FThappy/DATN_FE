@@ -19,7 +19,6 @@ const config = {
     },
     screens: {
       desktop: { max: "2100px" },
-      // => @media (max-width: 1535px) { ... }
       laptop: { max: "1800px" },
     },
     extend: {
@@ -27,7 +26,7 @@ const config = {
         red: "#F84D42",
         green: "#20b86d",
         yellow: "#FFB840",
-        blue :"#0766FF",
+        blue: "#0766FF",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -88,7 +87,7 @@ const config = {
         "icon-move": "wave 5s ease-in-out infinite",
       },
       boxShadow: {
-        beutifull: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
+        beautiful: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
       },
       gridTemplateColumns: {
         gallery: "repeat(auto-fit, minmax(150px, 1fr))",

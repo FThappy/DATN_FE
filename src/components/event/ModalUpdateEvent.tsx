@@ -25,7 +25,7 @@ import { EventProps } from "@/utils/typeEvent";
 import { userStore } from "@/store/userStore";
 import { BiSolidPencil } from "react-icons/bi";
 import { updateEvent } from "@/actions/updateEvent";
-import { isEqual } from 'date-fns';
+import { isEqual } from "date-fns";
 
 type Props = {
   event: EventProps;
@@ -33,9 +33,9 @@ type Props = {
 };
 
 const ModalUpdateEvent = (props: Props) => {
-  const { event , setEvent } = props;
+  const { event, setEvent } = props;
 
-  const [eventPre ,setEventPre] = useState<EventProps>(event)
+  const [eventPre, setEventPre] = useState<EventProps>(event);
 
   const user = userStore((state: any) => state?.user);
 
@@ -89,12 +89,15 @@ const ModalUpdateEvent = (props: Props) => {
         address === eventPre.address &&
         description === eventPre.description &&
         files.length === 0 &&
-        fileRemove.length === 0 
+        fileRemove.length === 0
       ) {
         setPending(false);
         return toastifyUtils("warning", "Thông tin không có gi thay đổi");
       }
-      if (dateStart <= new Date() && !(isEqual(dateStart, new Date(event.timeStart)))) {
+      if (
+        dateStart <= new Date() &&
+        !isEqual(dateStart, new Date(event.timeStart))
+      ) {
         setPending(false);
         return toastifyUtils(
           "warning",
@@ -132,26 +135,26 @@ const ModalUpdateEvent = (props: Props) => {
           formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
         });
       }
-      if(fileRemove.length > 0){
+      if (fileRemove.length > 0) {
         formData.append("imageRemove", JSON.stringify(fileRemove));
       }
-        const res = await updateEvent(formData , event._id);
-        setPending(false);
-        if (res.code === 1) {
-          return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
-        }
-        if (res.code === 2) {
-          return toastifyUtils("warning", "Không tồn tại sự kiện");
-        }
-        if (res.code === 4) {
-          return toastifyUtils("error", "Lỗi server");
-        }
-        toastifyUtils("success", "Sửa sự kiện thành công");
-        setOpen(false)
-        setEvent((prev)=> res.event)
-        setEventPre(res.event)
-        setFileRemove([]);
-        setFiles([])
+      const res = await updateEvent(formData, event._id);
+      setPending(false);
+      if (res.code === 1) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+      if (res.code === 2) {
+        return toastifyUtils("warning", "Không tồn tại sự kiện");
+      }
+      if (res.code === 4) {
+        return toastifyUtils("error", "Lỗi server");
+      }
+      toastifyUtils("success", "Sửa sự kiện thành công");
+      setOpen(false);
+      setEvent((prev) => res.event);
+      setEventPre(res.event);
+      setFileRemove([]);
+      setFiles([]);
     } catch (error) {
       console.log(error);
       setPending(false);
@@ -184,11 +187,10 @@ const ModalUpdateEvent = (props: Props) => {
     });
   };
   const removeAll = () => {
-    setImgWall([])
-    setFiles([])
+    setImgWall([]);
+    setFiles([]);
     setFileRemove((prev) => [...prev, ...event.wallImg]);
-  }
-
+  };
 
   return (
     <div>
@@ -200,7 +202,7 @@ const ModalUpdateEvent = (props: Props) => {
           </div>
         </DialogTrigger>
         <DialogContent
-          className="w-[40rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white p-0 m-0 gap-0"
+          className="w-[40rem] h-auto shadow-beautiful rounded-[0.5rem]	bg-white p-0 m-0 gap-0"
           // onInteractOutside={(e) => e.preventDefault()}
         >
           <div className="p-2 pt-4 flex items-center w-full justify-center relative">
@@ -384,10 +386,10 @@ const ModalUpdateEvent = (props: Props) => {
             />
           </form>
           <div className="border-slate-400 w-full h-[1px] border-b-[1px] mt-1"></div>
-          <div className="px-4 flex flex-col items-center shadow-beutifull bg-white  w-full rounded-b-[8px] ">
+          <div className="px-4 flex flex-col items-center shadow-beautiful bg-white  w-full rounded-b-[8px] ">
             <button
               type="submit"
-              className="h-[40px] w-[98%] mr-4 mb-2 mt-2 bg-green rounded flex justify-center shadow-beutifull items-center font-bold text-white text-[1.2rem] cursor-pointer"
+              className="h-[40px] w-[98%] mr-4 mb-2 mt-2 bg-green rounded flex justify-center shadow-beautiful items-center font-bold text-white text-[1.2rem] cursor-pointer"
               disabled={
                 eventName === eventPre.eventName &&
                 isEqual(dateStart, new Date(event.timeStart)) &&

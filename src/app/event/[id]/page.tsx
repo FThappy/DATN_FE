@@ -30,7 +30,6 @@ type ListJoinProps = {
   userId: string;
 };
 
-
 const Page = ({ params }: { params: { id: string } }) => {
   const user = userStore((state: any) => state?.user);
 
@@ -64,14 +63,14 @@ const Page = ({ params }: { params: { id: string } }) => {
   }, [params.id]);
 
   return (
-    <div className="bg-[#f1eff4d1] shadow-beutifull w-full pb-4">
+    <div className="bg-[#f1eff4d1] shadow-beautiful w-full pb-4">
       <div className="flex flex-col w-full relative">
         {event?.wallImg && event.wallImg.length > 0 ? (
           <SlideWallImg listWallImg={event.wallImg} />
         ) : (
           <div className="bg-gray-200 w-full desktop:h-[30rem] laptop:h-[25rem] relative"></div>
         )}{" "}
-        <div className="absolute shadow-beutifull bg-white w-[7rem] h-[7rem] bottom-4 left-20 rounded-[12px]">
+        <div className="absolute shadow-beautiful bg-white w-[7rem] h-[7rem] bottom-4 left-20 rounded-[12px]">
           <div className="bg-red h-[2rem] rounded-t-[12px]"></div>
           <div className="flex justify-center items-center w-full h-[5rem] text-[3.5rem] font-bold  ">
             {event?.timeStart && new Date(event.timeStart).getDate()}
@@ -187,10 +186,10 @@ const Page = ({ params }: { params: { id: string } }) => {
               )}
             </>
           ) : (
-            event?._id && <DiscussContainer eventId={event._id}/>
+            event?._id && <DiscussContainer eventId={event._id} />
           )}
         </div>
-        <div className="flex flex-col shadow-beutifull bg-white rounded-[8px] w-[37%] h-auto p-2 px-4 overflow-y-scroll max-h-[32.5rem]">
+        <div className="flex flex-col shadow-beautiful bg-white rounded-[8px] w-[37%] h-auto p-2 px-4 overflow-y-scroll max-h-[32.5rem]">
           <p className="font-bold text-[1.2rem]">Danh sách người tham gia :</p>
           {event && (
             <ListUserJoin

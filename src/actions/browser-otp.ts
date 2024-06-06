@@ -16,8 +16,8 @@ export const browserOTP = async (
         "Content-Type": "application/json",
       },
     });
-    return res.data
-  } catch (error) {
+    return res.data;
+  } catch (error: any) {
     return error.response.data;
   }
 };

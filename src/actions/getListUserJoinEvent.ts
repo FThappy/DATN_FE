@@ -14,7 +14,7 @@ export const getListUserJoinEvent = async (page: number, eventId: string) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

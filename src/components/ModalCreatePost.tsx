@@ -42,13 +42,13 @@ const ModalCreatePost = (props: Props) => {
       return newFiles;
     });
   };
-    const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      const fileList = e.target.files;
-      const fileArray = Array.from(fileList!);
-      setFiles((prevFiles) => [...(prevFiles || []), ...fileArray]);
-      e.target.value = "";
-    };
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const fileList = e.target.files;
+    const fileArray = Array.from(fileList!);
+    setFiles((prevFiles) => [...(prevFiles || []), ...fileArray]);
+    e.target.value = "";
+  };
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -61,17 +61,17 @@ const ModalCreatePost = (props: Props) => {
     if (documention) {
       formData.append("documention", documention);
     }
-    if (organizationId){
+    if (organizationId) {
       formData.append("organizationId", organizationId);
     }
-    if(type){
+    if (type) {
       formData.append("type", type);
     }
-      if (files.length > 0) {
-        files.forEach((file) => {
-          formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
-        });
-      }
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
+      });
+    }
     setPending(true);
     try {
       const res = await createPost(formData);
@@ -95,7 +95,7 @@ const ModalCreatePost = (props: Props) => {
     <>
       {!active ? (
         <div className="absolute flex flex-col items-center w-full h-auto min-h-[120%] bg-black/75 z-[120] top-0 left-0 py-4">
-          <div className=" w-[35rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white mb-10">
+          <div className=" w-[35rem] h-auto shadow-beautifulunded-[0.5rem]	bg-white mb-10">
             <div className="p-2 pt-4 flex items-center w-full justify-center relative">
               <p className="text-[1.5rem] font-bold">Tạo bài viết</p>
               <button

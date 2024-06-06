@@ -105,7 +105,7 @@ const UpdatePost = (props: Props) => {
       setPending(false);
       toastifyUtils("success", "Sửa bài viết thành công");
       setOpenPopover(false);
-      setOpen(false)
+      setOpen(false);
     } catch (error) {
       console.log(error);
       setPending(false);
@@ -125,7 +125,7 @@ const UpdatePost = (props: Props) => {
 
         {!active ? (
           <DialogContent
-            className="w-[36rem] h-auto shadow-beutifull rounded-[0.5rem]	bg-white p-0 m-0"
+            className="w-[36rem] h-auto shadow-beautiful rounded-[0.5rem]	bg-white p-0 m-0"
             // onInteractOutside={(e) => e.preventDefault()}
           >
             <div className="p-2 pt-4 flex items-center w-full justify-center relative">
@@ -171,7 +171,6 @@ const UpdatePost = (props: Props) => {
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                       setPrivacy(e.target.value);
                     }}
-
                   >
                     <option value="" selected disabled hidden>
                       {post.privacy === "global" ? "Công khai" : "Riêng tư"}
@@ -319,7 +318,7 @@ const UpdatePost = (props: Props) => {
           </DialogContent>
         ) : (
           <DialogContent
-            className="w-full h-full shadow-beutifull rounded-[0.5rem]	bg-white/0 p-0 m-0 "
+            className="w-full h-full shadow-beautiful rounded-[0.5rem]	bg-white/0 p-0 m-0 "
             // onInteractOutside={(e) => e.preventDefault()}
           >
             <ChangeImagePost

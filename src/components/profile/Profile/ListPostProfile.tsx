@@ -62,7 +62,7 @@ const ListPostProfile = (props: Props) => {
         openCreateModal && `max-h-[8rem] overflow-hidden `
       }`}
     >
-      <div className="p-4 shadow-beutifull rounded-[0.5rem]	bg-white ">
+      <div className="p-4 shadow-beautiful rounded-[0.5rem]	bg-white ">
         <div className="flex items-center">
           <div className="w-[40px] h-[40px] ">
             <Image
@@ -147,14 +147,14 @@ const ListPostProfile = (props: Props) => {
         )}
       </div>
       {openCreateModal && (
-          <ModalCreatePost
-            open={openCreateModal}
-            setOpen={setOpenCreateModal}
-            posts={posts}
-            setPosts={setPosts}
-            organizationId={undefined}
-            type = {undefined}
-          />
+        <ModalCreatePost
+          open={openCreateModal}
+          setOpen={setOpenCreateModal}
+          posts={posts}
+          setPosts={setPosts}
+          organizationId={undefined}
+          type={undefined}
+        />
       )}
     </div>
   );

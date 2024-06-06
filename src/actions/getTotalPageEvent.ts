@@ -10,7 +10,7 @@ export const getTotalPageEvent = async () => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }

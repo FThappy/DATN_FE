@@ -9,13 +9,13 @@ export const rePasswordAction = async (email: string, tokenRePassword : string ,
       {
         headers: {
           "Content-Type": "application/json",
-          email : email,
-          tokenRePassword : tokenRePassword
+          email: email,
+          tokenRePassword: tokenRePassword,
         },
       }
     );
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     return error.response.data;
   }
 };

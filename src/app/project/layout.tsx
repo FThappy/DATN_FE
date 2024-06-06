@@ -6,7 +6,7 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div >
       <Navbar />
       <div className="border-slate-400 w-full h-[1px] border-b-[1px]"></div>
       {children}

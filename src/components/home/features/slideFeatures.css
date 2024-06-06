@@ -44,11 +44,11 @@ body {
 .swiper-pagination .swiper-pagination-bullet {
   width: 1.5rem;
   height: 8px;
-  background-color: rgb(211, 211, 211); /* Màu của dấu chấm */
+  background-color: rgb(211, 211, 211); 
   border-radius: 4px;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
-.swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #F84D42; /* Màu của dấu chấm được chọn */
-}
+/* .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #F84D42; 
+} */

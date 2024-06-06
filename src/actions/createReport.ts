@@ -20,7 +20,7 @@ export const createReport = async (dataSend : Props) => {
       },
     });
     return res.data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return error.response.data;
   }
