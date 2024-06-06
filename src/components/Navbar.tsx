@@ -26,7 +26,7 @@ const Navbar = () => {
     try {
       const res = await logout();
       if (res && res.code === 4) {
-        return toastifyUtils("warning", "Định dạnh email không hợp lệ");
+        return toastifyUtils("warning", "Không xác thực");
       }
       deleteUser();
     } catch (error) {
