@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { io } from "socket.io-client";
 
 
@@ -15,7 +15,8 @@ import { io } from "socket.io-client";
 
 
 export const userRequest = axios.create({
-  withCredentials: true,
+  ...(axios.defaults as AxiosRequestConfig),
+  credentials: "include",
   baseURL: "https://datn-be-3cll.onrender.com",
 });
 
