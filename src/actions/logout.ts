@@ -3,12 +3,17 @@ import { userRequest } from "@/utils/requestMethod";
 import { cookies } from "next/headers";
 
 export const logout = async () => {
-  const cookie = cookies().get("Authorization");
+  const cookie = cookies();
+  const auth = cookie.get("Authorization");
+
+  console.log(cookie.getAll());
+  console.log(cookie)
+
   try {
     const res = await userRequest.delete(`api/auth/logout`, {
       headers: {
         "Content-Type": "application/json",
-        Cookie: `Authorization=${cookie?.value}`,
+        Cookie: `Authorization=${auth?.value}`,
       },
     });
     return res.data;
