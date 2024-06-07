@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { userRequest } from '@/utils/requestMethod';
 
 export const getProjectById = async (projectId: string) => {

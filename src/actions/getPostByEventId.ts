@@ -19,3 +19,4 @@ export const getPostByEventId = async (page: number, organizationId :string) => 
     return error.response.data;
   }
 };
+

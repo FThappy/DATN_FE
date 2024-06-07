@@ -16,3 +16,5 @@ export const getEventById = async ( eventId: string) => {
     return error.response.data;
   }
 };
+
+
