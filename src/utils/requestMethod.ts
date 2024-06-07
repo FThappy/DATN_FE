@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import { io } from "socket.io-client";
 
 
@@ -14,15 +14,13 @@ import { io } from "socket.io-client";
 // });
 
 
+
+
 export const userRequest = axios.create({
-  ...(axios.defaults as AxiosRequestConfig),
-  credentials: "include",
-  baseURL: "https://datn-be-3cll.onrender.com",
+  withCredentials: true,
+  baseURL: "https://datn-be-knxi.onrender.com",
 });
 
-
-export const socket = io("https://datn-be-3cll.onrender.com", {
+export const socket = io("https://datn-be-knxi.onrender.com", {
   withCredentials: true,
 });
-
-
