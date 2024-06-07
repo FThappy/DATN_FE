@@ -20,3 +20,4 @@ export const updateProject = async (formData: FormData, projectId: string) => {
     return error.response.data;
   }
 };
+
