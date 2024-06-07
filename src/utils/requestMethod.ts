@@ -18,9 +18,9 @@ import { io } from "socket.io-client";
 
 export const userRequest = axios.create({
   withCredentials: true,
-  baseURL: "https://datn-be-knxi.onrender.com",
+  baseURL: "https://datn-be-zrcv.onrender.com",
 });
 
-export const socket = io("https://datn-be-8ur2.onrender.com", {
+export const socket = io("https://datn-be-zrcv.onrender.com", {
   withCredentials: true,
 });
