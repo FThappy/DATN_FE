@@ -21,6 +21,6 @@ export const userRequest = axios.create({
   baseURL: "https://datn-be-knxi.onrender.com",
 });
 
-export const socket = io("https://datn-be-knxi.onrender.com", {
+export const socket = io("https://datn-be-8ur2.onrender.com", {
   withCredentials: true,
 });
