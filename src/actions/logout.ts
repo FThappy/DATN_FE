@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 
 export const logout = async () => {
   const cookie = cookies().get("Authorization");
-  console.log(cookie);
+  console.log(cookies());
+  console.log(cookies().getAll());
   // try {
   //   const res = await userRequest.delete(`api/auth/logout`, {
   //     headers: {
