@@ -1,15 +1,17 @@
 "use client"
 import React, { Suspense } from 'react'
-import EventOwnerPage from './EventOwnerPage';
+import EventJoinPage from './EventJoinPage';
+import ModalCreateEvent from '@/components/event/ModalCreateEvent';
 
 type Props = {}
 
 const page = (props: Props) => {
   return (
-    <div>
+    <div className="w-5/6">
       <Suspense fallback={<div>Loading...</div>}>
-        <EventOwnerPage />
+        <EventJoinPage />
       </Suspense>
+      <ModalCreateEvent />
     </div>
   );
 }

@@ -113,7 +113,6 @@ const ContentProject = (props: Props) => {
     );
   };
 
-  console.log(pageSearch);
 
   const handleSearch = async () => {
     setIsLoading(true);

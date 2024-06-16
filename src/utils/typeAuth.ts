@@ -35,3 +35,9 @@ export type User = {
   wall: string;
   displayname: string;
 };
+export type UserPublic = {
+  _id: string;
+  username: string;
+  displayname: string;
+  img: string;
+};

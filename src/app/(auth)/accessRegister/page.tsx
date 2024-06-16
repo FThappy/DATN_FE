@@ -17,7 +17,7 @@ const page = () => {
       <p className='text-white text-[1.5rem]'>Chúc mừng bạn hoàn tất việc đăng ký</p>
       <p className='text-white text-[1.5rem]'>Bằng cách nhấn vào Đăng nhập, bạn đồng ý với chúng tôi</p>
       <p className='text-white text-[1.5rem]'> Điều khoản, Chính sách dữ liệu và Chính sách cookie</p>
-      <Link href="/login" className="text-blue-600 text-center text-[2rem]">
+      <Link href="/login" className="text-blue text-center text-[2rem]">
         Đăng nhập
       </Link>
     </div>

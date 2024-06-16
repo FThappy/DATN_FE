@@ -121,7 +121,7 @@ const Post = (props: Props) => {
           <div className=" ml-2 ">
             <Link href={`/profile/${poster?._id}`}>
               <p className=" w-[250px] font-bold cursor-pointer">
-                {poster?.username}
+                {poster?.displayname ? poster?.displayname : poster?.username}
               </p>
             </Link>
             <p className=" w-[200px] text-gray-400 cursor-pointer">
@@ -241,6 +241,7 @@ const Post = (props: Props) => {
             userName={poster?.username}
             userImg={poster?.img}
             userId={poster?._id}
+            displayName={user?.displayname}
           />
         </div>
         <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">

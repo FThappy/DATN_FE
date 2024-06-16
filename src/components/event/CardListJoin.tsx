@@ -20,6 +20,7 @@ type UserJoin = {
   _id: string;
   username: string;
   img: string;
+  displayname : string;
 };
 const CardListJoin = (props: Props) => {
   const { userId, itemId, joinId, index, removeJoin, ownerId } = props;
@@ -103,8 +104,10 @@ const CardListJoin = (props: Props) => {
                 />
               )}
             </div>
-            <p className="font-normal text-[1.2rem] text-slate-800 mr-[1rem]">
-              {userJoin?.username}
+            <p className="font-medium text-[1.1rem] text-slate-800 mr-[1rem]">
+              {userJoin?.displayname
+                ? userJoin?.displayname
+                : userJoin?.username}
             </p>
           </Link>
         </div>

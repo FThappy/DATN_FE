@@ -17,6 +17,13 @@ export const timeFormatCustom = (date : Date)=>{
     date.getMinutes() < 10 ? 0 : ""
   }${date.getMinutes()} `;
 }
+export const dateFormatCustom = (date: Date) => {
+  return ` ${date.getDate()}/${date.getMonth() + 1}/${
+    date.getFullYear() + 1
+  } Lúc ${date.getHours() < 10 ? 0 : ""}${date.getHours()}:${
+    date.getMinutes() < 10 ? 0 : ""
+  }${date.getMinutes()}`;
+};
 
 export const timeCountDown = (timeEnd: Date) => {
   return differenceInHours(new Date(timeEnd),new Date()) <= 0

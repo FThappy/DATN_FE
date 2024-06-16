@@ -4,11 +4,13 @@ import { UserRegister } from "@/utils/typeAuth";
 
 export const register = async (
   inforRegister: UserRegister,
-  formData: FormData
+  formData: FormData,
+  type : string
 ) => {
   const data = {
     inforRegister: inforRegister,
     otp: formData.get("otp"),
+    type : type
   };
   try {
     const res = await userRequest.post("/api/auth/register", data, {

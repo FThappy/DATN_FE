@@ -26,7 +26,7 @@ const BrowserOTP = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     try {
-      const res = await browserOTP(email, formData);
+      const res = await browserOTP(email, formData, "forgot_password");
       if (res.code === 1) {
         return toastifyUtils("warning", "Email không hợp lệ");
       }
@@ -50,7 +50,7 @@ const BrowserOTP = () => {
   ) => {
     event.preventDefault();
     try {
-      const res = await forgotPassword(email);
+      const res = await forgotPassword(email, "forgot_password");
       if (res && res.code === 3) {
         return toastifyUtils("warning", "Lỗi gửi OTP");
       }
@@ -102,7 +102,7 @@ const BrowserOTP = () => {
       <p className="text-white mt-4">
         Chúng tôi đã gửi otp đến email : {email}
       </p>
-      <button className="text-blue-400 mt-2" onClick={handleReSendOTP}>
+      <button className="text-blue mt-2" onClick={handleReSendOTP}>
         Nhấn để nhận lại
       </button>
     </div>

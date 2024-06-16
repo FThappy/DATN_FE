@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+  KeyboardEvent,
+} from "react";
 import {
   Dialog,
   DialogClose,
@@ -12,10 +18,6 @@ import { FaRegComment, FaTrashCan } from "react-icons/fa6";
 import { PostProps } from "@/utils/typePost";
 import { differenceInDays, differenceInHours } from "date-fns";
 import { userStore } from "@/store/userStore";
-import DeletePost from "./DeleteSure";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import ReportModal from "./ReportModal";
-import { deletePost } from "@/actions/deletePost";
 import toastifyUtils from "@/utils/toastify";
 import Readmore from "./utils/Readmore";
 import ImageGroup from "./utils/ImageGroup";
@@ -24,16 +26,18 @@ import CommentPostContainer from "./CommentPostContainer";
 import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { CommentProps } from "@/utils/typeComment";
 import { socket } from "@/utils/requestMethod";
+import { TiDelete } from "react-icons/ti";
 
 type Props = {
   post: PostProps;
   userName: string | undefined;
   userImg: string | undefined;
   userId: string | undefined;
+  displayName: string | undefined;
 };
 
 const ModalPost = (props: Props) => {
-  const { post, userName, userImg, userId } = props;
+  const { post, userName, userImg, userId , displayName } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -49,7 +53,15 @@ const ModalPost = (props: Props) => {
 
   const [comments, setComments] = useState<CommentProps[]>([]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const [commentId, setCommentId] = useState<string>();
+
+  const [repUser, setRepUser] = useState<string>();
+
+  const [toUserId , setToUserId] = useState<string>();
+
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     event.preventDefault();
     if (!content) {
       toastifyUtils("error", "Bình luận không được để trống");
@@ -78,6 +90,32 @@ const ModalPost = (props: Props) => {
     event.preventDefault();
     setOpen(false);
     socket.emit("leave-room", post._id);
+  };
+
+  const handleSetRepUser = (user: string, commentId: string , toUserId : string) => {
+    setRepUser(user);
+    setCommentId(commentId);
+    setToUserId(toUserId);
+  };
+
+  const handleRepComment = async (
+    event: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    event.preventDefault();
+    if (!content) {
+      toastifyUtils("error", "Bình luận không được để trống");
+      return;
+    }
+    try {
+      socket.emit("rep-comment", commentId, content , toUserId);
+      setContent("");
+      setRepUser("");
+      setCommentId("");
+      setToUserId("")
+    } catch (error) {
+      console.log(error);
+      toastifyUtils("error", "Lỗi server");
+    }
   };
 
   return (
@@ -121,7 +159,7 @@ const ModalPost = (props: Props) => {
             </DialogClose>
           </div>
           <div className="border-slate-300 w-full h-[1px] border-t-[1px]"></div>
-          <div className="flex flex-col items-center w-full max-h-[33rem] overflow-y-scroll">
+          <div className="flex flex-col items-center w-full max-h-[32rem] overflow-y-scroll">
             <div className="flex items-center w-full px-4 pb-1 justify-between">
               <div className="flex items-center">
                 <div className="h-12 w-12 rounded-full  flex justify-center items-center ">
@@ -136,7 +174,7 @@ const ModalPost = (props: Props) => {
                 </div>
                 <div className=" ml-2 ">
                   <p className=" w-[250px] font-bold cursor-pointer">
-                    {userName}
+                    {displayName ? displayName : userName}
                   </p>
                   <p className=" w-[200px] text-gray-400 cursor-pointer">
                     {differenceInHours(new Date(), new Date(post.createdAt)) <=
@@ -197,9 +235,10 @@ const ModalPost = (props: Props) => {
               post={post}
               comments={comments}
               setComments={setComments}
+              handleSetRepUser={handleSetRepUser}
             />
           </div>
-          <div className="flex w-full gap-2 p-1 px-2 pr-4 h-[6rem]">
+          <div className="flex w-full gap-2 p-1 px-2 pr-4 h-auto pt-0">
             <div className="h-10 w-10 rounded-full  flex justify-center items-center ">
               <img
                 src={user?.img ? user.img : "/twitter.png"}
@@ -209,21 +248,53 @@ const ModalPost = (props: Props) => {
               />
             </div>
             <form
-              onSubmit={handleSubmit}
-              className="flex flex-col w-full bg-gray-200 rounded-[8px]"
+              onSubmit={(e) => {
+                if (!repUser) {
+                  handleSubmit(e);
+                } else {
+                  handleRepComment(e);
+                }
+              }}
+              className="flex flex-col w-full bg-gray-200 rounded-[8px] h-auto"
             >
+              {repUser && (
+                <div className="flex w-full justify-between px-2 pt-1 ">
+                  <p>
+                    Trả lời <span className="font-medium">{repUser}</span> :
+                  </p>
+                  <TiDelete
+                    className="cursor-pointer"
+                    size={24}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setRepUser("");
+                    }}
+                  />
+                </div>
+              )}
               <textarea
-                className="outline-none	bg-white/0 h-[3.5rem] min-h-[3.5rem] max-h-[3.5rem] p-2 text-[1rem]"
+                className="outline-none	bg-white/0 h-[4rem] min-h-[4rem] max-h-[4rem] p-2 text-[1rem]"
                 placeholder="Viết bình luận..."
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                   e.preventDefault();
                   setContent(e.target.value);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (!repUser) {
+                      handleSubmit(e);
+                    } else {
+                      handleRepComment(e);
+                    }
+                    e.currentTarget.value = "";
+                  }
+                }}
                 value={content}
               />
               <button
                 type="submit"
-                className="flex justify-end items-center h-full"
+                className="flex justify-end items-center h-full my-1"
                 disabled={content ? false : true}
               >
                 <PiPaperPlaneRightFill

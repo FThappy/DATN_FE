@@ -93,7 +93,7 @@ const PostProfile = (props: Props) => {
           </div>
           <div className=" ml-2 ">
             <p className=" w-[250px] font-bold cursor-pointer">
-              {user?.username}
+              {user?.displayname ? user?.displayname : user?.username}
             </p>
             <p className=" w-[200px] text-gray-400 cursor-pointer">
               {differenceInHours(new Date(), new Date(post.createdAt)) <= 0
@@ -173,6 +173,7 @@ const PostProfile = (props: Props) => {
             userName={user.username}
             userImg={user.img}
             userId={user._id}
+            displayName={user.displayname}
           />
         </div>
         <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">

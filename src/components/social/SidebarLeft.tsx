@@ -23,12 +23,13 @@ const SidebarLeft = () => {
               className="cursor-pointer rounded-full  h-full"
             />
           </div>
-          <p className="font-normal text-[1.5rem] text-slate-800 mr-[1rem]">
-            {user?.username}
+          <p className="font-medium text-[1.4rem] text-slate-800 mr-[1rem]">
+            {user?.displayName ? user.displayName : user?.username}
           </p>
         </div>
         {sidebarLeft.map((item, index) => (
-          <Link href={item.href}
+          <Link
+            href={item.href}
             className="w-full h-[60px] cursor-pointer flex items-center gap-2 hover:bg-gray-300 p-2 rounded-[0.8rem] mb-2"
             key={index}
           >

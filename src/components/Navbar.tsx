@@ -13,6 +13,8 @@ import {
 import toastifyUtils from "../utils/toastify";
 import { logout } from "@/actions/logout";
 import { MdEventAvailable } from "react-icons/md";
+import MessengerTopBar from "./MessengerTopBar";
+import Notification from "./Notification";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -59,17 +61,11 @@ const Navbar = () => {
             {item.name}
           </Link>
         ))}
-        <Image
-          src="/search.png"
-          alt="logo-search"
-          loading="lazy"
-          height={30}
-          width={30}
-          className="cursor-pointer"
-        />
         <div className="h-[24px] w-[1px] border-r-2 border-slate-500	"></div>
         {user ? (
-          <>
+          <div className="flex gap-2 items-center">
+            <MessengerTopBar />
+            <Notification />
             <Popover>
               <PopoverTrigger asChild>
                 <div className="h-[60px] cursor-pointer flex items-center gap-2">
@@ -83,9 +79,6 @@ const Navbar = () => {
                       className="cursor-pointer rounded-full w-full h-full"
                     />
                   </div>
-                  <p className="font-normal text-2xl text-slate-800 mr-[1rem]">
-                    {user.username}
-                  </p>
                 </div>
               </PopoverTrigger>
               <PopoverContent className="mr-4 w-[25rem] z-[100]">
@@ -105,7 +98,7 @@ const Navbar = () => {
                       </div>
 
                       <p className="font-normal text-[1.5rem] text-slate-800 mr-[1rem]">
-                        {user.username}
+                        {user?.displayName ? user?.displayName : user.username}
                       </p>
                     </div>
                   </Link>
@@ -116,7 +109,7 @@ const Navbar = () => {
                     </button>
                   </Link>
                 </div>
-                <div className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 ">
+                <Link href={`/profile/change-info`} className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 ">
                   <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
                     <Image
                       src="/gear.png"
@@ -130,9 +123,9 @@ const Navbar = () => {
                   <p className="font-bold text-[1.2rem] text-black">
                     Cài đặt & quyền riêng tư
                   </p>
-                </div>
+                </Link>
                 <Link
-                  href={"/social/event-owner"}
+                  href={"/profile/event-owner?page=0"}
                   className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 "
                 >
                   <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
@@ -162,7 +155,7 @@ const Navbar = () => {
                 </button>
               </PopoverContent>
             </Popover>
-          </>
+          </div>
         ) : (
           <>
             <Link

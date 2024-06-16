@@ -110,7 +110,7 @@ const RegisterPage = () => {
       birth: inputs.birth!,
     };
     try {
-      const res = await sendOTP(inputs.email);
+      const res = await sendOTP(inputs.email, "register");
       updateInforRegister(dataSend);
       updateEmail(inputs.email);
       if (res && res.code === 2) {
@@ -336,7 +336,7 @@ const RegisterPage = () => {
         </button>
       </form>
       <p className="text-white text-center mt-[3rem]">Bạn đã có tài khoản?</p>
-      <Link href="/login" className="text-blue-600 text-center text-[1.2rem]">
+      <Link href="/login" className="text-blue text-center text-[1.2rem]">
         Đăng nhập
       </Link>
     </div>

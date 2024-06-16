@@ -315,7 +315,7 @@ const Page = (props: Props) => {
           <label htmlFor="typeProject" className="font-medium">
             Loại dự án<span className="text-red">*</span> :
           </label>
-          <TypeInputProject type={type} setType={setType} width={55} />
+          <TypeInputProject type={type} setType={setType}/>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex flex-col gap-1">
@@ -383,7 +383,7 @@ const Page = (props: Props) => {
                 ? "#F84D42"
                 : "#20b86d",
           }}
-          className={`h-[40px] w-[98%] mr-4 mb-2 mt-2 bg-green rounded flex justify-center 
+          className={`h-[40px] w-[100%]  mb-2 mt-2 bg-green rounded flex justify-center 
           shadow-beautiful items-center font-bold text-white text-[1.2rem] cursor-pointer
       `}
           onClick={handleSubmit}
@@ -403,7 +403,7 @@ const Page = (props: Props) => {
               <div className="loader"></div>
             </>
           ) : (
-            "Xác nhận"
+            "Đăng dự án"
           )}
         </button>
       </form>

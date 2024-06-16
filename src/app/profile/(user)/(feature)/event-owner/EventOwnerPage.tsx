@@ -153,7 +153,7 @@ const EventOwnerPage = (props: Props) => {
     qCity: string
   ) => {
     router.push(
-      `/social/event-owner?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
+      `/profile/event-owner?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
     );
   };
 
@@ -171,7 +171,7 @@ const EventOwnerPage = (props: Props) => {
   }, [qDate, qSort, qCity, page]);
 
   return (
-    <div className="p-2 w-5/6 ">
+    <div className="p-2 w-full ">
       <div className="shadow-beautiful w-full h-[55rem] flex flex-col bg-white rounded-[8px]">
         <div className="h-[53.25rem] w-full px-8 pt-1 flex flex-col items-center">
           <SearchContainer

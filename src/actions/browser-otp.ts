@@ -4,11 +4,13 @@ import { userRequest } from "@/utils/requestMethod";
 
 export const browserOTP = async (
   email: string,
-  formData: FormData
+  formData: FormData,
+  type : string
 ) => {
   const data = {
     email: email,
     otp: formData.get("otp"),
+    type : type
   };
   try {
     const res = await userRequest.post("/api/auth/browser-otp", data, {

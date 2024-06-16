@@ -1,6 +1,7 @@
 import React from 'react'
 import { User } from "@/utils/typeAuth";
 import { GoPersonAdd } from "react-icons/go";
+import BtnHeader from './BtnHeader';
 
 type Props = {
   user: User;
@@ -8,7 +9,7 @@ type Props = {
 
 const HeadForeignInfo = (props: Props) => {
 
-    const { user } = props;
+  const { user } = props;
 
 
   return (
@@ -36,10 +37,7 @@ const HeadForeignInfo = (props: Props) => {
           </p>
         </div>
         <div className="flex gap-2 justify-center items-center mr-4">
-          <button className="flex gap-2 justify-center items-center p-2 bg-sky-400	 w-[15rem] rounded-[6px] cursor-pointer h-[2.5rem] hover:bg-sky-600">
-            <GoPersonAdd size={24} color="white" />
-            <p className="font-bold text-[1rem] text-white">Thêm bạn bè</p>
-          </button>
+             <BtnHeader user ={user}/>
         </div>
       </div>
     </>

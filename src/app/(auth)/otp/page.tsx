@@ -23,7 +23,7 @@ const OTPPage = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     try {
-      const res = await register(inforRegister, formData);
+      const res = await register(inforRegister, formData, "register");
       console.log(res)
       if (res.code === 1) {
         return toastifyUtils("error", "OTP không chính xác");
@@ -54,7 +54,7 @@ const OTPPage = () => {
   ) => {
     event.preventDefault();
     try {
-      const res = await sendOTP(email);
+      const res = await sendOTP(email, "register");
       if (res && res.code === 2) {
         return toastifyUtils("warning", "Định dạnh email không hợp lệ");
       }
@@ -121,7 +121,7 @@ const OTPPage = () => {
       <p className="text-white mt-4">
         Chúng tôi đã gửi otp đến email : {email}
       </p>
-      <button className="text-blue-400 mt-2" onClick={handleReSendOTP}>
+      <button className="text-blue mt-2" onClick={handleReSendOTP}>
         Nhấn để nhận lại
       </button>
     </div>

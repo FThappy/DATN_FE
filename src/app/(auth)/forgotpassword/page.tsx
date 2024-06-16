@@ -27,7 +27,7 @@ const ForgotPassWordPage = () => {
       if (!checkValidGmail(data.email)) {
         return toastifyUtils("warning", "Định dạnh email không hợp lệ");
       }
-      const res = await forgotPassword(data.email);
+      const res = await forgotPassword(data.email, "forgot_password");
       updateEmail(data.email);
       if (res && res.code === 3) {
         return toastifyUtils("warning", "Lỗi gửi OTP");

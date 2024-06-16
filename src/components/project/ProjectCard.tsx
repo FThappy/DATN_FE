@@ -27,7 +27,7 @@ const ProjectCard = ({
         src={`${cause.image.length > 0 ? cause.image[0] : "/bg2.jpg"}`}
         alt="logo"
         loading="lazy"
-        className="self-center w-full h-[15rem] object-cover rounded-t-[8px]"
+        className="self-center w-full h-[14rem] object-cover rounded-t-[8px]"
       />
       <div className="px-2">
         <p
@@ -42,19 +42,20 @@ const ProjectCard = ({
           <div className="flex gap-1 items-center">
             <FaMapMarkerAlt color="gray" />
             <p className={`${inter.className} font-bold text-gray-600 `}>
-              {cause.city}
+              Vị trí
             </p>
           </div>
           <div className="flex gap-1 items-center">
-            <FaClock color="gray" />
             <p className={`${inter.className} font-bold text-gray-600 `}>
-              Thành phố Hà nội
+              {cause.city}
             </p>
           </div>
         </div>
         <div className=" w-full  flex justify-between mt-3">
           <p className={`${inter.className} font-bold text-gray-600 `}>
             Raised :{" "}
+          </p>
+          <p className={`${inter.className} font-bold text-gray-600 `}>
             {cause.rise
               ? cause.rise.toLocaleString("it-IT", {
                   style: "currency",
@@ -62,8 +63,12 @@ const ProjectCard = ({
                 })
               : "0VND"}
           </p>
+        </div>
+        <div className=" w-full flex justify-between mt-3">
           <p className={`${inter.className} font-bold text-gray-600 `}>
             Goal :
+          </p>
+          <p className={`${inter.className} font-bold text-gray-600 `}>
             {cause.goal
               ? cause.goal.toLocaleString("it-IT", {
                   style: "currency",

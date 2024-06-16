@@ -11,10 +11,11 @@ type Props = {
   post: PostProps;
   comments: CommentProps[];
   setComments: React.Dispatch<React.SetStateAction<CommentProps[]>>;
+  handleSetRepUser: (user: string, commentId: string, toUserId: string) => void;
 };
 
 const CommentPostContainer = (props: Props) => {
-  const { post, comments, setComments } = props;
+  const { post, comments, setComments, handleSetRepUser } = props;
 
   const [page, setPage] = useState<number>(0);
 
@@ -26,8 +27,7 @@ const CommentPostContainer = (props: Props) => {
 
   const [pending, setPending] = useState(false);
 
-  const [isLoading , setIsLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (inView) {
@@ -53,7 +53,6 @@ const CommentPostContainer = (props: Props) => {
     };
   }, []);
 
-
   useEffect(() => {
     const handleNewComment = (newComment: CommentProps) => {
       setNewComments((prevComments) => [...prevComments, newComment]);
@@ -71,20 +70,17 @@ const CommentPostContainer = (props: Props) => {
     try {
       socket.emit("load-more", post._id, page + 1, newComments.length);
       setPage(page + 1);
-        socket
-          .off("load-more")
-          .on("load-more", (newListComments: CommentProps[]) => {
-            if (newListComments.length === 0) {
-              setPending(false);
-              return setEndComment(false);
-            }
-            console.log(newListComments);
-            setComments((prevComments) => [
-              ...prevComments,
-              ...newListComments,
-            ]);
+      socket
+        .off("load-more")
+        .on("load-more", (newListComments: CommentProps[]) => {
+          if (newListComments.length === 0) {
             setPending(false);
-          });
+            return setEndComment(false);
+          }
+          console.log(newListComments);
+          setComments((prevComments) => [...prevComments, ...newListComments]);
+          setPending(false);
+        });
     } catch (error) {
       setPending(false);
       console.log(error);
@@ -96,51 +92,52 @@ const CommentPostContainer = (props: Props) => {
     setComments((prevComments) => {
       const comments = [...prevComments];
       const index = comments.findIndex((item) => item._id === newComment._id);
-      comments.splice(index, 1, newComment);
-            if(index < 0) {
-        return comments
+      if (index < 0) {
+        return comments;
+      } else {
+        comments.splice(index, 1, newComment);
+        return comments;
       }
-      return comments;
     });
     setNewComments((prevComments) => {
       const comments = [...prevComments];
       const index = comments.findIndex((item) => item._id === newComment._id);
-      if(index < 0) {
-        return comments
+      if (index < 0) {
+        return comments;
+      } else {
+        comments.splice(index, 1, newComment);
+        return comments;
       }
-      comments.splice(index, 1, newComment);
-      return comments;
     });
   };
   socket.off("change-comment").on("change-comment", handleSocketChangeComment);
 
-    const handleSocketDeleteComment = (oldCommentId: string) => {
-      setComments((prevComments) => {
-        const comments = [...prevComments];
-        const index = comments.findIndex((item) => item._id === oldCommentId);
-        comments.splice(index, 1,);
-        if (index < 0) {
-          return comments;
-        }
+  const handleSocketDeleteComment = (oldCommentId: string) => {
+    setComments((prevComments) => {
+      const comments = [...prevComments];
+      const index = comments.findIndex((item) => item._id === oldCommentId);
+      if (index < 0) {
         return comments;
-      });
-      setNewComments((prevComments) => {
-        const comments = [...prevComments];
-        const index = comments.findIndex((item) => item._id === oldCommentId);
-        if (index < 0) {
-          return comments;
-        }
+      } else {
         comments.splice(index, 1);
         return comments;
-      });
-    };
-    socket
-      .off("delete-comment")
-      .on("delete-comment", handleSocketDeleteComment);
-
+      }
+    });
+    setNewComments((prevComments) => {
+      const comments = [...prevComments];
+      const index = comments.findIndex((item) => item._id === oldCommentId);
+      if (index < 0) {
+        return comments;
+      } else {
+        comments.splice(index, 1);
+      }
+      return comments;
+    });
+  };
+  socket.off("delete-comment").on("delete-comment", handleSocketDeleteComment);
 
   return (
-    <div ref={ref} className="flex flex-col w-full gap-2 mt-2  mb-2">
+    <div ref={ref} className="flex flex-col w-full gap-2  mt-4">
       <div className=" flex flex-col border-l-4 border-sky-600 gap-2">
         {newComments.map((comment, index) => (
           <div className="px-4" key={index}>
@@ -150,6 +147,8 @@ const CommentPostContainer = (props: Props) => {
               index={index}
               postId={post._id}
               type="new"
+              handleSetRepUser={handleSetRepUser}
+              typeItem="post"
             />
           </div>
         ))}
@@ -162,6 +161,8 @@ const CommentPostContainer = (props: Props) => {
             index={index}
             postId={post._id}
             type="load"
+            handleSetRepUser={handleSetRepUser}
+            typeItem="post"
           />
         </div>
       ))}
@@ -178,7 +179,7 @@ const CommentPostContainer = (props: Props) => {
         )
       ) : comments.length >= 8 && endComment ? (
         <button
-          className="text-gray-400 font-[500] mt-2"
+          className="text-gray-400 font-[500]"
           onClick={handleLoadMore}
           disabled={pending}
         >
@@ -192,7 +193,7 @@ const CommentPostContainer = (props: Props) => {
           )}
         </button>
       ) : (
-        <p className="text-gray-400 font-[500] mt-2 text-center">
+        <p className="text-gray-400 font-[500] text-center">
           - Đã hết bình luận -
         </p>
       )}

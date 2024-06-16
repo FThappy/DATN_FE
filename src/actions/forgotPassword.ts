@@ -1,11 +1,11 @@
 "use server";
 import { userRequest } from "@/utils/requestMethod";
 
-export const forgotPassword = async (dataSend: string) => {
+export const forgotPassword = async (dataSend: string, type : string) => {
   try {
     const res = await userRequest.post(
       "/api/auth/forgotPassword",
-      { email: dataSend },
+      { email: dataSend, type: type},
       {
         headers: {
           "Content-Type": "application/json",

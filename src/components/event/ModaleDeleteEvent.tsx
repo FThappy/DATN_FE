@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Dialog, DialogContentCustom, DialogTrigger } from "../ui/dialog";
-import { FaTrashCan } from "react-icons/fa6";
 import DeleteSure from "../DeleteSure";
 import toastifyUtils from "@/utils/toastify";
 import { deleteEventById } from "@/actions/deleteEventById";
@@ -36,7 +35,7 @@ const ModaleDeleteEvent = (props: Props) => {
       if (res.code === 0) {
         setPending(false);
         setOpenDeleteModal(false);
-        router.push(`/event`);
+        router.push(`/event?page=0`);
         toastifyUtils("success", "Xóa sự kiện thành công");
       }
     } catch (error) {
