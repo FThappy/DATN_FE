@@ -151,12 +151,7 @@ export const sidebarLeft = [
   {
     name: "Bạn bè",
     img: "/friends.png",
-    href: "/friend",
-  },
-  {
-    name: "Nhóm",
-    img: "/together.png",
-    href: "/group",
+    href: "/friends/list",
   },
   {
     name: "Sự kiện của bạn",
@@ -169,7 +164,7 @@ export const sidebarLeft = [
     href: "/",
   },
   {
-    name: "Chương trình của bạn",
+    name: "Dự án của bạn",
     img: "/task-management.png",
     href: "/",
   },

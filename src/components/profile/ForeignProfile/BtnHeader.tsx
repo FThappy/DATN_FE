@@ -13,6 +13,7 @@ import { FaUserTimes } from "react-icons/fa";
 import { checkFriend } from "@/actions/checkFriend";
 import { deleteFriend } from "@/actions/deleteFriend";
 import { refuseAddFriend } from "@/actions/refuseAddFriend";
+import { FaUserXmark } from "react-icons/fa6";
 
 type Props = {
   user: User;
@@ -337,10 +338,10 @@ const BtnHeader = (props: Props) => {
         )
       ) : (
         <button
-          className="flex gap-2 justify-center items-center p-2 bg-sky-400 w-[15rem] rounded-[6px] cursor-pointer h-[2.5rem] hover:bg-sky-600"
+          className="flex gap-2 justify-center items-center p-2 bg-red w-[15rem] rounded-[6px] cursor-pointer h-[2.5rem] hover:bg-red/75"
           onClick={handleDeleteFriend}
         >
-          <GoPersonAdd size={24} color="white" />
+          <FaUserXmark size={24} color="white" />
           <div className="flex justify-center gap-2 font-bold text-[1rem] text-white">
             {pending ? (
               <>

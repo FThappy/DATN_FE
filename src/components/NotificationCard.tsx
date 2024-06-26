@@ -7,6 +7,8 @@ import NotificationAddFriend from "./NotificationAddFriend";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
 import { changeIsReadNotification } from "@/actions/changeIsReadNotification";
+import NotificationEventCard from "./NotificationEventCard";
+import NotificationTranscationCard from "./NotificationTranscationCard";
 
 type Props = {
   notification: NotificationProps;
@@ -75,7 +77,9 @@ const NotificationCard = React.memo((props: Props) => {
     }
   };
   useEffect(() => {
+    if(notification.type !== "event" && notification.type !=="transcation"){
     getSender();
+    }
   }, [notification]);
 
   const handleChangeIsRead = async () => {
@@ -98,35 +102,54 @@ const NotificationCard = React.memo((props: Props) => {
       toastifyUtils("error", "Lỗi server");
     }
   };
+  console.log(notification.type)
   return (
     <>
-      {sender ? (
-        <div
-          className="flex gap-2 hover:bg-gray-200 relative p-2 w-full rounded-[8px] "
-          onMouseOver={(e) => {
-            e.preventDefault();
-            if (notification.type !== "addFriend" && !notification.isRead) {
-              handleChangeIsRead();
-            }
-          }}
-        >
-          <img
-            src={sender?.img ? sender?.img : "/user-default.png"}
-            className="rounded-full h-[3.5rem] w-[3.5rem]"
-          />
-          {contentForType(
-            notification,
-            sender,
-            index,
-            handleRemoveNewNotification,
-            type
-          )}
-          {!notification.isRead && (
-            <div className="w-[1rem] h-[1rem] bg-blue rounded-full self-center p-2"></div>
-          )}
-        </div>
+      {notification.type !== "event" &&  notification.type !=="transcation"? (
+        sender ? (
+          <div
+            className="flex gap-2 hover:bg-gray-200 relative p-2 w-full rounded-[8px] "
+            onMouseOver={(e) => {
+              e.preventDefault();
+              if (notification.type !== "addFriend" && !notification.isRead) {
+                handleChangeIsRead();
+              }
+            }}
+          >
+            <img
+              src={sender?.img ? sender?.img : "/user-default.png"}
+              className="rounded-full h-[3.5rem] w-[3.5rem]"
+            />
+            {contentForType(
+              notification,
+              sender,
+              index,
+              handleRemoveNewNotification,
+              type
+            )}
+            {!notification.isRead && (
+              <div className="w-[1rem] h-[1rem] bg-blue rounded-full self-center p-2"></div>
+            )}
+          </div>
+        ) : (
+          <Skeleton className="w-full h-[3.5rem] rounded-[8px]" />
+        )
+      ) : notification.type === "event" ? (
+        <NotificationEventCard
+          notification={notification}
+          index={index}
+          handleChangeIsRead={handleChangeIsRead}
+          type={type}
+        />
+      ) : notification.type === "transcation" ? (
+        <NotificationTranscationCard
+          notification={notification}
+          index={index}
+          handleChangeIsRead={handleChangeIsRead}
+          type={type}
+        />
       ) : (
-        <Skeleton className="w-full h-[3.5rem] rounded-[8px]" />
+        <></>
       )}
     </>
   );

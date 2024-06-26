@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { userStore } from "@/store/userStore";
 import CryptoJS from "crypto-js";
 import toastifyUtils from "../../../utils/toastify";
+import { socket } from "@/utils/requestMethod";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -32,6 +33,7 @@ const LoginPage = () => {
       const result = await login(data);
       if (result.code === 0) {
         updateUser(result);
+        socket.connect();
         router.push("/");
       }
       if (result.code === 1) {

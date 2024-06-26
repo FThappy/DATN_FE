@@ -94,7 +94,7 @@ const ReportModal = (props: Props) => {
           // onInteractOutside={(e) => e.preventDefault()}
         >
           <div className="p-2 pt-4 flex items-center w-full justify-center relative">
-            <p className="text-[1.5rem] font-bold">Báo cáo bài viết</p>
+            <p className="text-[1.5rem] font-bold">Báo cáo</p>
             <button
               className="flex items-center justify-center bg-[#E8E5ED] rounded-full w-[50px] 
           h-[50px] absolute right-2 cursor-pointer"

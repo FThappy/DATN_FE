@@ -14,11 +14,12 @@ type Props = {
   type: string[] | undefined;
   setType: React.Dispatch<React.SetStateAction<string[] | undefined>>;
   width: number;
-
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPageSearch: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const TypeInputProjectSearch = (props: Props) => {
-  const { type, setType, width } = props;
+  const { type, setType, width, setPage, setPageSearch } = props;
 
   const [otherType, setOtherType] = useState<string>();
 
@@ -27,6 +28,8 @@ const TypeInputProjectSearch = (props: Props) => {
   const handleAddType = (value: string) => {
     if (value) {
       setType((prev) => [value, ...(prev ? prev : [])]);
+      setPageSearch(0);
+      setPage(0);
     } else {
       return toastifyUtils("warning", "Hãy nhập giá trị");
     }
@@ -37,6 +40,8 @@ const TypeInputProjectSearch = (props: Props) => {
       newPrev.splice(index, 1);
       return newPrev;
     });
+    setPageSearch(0);
+    setPage(0);
     if (typeProjectDefault.includes(type![index])) {
       setIsActive((prev) => {
         prev[typeProjectDefault.findIndex((item) => item === type![index])] =
@@ -54,8 +59,9 @@ const TypeInputProjectSearch = (props: Props) => {
       );
       return newPrev;
     });
+    setPageSearch(0);
+    setPage(0);
   };
-
 
   return (
     <Accordion type="single" collapsible className="w-full">

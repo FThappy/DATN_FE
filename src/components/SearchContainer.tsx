@@ -116,21 +116,6 @@ const SearchContainer = (props: Props) => {
             </option>
           ))}
         </select>
-        <select
-          className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            e.preventDefault();
-            setQSort(e.target.value);
-            handlePushParams(qDate, qSearch, e.target.value, qCity);
-          }}
-          defaultValue={qSort}
-        >
-          <option value="" disabled hidden>
-            Ngày đăng sự kiện giảm dần
-          </option>
-          <option value="new">Ngày đăng sự kiện giảm dần</option>
-          <option value="old">Ngày đăng sự kiện tăng dần </option>
-        </select>
       </div>
     </div>
   );

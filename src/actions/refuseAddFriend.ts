@@ -12,7 +12,6 @@ export const refuseAddFriend = async (userId: string) => {
     });
     return res.data;
   } catch (error: any) {
-    console.log(error);
     return error.response.data;
   }
 };

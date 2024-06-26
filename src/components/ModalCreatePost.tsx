@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { userStore } from "@/store/userStore";
 import Image from "next/image";
-import ImageGroup from "./utils/ImageGroup";
 import ImageGroupPreview from "./utils/ImageGroupPreview";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiPencilFill } from "react-icons/ri";
@@ -94,8 +93,8 @@ const ModalCreatePost = (props: Props) => {
   return (
     <>
       {!active ? (
-        <div className="absolute flex flex-col items-center w-full h-auto min-h-[120%] bg-black/75 z-[120] top-0 left-0 py-4">
-          <div className=" w-[35rem] h-auto shadow-beautifulunded-[0.5rem]	bg-white mb-10">
+        <div className="absolute flex flex-col items-center w-full h-auto min-h-[120%] bg-black/75 z-[120] top-0 left-0 py-4 ">
+          <div className=" w-[50rem] h-auto shadow-beautifulunded-[0.5rem]	bg-white mb-10 rounded-[8px]">
             <div className="p-2 pt-4 flex items-center w-full justify-center relative">
               <p className="text-[1.5rem] font-bold">Tạo bài viết</p>
               <button
@@ -116,7 +115,7 @@ const ModalCreatePost = (props: Props) => {
               </button>
             </div>
             <div className="border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem]"></div>
-            <form className="flex flex-col items-center">
+            <div className="flex flex-col items-center">
               <div className="w-full h-[60px] cursor-pointer flex items-center gap-2 p-2  mb-2">
                 <div className="w-[50px] h-[50px]">
                   <Image
@@ -128,13 +127,14 @@ const ModalCreatePost = (props: Props) => {
                     className="cursor-pointer rounded-full  h-full"
                   />
                 </div>
-                <div className="flex flex-col  justify-center items-center">
+                <div className="flex flex-col  justify-center">
                   <p className="font-bold text-[1.3rem] text-slate-800 mr-[1rem]">
-                    {user?.username}
+                    {user?.displayName ? user?.displayName : user?.username}
                   </p>
                   <select
-                    className="flex items-center justify-center bg-[#E8E5ED] rounded-[8px]  text-[0.8rem] font-bold p-2 "
+                    className="flex items-center justify-center bg-[#E8E5ED] rounded-[8px] w-[70%] text-[0.8rem] font-bold p-2 "
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      e.preventDefault();
                       setPrivacy(e.target.value);
                     }}
                   >
@@ -143,7 +143,7 @@ const ModalCreatePost = (props: Props) => {
                   </select>
                 </div>
                 {files.length > 0 && (
-                  <div className="flex gap-2 ml-[5rem]">
+                  <div className="flex gap-2 ml-[15rem]">
                     <button
                       className="flex items-center justify-center bg-gray-100
                      hover:bg-gray-300 w-[120px] h-[50px] gap-1 rounded-[12px] cursor-pointer p-2"
@@ -172,6 +172,7 @@ const ModalCreatePost = (props: Props) => {
                       className="hidden"
                       multiple
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        e.preventDefault();
                         handleChangeFile(e);
                       }}
                     />
@@ -219,6 +220,7 @@ const ModalCreatePost = (props: Props) => {
                     className="hidden"
                     multiple
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      e.preventDefault();
                       handleChangeFile(e);
                     }}
                   />
@@ -239,6 +241,7 @@ const ModalCreatePost = (props: Props) => {
                     className="hidden"
                     multiple
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      e.preventDefault();
                       handleChangeFile(e);
                     }}
                   />
@@ -264,7 +267,7 @@ const ModalCreatePost = (props: Props) => {
                   "Đăng bài"
                 )}
               </button>
-            </form>
+            </div>
           </div>
         </div>
       ) : (

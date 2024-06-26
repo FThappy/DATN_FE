@@ -21,7 +21,7 @@ const DiscussContainer = (props: Props) => {
   return (
     <div
       className={`w-full bg-[#f1eff4d1] pr-[3rem] ${
-        open && `max-h-screen overflow-hidden`
+        open && `max-h-[10rem] overflow-hidden`
       }`}
     >
       <div className="p-4 shadow-beautiful rounded-[0.5rem]	bg-white ">

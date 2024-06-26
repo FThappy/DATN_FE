@@ -1,15 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { BiLike } from "react-icons/bi";
-import { FaRegComment } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 import { PiShareFatLight } from "react-icons/pi";
 import { PostProps } from "@/utils/typePost";
 import { differenceInHours, differenceInDays } from "date-fns";
-import { getUserPublic } from "@/actions/getInfoUserPublic";
 import toastifyUtils from "@/utils/toastify";
-import { userStore } from "@/store/userStore";
 import Readmore from "@/components/utils/Readmore";
-import ImageGroup from "@/components/utils/ImageGroup";
 import Image from "next/image";
 import { User } from "@/utils/typeAuth";
 import { FaTrashCan } from "react-icons/fa6";
@@ -28,6 +23,13 @@ import { deletePost } from "@/actions/deletePost";
 import UpdatePost from "@/components/UpdatePost";
 import ModalPost from "@/components/ModalPost";
 import DeleteSure from "@/components/DeleteSure";
+import SharePost from "@/components/social/SharePost";
+import ShareEvent from "@/components/social/ShareEvent";
+import ShareProject from "@/components/social/ShareProject";
+import LikeContainer from "@/components/LikeContainer";
+import { getTotalLike } from "@/actions/getTotalLike";
+import ModalUpdateSharePost from "@/components/ModalUpdateSharePost";
+import ImageContainer from "@/components/utils/ImageContainer";
 type Props = {
   post: PostProps;
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>;
@@ -43,6 +45,8 @@ const PostProfile = (props: Props) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const [openPopover, setOpenPopover] = useState(false);
+
+  const [totalLike, setTotalLike] = useState<number>(0);
 
   const removePost = (index: number) => {
     setPosts((prev: PostProps[]) => {
@@ -76,6 +80,22 @@ const PostProfile = (props: Props) => {
       toastifyUtils("error", "Lỗi server");
     }
   };
+
+  useEffect(() => {
+    const totalLike = async () => {
+      try {
+        const res = await getTotalLike(post._id);
+        if (res.code === 0) {
+          console.log(res);
+          setTotalLike(res.total);
+        }
+      } catch (error) {
+        console.log(error);
+        toastifyUtils("error", "Lỗi server");
+      }
+    };
+    totalLike();
+  }, [post._id]);
 
   return (
     <div className="py-4 shadow-beautiful bg-white rounded-[0.5rem] mt-4">
@@ -120,13 +140,23 @@ const PostProfile = (props: Props) => {
               </div>
             </PopoverTrigger>
             <PopoverContent className="mr-[12rem] p-1 w-[18rem] px-4">
-              <UpdatePost
-                post={post}
-                user={user}
-                index={index}
-                setPosts={setPosts}
-                setOpenPopover={setOpenPopover}
-              />
+              {!post.typeShare ? (
+                <UpdatePost
+                  post={post}
+                  user={user}
+                  index={index}
+                  setPosts={setPosts}
+                  setOpenPopover={setOpenPopover}
+                />
+              ) : (
+                <ModalUpdateSharePost
+                  post={post}
+                  user={user}
+                  index={index}
+                  setPosts={setPosts}
+                  setOpenPopover={setOpenPopover}
+                />
+              )}
               <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
                 <DialogTrigger className="w-full">
                   <button className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-1  rounded-[0.5rem] mt-1 ">
@@ -147,7 +177,17 @@ const PostProfile = (props: Props) => {
         </div>
       </div>
       {post.document && <Readmore documentation={post.document} />}
-      {post.img.length > 0 && <ImageGroup listUrl={post.img} />}
+      {post.typeShare ? (
+        post.typeShare === "post" ? (
+          <SharePost itemId={post?.linkItem} />
+        ) : post.typeShare === "event" ? (
+          <ShareEvent itemId={post?.linkItem} />
+        ) : (
+          <ShareProject itemId={post?.linkItem} />
+        )
+      ) : (
+        post.img.length > 0 && <ImageContainer postImg={post.img} />
+      )}
       <div className="flex items-center gap-2 mt-4 px-4">
         <Image
           src="/like.png"
@@ -157,15 +197,19 @@ const PostProfile = (props: Props) => {
           width={20}
           className="cursor-pointer"
         />
-        <p className=" w-[200px] text-gray-400 cursor-pointer">100</p>
+        <p className=" w-[200px] text-gray-400 cursor-pointer">{totalLike}</p>
       </div>
       <div className="px-4">
         <div className=" border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem] "></div>
       </div>
       <div className="flex items-center justify-between w-full px-4">
-        <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
-          <BiLike size={28} color={"#9ca3af"} />
-          <p className="text-gray-400 font-bold text-[1rem]">Thích</p>
+        <div className="w-1/3">
+          <LikeContainer
+            itemId={post._id}
+            type="post"
+            totalLike={totalLike}
+            setTotalLike={setTotalLike}
+          />
         </div>
         <div className="w-1/3">
           <ModalPost
@@ -174,6 +218,8 @@ const PostProfile = (props: Props) => {
             userImg={user.img}
             userId={user._id}
             displayName={user.displayname}
+            totalLike={totalLike}
+            setTotalLike={setTotalLike}
           />
         </div>
         <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">

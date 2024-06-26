@@ -1,16 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { User } from "@/utils/typeAuth";
 import { GoPersonAdd } from "react-icons/go";
-import BtnHeader from './BtnHeader';
+import BtnHeader from "./BtnHeader";
+import toastifyUtils from "@/utils/toastify";
+import { getTotalLike } from "@/actions/getTotalLike";
+import LikeContainer from "@/components/LikeContainer";
+import { FaMessage } from "react-icons/fa6";
+import { boxChatStore, State } from "@/store/boxChatStore";
 
 type Props = {
   user: User;
 };
 
 const HeadForeignInfo = (props: Props) => {
-
   const { user } = props;
 
+  const [totalLike, setTotalLike] = useState<number>(0);
+
+  const updateBoxChat = boxChatStore((state: State) => state?.updateBoxChat);
+
+  useEffect(() => {
+    const totalLike = async () => {
+      try {
+        const res = await getTotalLike(user._id);
+        if (res.code === 0) {
+          console.log(res);
+          setTotalLike(res.total);
+        }
+      } catch (error) {
+        console.log(error);
+        toastifyUtils("error", "Lỗi server");
+      }
+    };
+    totalLike();
+  }, [user._id]);
 
   return (
     <>
@@ -37,11 +60,29 @@ const HeadForeignInfo = (props: Props) => {
           </p>
         </div>
         <div className="flex gap-2 justify-center items-center mr-4">
-             <BtnHeader user ={user}/>
+          <button
+            className="flex gap-2 justify-center items-center p-2 bg-sky-400 w-[15rem] rounded-[6px] cursor-pointer h-[2.5rem] hover:bg-sky-600"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              updateBoxChat(user._id, "person", undefined);
+            }}
+          >
+            <FaMessage size={24} color="white" />
+            <div className="flex justify-center gap-2 font-bold text-[1rem] text-white">
+              Nhắn tin
+            </div>
+          </button>
+          <BtnHeader user={user} />
+          <LikeContainer
+            itemId={user._id}
+            type="user"
+            totalLike={totalLike}
+            setTotalLike={setTotalLike}
+          />
         </div>
       </div>
     </>
   );
-}
+};
 
-export default HeadForeignInfo
+export default HeadForeignInfo;

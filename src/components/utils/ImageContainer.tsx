@@ -1,22 +1,35 @@
 import React from 'react'
 import Image from "next/image";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel';
 
 
-const ImageContainerPreview = ({file,index}: {file:string, index:number}) => {
+const ImageContainer = ({postImg}: {postImg:string[]}) => {
   return (
-    <div
-      key={index}
-      className="h-full flex items-center justify-center rounded-xl relative overflow-hidden group m-1"
-    >
-      <img
-        src={file}
-        alt="image"
-        // fill={true}
-        // sizes="(min-width: 1280px) 420px, (min-width: 1040px) calc(12.73vw + 118px), (min-width: 800px) 33.18vw, (min-width: 540px) 50vw, calc(100vw - 16px)"
-        className="w-full h-full group-hover:opacity-75 cursor-pointer "
-      />
-    </div>
+        postImg.length > 0 && (
+          <Carousel>
+            <CarouselContent className="w-full desktop:h-[35rem] laptop:h-[30rem] ml-0 pl-0">
+              {postImg.map((url, index) => (
+                <CarouselItem key={index} className="ml-0 pl-0 relative flex w-full items-center justify-center">
+                  <img
+                    src={url}
+                    alt="image"
+                    className="w-auto max-w-full desktop:h-[32rem] laptop:h-[27rem]  cursor-pointer object-fit rounded-[8px]"
+                    loading="lazy"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {postImg.length > 1 ? (
+              <>
+                <CarouselPrevious className="left-4" />
+                <CarouselNext className="right-4" />
+              </>
+            ) : (
+              <></>
+            )}
+          </Carousel>
+        )
   );
 }
 
-export default ImageContainerPreview
+export default ImageContainer

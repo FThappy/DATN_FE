@@ -52,7 +52,6 @@ const BtnJoinEvent = (props: Props) => {
     };
     if (!userId) {
       setPending(false);
-
       return toastifyUtils(
         "warning",
         "Bạn phải đăng nhập để thực hiện chức năng này"

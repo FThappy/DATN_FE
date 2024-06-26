@@ -20,7 +20,7 @@ const RegisterPage = () => {
   const updateInforRegister = authStore(
     (state: any) => state.updateInforRegister
   );
-  const updateEmail = authStore((state: any) => state.updateEmail)
+  const updateEmail = authStore((state: any) => state.updateEmail);
   const router = useRouter();
   const [inputs, setInputs] = useState<InputUserRegister>({
     username: "",
@@ -80,7 +80,7 @@ const RegisterPage = () => {
       });
     }
     if (!checkValidGmail(inputs.email)) {
-      return toastifyUtils("warning","Định dạnh email không hợp lệ")
+      return toastifyUtils("warning", "Định dạnh email không hợp lệ");
     }
     if (!checkValidPhoneNumber(inputs.phone)) {
       return toast.warning("Định dạng phone không hợp lệ", {
@@ -114,11 +114,13 @@ const RegisterPage = () => {
       updateInforRegister(dataSend);
       updateEmail(inputs.email);
       if (res && res.code === 2) {
-      return toastifyUtils("warning","Định dạnh email không hợp lệ")
-
+        return toastifyUtils("warning", "Định dạnh email không hợp lệ");
       }
-      if(res && res.code===6){
-        return toastifyUtils("warning","Email này đã được sử dụng")
+      if (res && res.code === 3) {
+        return toastifyUtils("warning", "Tên đăng nhập đã tồn tại");
+      }
+      if (res && res.code === 6) {
+        return toastifyUtils("warning", "Email này đã được sử dụng");
       }
       router.push("/otp");
     } catch (error) {

@@ -1,45 +1,39 @@
 import React from "react";
 import Image from "next/image";
-import ImageContainerPreview from "./ImageContainerPreview";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 const ImageGroupPreview = ({ listUrl }: { listUrl: (File | string)[] }) => {
-  if (listUrl.length >= 6) {
     return (
-      <section className=" my-3 grid grid-cols-gallery  grid-rows-galleryRow auto-rows-64  h-[30rem]  relative">
-        {listUrl.slice(0, 6).map((file, index) => (
-          <ImageContainerPreview file={file} index={index} key={index} />
-        ))}
-        {listUrl.length -6 > 0  &&   <div
-          className="absolute flex items-center justify-center w-[31.8%] bg-black/50 z-[40] h-[48.5%] m-1 bottom-[0] right-[0]
-           text-white font-bold text-[2.4rem] cursor-pointer rounded-[12px]"
-        >
-          + {listUrl.length - 6}
-        </div>}
-       
-      </section>
+      listUrl.length > 0 && (
+        <Carousel>
+          <CarouselContent className="w-full desktop:h-[35rem] laptop:h-[30rem] ml-0 pl-0">
+            {listUrl.map((file, index) => (
+              <CarouselItem
+                key={index}
+                className="ml-0 pl-0 relative flex w-full items-center justify-center"
+              >
+                <Image
+                  src={
+                    typeof file === "string" ? file : URL.createObjectURL(file)
+                  }
+                  alt="image"
+                  fill={true}
+                  sizes="(min-width: 1280px) 278px, (min-width: 1040px) calc(12.73vw + 118px), (min-width: 800px) 33.18vw, (min-width: 540px) 50vw, calc(100vw - 16px)"
+                  className=" group-hover:opacity-75 cursor-pointer object-fit rounded-[8px]"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {listUrl.length > 1 ? (
+            <>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </>
+          ) : (
+            <></>
+          )}
+        </Carousel>
+      )
     );
-  }
-  if (listUrl.length < 6 && listUrl.length >= 4) {
-    return (
-      <section className=" my-3 grid grid-cols-gallery  grid-rows-galleryRow auto-rows-64  h-[30rem]  relative">
-        {listUrl.slice(0, 3).map((file, index) => (
-          <ImageContainerPreview file={file} index={index} key={index} />
-        ))}
-        <div
-          className="absolute flex items-center justify-center w-[31.8%] bg-black/50 z-[40] h-[98.5%] m-1 bottom-[0] right-[0]
-           text-white font-bold text-[2.4rem] cursor-pointer rounded-[12px]"
-        >
-          + {listUrl.length - 3}
-        </div>
-      </section>
-    );
-  }
-  return (
-    <section className=" my-1 grid grid-cols-gallery  grid-rows-galleryRow auto-rows-64  h-[30rem]  relative">
-      {listUrl.map((file, index) => (
-        <ImageContainerPreview file={file} index={index} key={index} />
-      ))}
-    </section>
-  );
 };
 
 export default ImageGroupPreview;

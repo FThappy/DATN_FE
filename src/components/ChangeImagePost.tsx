@@ -16,7 +16,7 @@ type Props = {
 const ChangeImagePost = (props: Props) => {
   const { files, setFiles, removeFile, handleChangeFile } = props;
   return (
-    <div className="absolute flex flex-col items-center w-full h-[120%] bg-black/75 z-50 top-0 left-0 py-4">
+    <div className="absolute flex flex-col items-center w-full h-[120%] bg-black/75 z-[100000] top-0 left-0 py-4">
       <div className=" w-[80rem] h-[40rem] shadow-beautiful rounded-[0.5rem]	bg-white ">
         <div className="p-2 pt-4 flex items-center w-full justify-center relative">
           <p className="text-[1.5rem] font-bold">Chỉnh sửa ảnh</p>

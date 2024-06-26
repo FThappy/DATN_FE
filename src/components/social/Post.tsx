@@ -1,21 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { BiLike } from "react-icons/bi";
-import { FaRegComment } from "react-icons/fa";
-import { PiShareFatLight } from "react-icons/pi";
-import ImageGroup from "../utils/ImageGroup";
-import { img1, img2, img3, img4, img5, img6 } from "@/lib/placeholder-data";
 import { PostProps } from "@/utils/typePost";
 import { differenceInHours, differenceInDays } from "date-fns";
 import Readmore from "../utils/Readmore";
-import { getUserPublic } from "@/actions/getInfoUserPublic";
 import toastifyUtils from "@/utils/toastify";
 import { userStore } from "@/store/userStore";
 import Link from "next/link";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { FaTrashCan } from "react-icons/fa6";
-import { BiSolidPencil } from "react-icons/bi";
 import { BiSolidCommentError } from "react-icons/bi";
 import { deletePost } from "@/actions/deletePost";
 import { Dialog, DialogContentCustom, DialogTrigger } from "../ui/dialog";
@@ -25,6 +18,14 @@ import ModalPost from "../ModalPost";
 import UpdatePost from "../UpdatePost";
 import { getUser } from "@/actions/getUser";
 import { User } from "@/utils/typeAuth";
+import ModalShare from "../ModalShare";
+import SharePost from "./SharePost";
+import ShareEvent from "./ShareEvent";
+import ShareProject from "./ShareProject";
+import LikeContainer from "../LikeContainer";
+import { getTotalLike } from "@/actions/getTotalLike";
+import ModalUpdateSharePost from "../ModalUpdateSharePost";
+import ImageContainer from "../utils/ImageContainer";
 
 type Props = {
   post: PostProps;
@@ -44,6 +45,8 @@ const Post = (props: Props) => {
 
   const [poster, setPoster] = useState<User>();
 
+  const [totalLike, setTotalLike] = useState<number>(0);
+
   const getPoster = async (): Promise<void> => {
     try {
       const res = await getUser(post.userId);
@@ -61,7 +64,7 @@ const Post = (props: Props) => {
     if (post.userId) {
       getPoster();
     }
-  }, [post.userId]);
+  }, [post?.userId]);
 
   const [pending, setPending] = useState(false);
 
@@ -101,6 +104,25 @@ const Post = (props: Props) => {
       toastifyUtils("error", "Lỗi server");
     }
   };
+  const handleNewSharePost = (newPost: PostProps) => {
+    setPosts((prev) => [newPost, ...prev]);
+  };
+
+  useEffect(() => {
+    const totalLike = async () => {
+      try {
+        const res = await getTotalLike(post._id);
+        if (res.code === 0) {
+          console.log(res);
+          setTotalLike(res.total);
+        }
+      } catch (error) {
+        console.log(error);
+        toastifyUtils("error", "Lỗi server");
+      }
+    };
+    totalLike();
+  }, [post._id]);
 
   return (
     <div className="py-4 shadow-beautiful rounded-[0.5rem]	bg-white mt-4">
@@ -163,13 +185,24 @@ const Post = (props: Props) => {
                 </ReportModal>
               ) : (
                 <>
-                  <UpdatePost
-                    post={post}
-                    user={poster!}
-                    index={index}
-                    setPosts={setPosts}
-                    setOpenPopover={setOpenPopover}
-                  />
+                  {!post.typeShare ? (
+                    <UpdatePost
+                      post={post}
+                      user={poster!}
+                      index={index}
+                      setPosts={setPosts}
+                      setOpenPopover={setOpenPopover}
+                    />
+                  ) : (
+                    <ModalUpdateSharePost
+                      post={post}
+                      user={poster!}
+                      index={index}
+                      setPosts={setPosts}
+                      setOpenPopover={setOpenPopover}
+                    />
+                  )}
+
                   <Dialog
                     open={openDeleteModal}
                     onOpenChange={setOpenDeleteModal}
@@ -211,7 +244,17 @@ const Post = (props: Props) => {
         </div>
       </div>
       {post.document && <Readmore documentation={post.document} />}
-      {post.img.length > 0 && <ImageGroup listUrl={post.img} />}
+      {post.typeShare ? (
+        post.typeShare === "post" ? (
+          <SharePost itemId={post?.linkItem} />
+        ) : post.typeShare === "event" ? (
+          <ShareEvent itemId={post?.linkItem} />
+        ) : (
+          <ShareProject itemId={post?.linkItem} />
+        )
+      ) : (
+        post.img.length > 0 && <ImageContainer postImg={post.img} />
+      )}
       <div className="flex items-center gap-2 mt-4 px-4">
         <Image
           src="/like.png"
@@ -221,16 +264,21 @@ const Post = (props: Props) => {
           width={20}
           className="cursor-pointer"
         />
-        <p className=" w-[200px] text-gray-400 cursor-pointer">100</p>
+        <p className=" w-[200px] text-gray-400 cursor-pointer">{totalLike}</p>
       </div>
       <div className="px-4">
         <div className=" border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem] "></div>
       </div>
       <div className="flex items-center justify-between w-full px-4">
-        <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
-          <BiLike size={28} color={"#9ca3af"} />
-          <p className="text-gray-400 font-bold text-[1rem]">Thích</p>
+        <div className="w-1/3">
+          <LikeContainer
+            itemId={post._id}
+            type="post"
+            totalLike={totalLike}
+            setTotalLike={setTotalLike}
+          />
         </div>
+
         {/* <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
           <FaRegComment size={28} color={"#9ca3af"} />
           <p className="text-gray-400 font-bold text-[1rem] ">Bình Luận</p>
@@ -241,12 +289,17 @@ const Post = (props: Props) => {
             userName={poster?.username}
             userImg={poster?.img}
             userId={poster?._id}
-            displayName={user?.displayname}
+            displayName={poster?.displayname}
+            totalLike={totalLike}
+            setTotalLike={setTotalLike}
           />
         </div>
-        <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
-          <PiShareFatLight size={28} color={"#9ca3af"} />
-          <p className="text-gray-400 font-bold text-[1rem]">Chia Sẻ</p>
+        <div className="w-1/3">
+          <ModalShare
+            itemId={post._id}
+            handleNewSharePost={handleNewSharePost}
+            type="post"
+          />
         </div>
       </div>
     </div>

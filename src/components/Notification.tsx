@@ -86,16 +86,16 @@ const Notification = (props: Props) => {
     socket.emit("join-private-notification");
   }, []);
   useEffect(() => {
-    const handleNewFriend = (newNotification: NotificationProps) => {
+    const handleNew = (newNotification: NotificationProps) => {
       console.log(newNotification);
       setListNewNotifications((prev) => [newNotification, ...prev]);
       setNumberNotifications((prev) => {
         return prev + 1;
       });
     };
-    socket.on("notification-req-friend", handleNewFriend);
+    socket.on("notification-req", handleNew);
     return () => {
-      socket.off("notification-req-friend");
+      socket.off("notification-req");
     };
   }, []);
 
@@ -150,6 +150,47 @@ const Notification = (props: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleUpdateNotification = (newNotification: NotificationProps) => {
+      setListNewNotifications((prev) =>
+        prev.map((notification) =>
+          notification._id === newNotification._id
+            ? newNotification
+            : notification
+        )
+      );
+      setListNotifications((prev) =>
+        prev.map((notification) =>
+          notification._id === newNotification._id
+            ? newNotification
+            : notification
+        )
+      );
+      console.log("a")
+      setNumberNotifications((prev) => {
+        if (
+          listNewNotifications.findIndex(
+            (item) => item._id === newNotification._id
+          )
+        ) {
+          return prev + 1;
+        }
+        if (
+          listNotifications.findIndex(
+            (item) => item._id === newNotification._id
+          )
+        ) {
+          return prev + 1;
+        }
+        return prev;
+      });
+    };
+    socket.on("update-notification", handleUpdateNotification);
+    return () => {
+      socket.off("update-notification");
+    };
+  }, []);
+
   const handleChangeRead = (
     newNotification: NotificationProps,
     type: string
@@ -196,7 +237,7 @@ const Notification = (props: Props) => {
           )}
         </div>
       </PopoverTrigger>
-      <PopoverContent className="mr-2 w-[25rem] max-h-[calc(100vh-8rem)] min-h-[calc(100vh-8rem)] overflow-y-scroll z-[100]">
+      <PopoverContent className="mr-2 w-[25rem] max-h-[calc(80vh-8rem)] min-h-[calc(80vh-8rem)] overflow-y-scroll z-[100]">
         <div className="flex flex-col gap-2">
           <p className="font-bold text-[1.2rem]">Danh sách thông báo :</p>
           {listNewNotifications.length > 0 &&

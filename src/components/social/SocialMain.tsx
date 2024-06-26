@@ -37,7 +37,7 @@ const SocialMain = () => {
 
   return (
     <div
-      className={`w-1/2 bg-[#f1eff4d1] pr-[3rem] ${
+      className={`w-1/2  pr-[3rem] ${
         open && `max-h-screen overflow-hidden`
       }`}
     >

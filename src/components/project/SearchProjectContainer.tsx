@@ -24,6 +24,8 @@ type Props = {
   ) => void;
   handleSearch: () => Promise<Id | undefined>;
   handleQSearch: (page: number) => Promise<Id | undefined>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPageSearch: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const SearchProjectContainer = (props: Props) => {
@@ -39,12 +41,13 @@ const SearchProjectContainer = (props: Props) => {
     handlePushParams,
     handleSearch,
     handleQSearch,
+    setPage,
+    setPageSearch,
   } = props;
 
   useEffect(() => {
     if (qType && qType.length >= 0) {
       handlePushParams(qType, qSearch, qSort, qCity, false);
-      handleQSearch(0);
     }
   }, [qType]);
 
@@ -56,6 +59,8 @@ const SearchProjectContainer = (props: Props) => {
           e.preventDefault();
           handlePushParams(qType, qSearch, qSort, qCity, true);
           handleQSearch(0);
+          setPageSearch(0);
+          setPage(0);
         }}
       >
         <IoIosSearch size={24} color="gray" />
@@ -71,13 +76,21 @@ const SearchProjectContainer = (props: Props) => {
         />
       </form>
       <div className="flex gap-2">
-        <TypeInputProjectSearch type={qType} setType={setQType} width={35} />
+        <TypeInputProjectSearch
+          type={qType}
+          setType={setQType}
+          width={35}
+          setPageSearch={setPageSearch}
+          setPage={setPage}
+        />
         <select
           className="flex shadow-beautiful h-[2.5rem] bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
             setQCity(e.target.value);
             handlePushParams(qType, qSearch, qSort, e.target.value, false);
+            setPageSearch(0);
+            setPage(0);
           }}
           defaultValue={qCity}
         >
@@ -94,6 +107,8 @@ const SearchProjectContainer = (props: Props) => {
             e.preventDefault();
             setQSort(e.target.value);
             handlePushParams(qType, qSearch, e.target.value, qCity, false);
+            setPageSearch(0);
+            setPage(0);
           }}
           defaultValue={qSort}
         >

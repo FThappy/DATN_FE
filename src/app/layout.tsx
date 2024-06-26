@@ -4,6 +4,8 @@ import "./globals.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NextTopLoader from "nextjs-toploader";
+import UserNewTab from "@/components/UserNewTab";
+import BoxChat from "@/components/BoxChat";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -23,9 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${robotoCondensed.className} antialiased`}>
         <div>
+          <UserNewTab />
           <NextTopLoader showSpinner={false} />
           {children}
           <ToastContainer />
+          <BoxChat />
         </div>
       </body>
     </html>

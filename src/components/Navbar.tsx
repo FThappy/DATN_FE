@@ -15,6 +15,9 @@ import { logout } from "@/actions/logout";
 import { MdEventAvailable } from "react-icons/md";
 import MessengerTopBar from "./MessengerTopBar";
 import Notification from "./Notification";
+import { socket } from "@/utils/requestMethod";
+import { boxChatStore } from "@/store/boxChatStore";
+import { usePathname } from "next/navigation";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -22,6 +25,10 @@ const inter = Inter({ subsets: ["latin"] });
 const Navbar = () => {
   const user = userStore((state: any) => state?.user);
   const deleteUser = userStore((state: any) => state?.deleteUser);
+  const deleteAll = boxChatStore((state: any) => state?.deleteAll);
+  const pathname = usePathname();
+
+
 
   const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -31,7 +38,10 @@ const Navbar = () => {
         return toastifyUtils("warning", "Không xác thực");
       }
       deleteUser();
+      deleteAll();
+      socket.close();
     } catch (error) {
+      console.log(error)
       return toastifyUtils("error", "Lỗi server");
     }
   };
@@ -64,7 +74,7 @@ const Navbar = () => {
         <div className="h-[24px] w-[1px] border-r-2 border-slate-500	"></div>
         {user ? (
           <div className="flex gap-2 items-center">
-            <MessengerTopBar />
+            {pathname !== "/message" && <MessengerTopBar />}
             <Notification />
             <Popover>
               <PopoverTrigger asChild>
@@ -109,7 +119,10 @@ const Navbar = () => {
                     </button>
                   </Link>
                 </div>
-                <Link href={`/profile/change-info`} className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 ">
+                <Link
+                  href={`/profile/change-info`}
+                  className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-2 rounded-[0.8rem] mt-2 "
+                >
                   <div className="w-[40px] h-[40px] rounded-full p-2 bg-gray-300 flex justify-center items-center">
                     <Image
                       src="/gear.png"

@@ -31,6 +31,7 @@ const NotificationAddFriend = (props: Props) => {
       return;
     }
     try {
+      setPending(false);
       socket.emit("accept-req-friend", sender._id);
       // Cần thềm một hàm socket ở notification
     } catch (error) {

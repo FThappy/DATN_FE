@@ -9,24 +9,26 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogContentCustom,
   DialogTrigger,
 } from "./ui/dialog";
-import { BiLike, BiSolidPencil } from "react-icons/bi";
 import Image from "next/image";
-import { FaRegComment, FaTrashCan } from "react-icons/fa6";
+import { FaRegComment } from "react-icons/fa6";
 import { PostProps } from "@/utils/typePost";
 import { differenceInDays, differenceInHours } from "date-fns";
 import { userStore } from "@/store/userStore";
 import toastifyUtils from "@/utils/toastify";
 import Readmore from "./utils/Readmore";
-import ImageGroup from "./utils/ImageGroup";
 import { PiShareFatLight } from "react-icons/pi";
 import CommentPostContainer from "./CommentPostContainer";
 import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { CommentProps } from "@/utils/typeComment";
 import { socket } from "@/utils/requestMethod";
 import { TiDelete } from "react-icons/ti";
+import SharePost from "./social/SharePost";
+import ShareEvent from "./social/ShareEvent";
+import ShareProject from "./social/ShareProject";
+import LikeContainer from "./LikeContainer";
+import ImageContainer from "./utils/ImageContainer";
 
 type Props = {
   post: PostProps;
@@ -34,10 +36,12 @@ type Props = {
   userImg: string | undefined;
   userId: string | undefined;
   displayName: string | undefined;
+  totalLike: number;
+  setTotalLike: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const ModalPost = (props: Props) => {
-  const { post, userName, userImg, userId , displayName } = props;
+  const { post, userName, userImg, userId , displayName , totalLike , setTotalLike } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -118,6 +122,8 @@ const ModalPost = (props: Props) => {
     }
   };
 
+
+
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -137,7 +143,7 @@ const ModalPost = (props: Props) => {
         >
           <div className="pt-1 flex items-center w-full justify-center relative">
             {userName && (
-              <p className="text-[1.5rem] font-bold">Bài viết của {userName}</p>
+              <p className="text-[1.5rem] font-bold">Bài viết của {displayName ? displayName : userName}</p>
             )}
             <DialogClose asChild>
               <button
@@ -196,7 +202,17 @@ const ModalPost = (props: Props) => {
             </div>
             {post.document && <Readmore documentation={post.document} />}
             <div className="w-full">
-              {post.img.length > 0 && <ImageGroup listUrl={post.img} />}
+              {post.typeShare ? (
+                post.typeShare === "post" ? (
+                  <SharePost itemId={post?.linkItem} />
+                ) : post.typeShare === "event" ? (
+                  <ShareEvent itemId={post?.linkItem} />
+                ) : (
+                  <ShareProject itemId={post?.linkItem} />
+                )
+              ) : (
+                post.img.length > 0 && <ImageContainer postImg={post.img} />
+              )}
             </div>
             <div className="flex items-center gap-2 mt-1 px-4 w-full">
               <Image
@@ -207,15 +223,19 @@ const ModalPost = (props: Props) => {
                 width={20}
                 className="cursor-pointer"
               />
-              <p className=" w-[200px] text-gray-400 cursor-pointer">100</p>
+              <p className=" w-[200px] text-gray-400 cursor-pointer">{totalLike}</p>
             </div>
             <div className="px-4 w-full ">
               <div className=" border-slate-300 w-full h-[1px] border-t-[1px] mt-[0.65rem] mb-1 "></div>
             </div>
             <div className="flex items-center justify-between w-full px-4">
-              <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
-                <BiLike size={28} color={"#9ca3af"} />
-                <p className="text-gray-400 font-bold text-[1rem]">Thích</p>
+              <div className="w-1/3">
+                <LikeContainer
+                  itemId={post._id}
+                  type="post"
+                  totalLike={totalLike}
+                  setTotalLike={setTotalLike}
+                />
               </div>
               <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
                 <FaRegComment size={28} color={"#9ca3af"} />

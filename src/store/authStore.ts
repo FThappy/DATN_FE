@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { UserRegister } from '@/utils/typeAuth';
 
 export const authStore = create((set) => ({
   inforRegister: {},
