@@ -31,7 +31,7 @@ export default function RootLayout({
           {children}
           <ToastContainer />
           <BoxChat />
-          {/* <ConfigSocket /> */}
+          <ConfigSocket />
         </div>
       </body>
     </html>
