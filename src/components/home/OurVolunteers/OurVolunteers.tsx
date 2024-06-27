@@ -27,7 +27,6 @@ const OurVolunteers = () => {
         try {
           const res = await getUserLike(3);
           if (res.code === 0) {
-            console.log(res.data);
             setListUser(res.data);
           }
         } catch (error) {

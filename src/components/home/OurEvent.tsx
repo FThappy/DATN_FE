@@ -26,7 +26,6 @@ const OurEvent = () => {
       try {
         const res = await getEventLike(6);
         if (res.code === 0) {
-          console.log(res.data);
           setListEvent(res.data);
         }
       } catch (error) {

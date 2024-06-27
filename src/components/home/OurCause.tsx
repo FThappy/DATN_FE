@@ -27,7 +27,6 @@ const OurCause = () => {
       try {
         const res = await getProjectLike(3);
         if (res.code === 0) {
-          console.log(res.data)
           setListProject(res.data);
         }
       } catch (error) {

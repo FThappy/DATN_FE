@@ -174,6 +174,7 @@ const UpdateProject = (props: Props) => {
           JSON.stringify(imageContentRemoved)
         );
       }
+      formData.append("tmpImg", JSON.stringify(tmpImg));
       if (fileRemove.length > 0) {
         formData.append("imageRemove", JSON.stringify(fileRemove));
       }
@@ -242,9 +243,7 @@ const UpdateProject = (props: Props) => {
       }
     });
   }, [contentJSON, tmpImg]);
-  console.log(tmpImg);
-  console.log(imageContent);
-  console.log(imageContentRemoved);
+
 
   return (
     <div className="flex flex-col gap-1 items-center bg-[#f1eff4d1]  ">

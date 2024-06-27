@@ -90,6 +90,7 @@ const Page = (props: Props) => {
       formData.append("city", city);
       formData.append("description", description);
       formData.append("content", JSON.stringify(contentJSON));
+      formData.append("tmpImg", JSON.stringify(tmpImg));
       if (goal) {
         formData.append("goal", goal.toString());
       }
@@ -151,6 +152,7 @@ const Page = (props: Props) => {
       }
     });
   }, [contentJSON, tmpImg]);
+
   return (
     <div className="flex flex-col gap-1 items-center bg-[#f1eff4d1]  ">
       <p className="text-[1.5rem] font-bold mb-4">Tạo dự án từ thiện cho bạn</p>
