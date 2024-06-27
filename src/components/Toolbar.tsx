@@ -18,6 +18,7 @@ import { BsTextIndentLeft } from "react-icons/bs";
 import { BsTextIndentRight } from "react-icons/bs";
 import JustifyToolbar from './JustifyToolbar';
 import ImageToolbar from './ImageToolBar';
+import LinkToolbar from './LinkToolbar';
 
 type Props = {
   editor: Editor | null;
@@ -146,6 +147,8 @@ const Toolbar = ({ editor, content , imageContent , setImageContent , tmpImg , s
           tmpImg={tmpImg}
           setTmpImg={setTmpImg}
         />
+        <LinkToolbar  editor={editor}
+          content={content}/>
         <button
           onClick={(e) => {
             e.preventDefault();

@@ -8,6 +8,9 @@ import TextAlign from "@tiptap/extension-text-align";
 import ImageResize from "tiptap-extension-resize-image";
 import Image from "@tiptap/extension-image";
 import { useState } from "react";
+import Link from "@tiptap/extension-link";
+import Youtube from "@tiptap/extension-youtube";
+
 
 type Props = {
   content: string;
@@ -36,6 +39,11 @@ const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSO
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      Link,
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+      }),
     ],
     editorProps: {
       attributes: {
@@ -46,6 +54,7 @@ const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSO
     onUpdate: ({ editor, transaction }) => {
       setContentJSON(editor.getJSON());
       handleChange(editor.getHTML());
+      console.log(editor.getJSON());
     },
 
     content: content,

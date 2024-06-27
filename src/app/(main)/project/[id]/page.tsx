@@ -29,7 +29,8 @@ import ModalShareEventProject from "@/components/ModalShareEventProject";
 import { getTotalLike } from "@/actions/getTotalLike";
 import LikeContainer from "@/components/LikeContainer";
 import CreateBy from "@/components/project/CreateBy";
-
+import LinkTiptap from "@tiptap/extension-link";
+import Youtube from "@tiptap/extension-youtube";
 type Props = {};
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -49,6 +50,11 @@ const Page = ({ params }: { params: { id: string } }) => {
         TextAlign.configure({
           types: ["heading", "paragraph"],
         }),
+        LinkTiptap,
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+      }),
       ]);
     }
     return "";
@@ -207,7 +213,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
             <div className="border-slate-300 w-full h-[1px] border-t-[1px] mt-2 mb-2"></div>
-            <div dangerouslySetInnerHTML={{ __html: output }} />
+            <div dangerouslySetInnerHTML={{ __html: output }} className="ProseMirror"/>
             {user && project ? (
               <ProjectCommentContainer user={user} project={project} />
             ) : (

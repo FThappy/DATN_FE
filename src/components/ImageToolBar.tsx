@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { LuHeading2, LuImagePlus } from "react-icons/lu";
 import { Editor } from "@tiptap/react";
@@ -22,6 +22,7 @@ const ImageToolbar = ({
   setTmpImg,
 }: Props) => {
   const [openPopover, setOpenPopover] = useState(false);
+
 
   if (!editor) {
     return null;

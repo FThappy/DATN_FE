@@ -34,6 +34,8 @@ type Props = {
 const PostForeign = (props: Props) => {
   const { post, user } = props;
 
+  const owner = userStore((state: any) => state?.user);
+
   const [openPopover, setOpenPopover] = useState(false);
 
     const [totalLike, setTotalLike] = useState<number>(0);
@@ -139,31 +141,33 @@ const PostForeign = (props: Props) => {
       <div className="px-4">
         <div className=" border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem] "></div>
       </div>
-      <div className="flex items-center justify-between w-full px-4">
-        <div className="w-1/3">
-          <LikeContainer
-            itemId={post._id}
-            type="post"
-            totalLike={totalLike}
-            setTotalLike={setTotalLike}
-          />
+      {owner && (
+        <div className="flex items-center justify-between w-full px-4">
+          <div className="w-1/3">
+            <LikeContainer
+              itemId={post._id}
+              type="post"
+              totalLike={totalLike}
+              setTotalLike={setTotalLike}
+            />
+          </div>
+          <div className="w-1/3">
+            <ModalPost
+              post={post}
+              userName={user.username}
+              userImg={user.img}
+              userId={user._id}
+              displayName={user.displayname}
+              totalLike={totalLike}
+              setTotalLike={setTotalLike}
+            />
+          </div>
+          <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
+            <PiShareFatLight size={28} color={"#9ca3af"} />
+            <p className="text-gray-400 font-bold text-[1rem]">Chia Sẻ</p>
+          </div>
         </div>
-        <div className="w-1/3">
-          <ModalPost
-            post={post}
-            userName={user.username}
-            userImg={user.img}
-            userId={user._id}
-            displayName={user.displayname}
-            totalLike={totalLike}
-            setTotalLike={setTotalLike}
-          />
-        </div>
-        <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
-          <PiShareFatLight size={28} color={"#9ca3af"} />
-          <p className="text-gray-400 font-bold text-[1rem]">Chia Sẻ</p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

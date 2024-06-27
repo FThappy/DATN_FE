@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import PostSkeleton from "../PostSkeleton";
 import Post from "./Post";
+import { userStore } from "@/store/userStore";
+import { getPostPublic } from "@/actions/getPostPublic";
 
 type Props = {
   posts: PostProps[];
@@ -22,9 +24,12 @@ const LoadMore = (props: Props) => {
 
   const { posts, setPosts } = props; // State để lưu trữ danh sách bài đăng
 
+  const user = userStore((state: any) => state?.user);
+
+
   const getListPost = async (): Promise<void> => {
     try {
-      const res = await getPost(page);
+    const res = user ? await getPost(page) : await getPostPublic(page);
       if (res.code === 4) {
         toastifyUtils("error", "Lỗi server");
       }

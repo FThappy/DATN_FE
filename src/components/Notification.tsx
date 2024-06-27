@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import Link from "next/link";
-import Image from "next/image";
-import { MdEventAvailable } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { socket } from "@/utils/requestMethod";
 import toastifyUtils from "@/utils/toastify";
@@ -12,6 +9,7 @@ import { useInView } from "react-intersection-observer";
 import NotificationSkeleton from "./NotificationSkeleton";
 import { getNotifications } from "@/actions/getNotifications";
 import { getTotalNotifications } from "@/actions/getTotalNotification";
+import { userStore } from "@/store/userStore";
 
 type Props = {};
 
@@ -23,6 +21,8 @@ const Notification = (props: Props) => {
   const [page, setPage] = useState<number>(0);
 
   const [end, setEnd] = useState<boolean>(true);
+
+  const user = userStore((state: any) => state?.user);
 
   const [listNewNotifications, setListNewNotifications] = useState<
     NotificationProps[]
@@ -83,8 +83,8 @@ const Notification = (props: Props) => {
     };
   }, []);
   useEffect(() => {
-    socket.emit("join-private-notification");
-  }, []);
+    socket.emit("join-private-notification", user?.id);
+  }, [user]);
   useEffect(() => {
     const handleNew = (newNotification: NotificationProps) => {
       console.log(newNotification);
