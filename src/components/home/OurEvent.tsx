@@ -1,89 +1,137 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Inter, Dancing_Script } from "next/font/google";
 import TextUnderline from "../utils/TextUnderline";
 import { event } from "@/lib/placeholder-data";
+import { ProjectProps } from "@/utils/typeProject";
+import { getEventLike } from "@/actions/getEventLike";
+import toastifyUtils from "@/utils/toastify";
+import { Skeleton } from "../ui/skeleton";
+import { EventProps } from "@/utils/typeEvent";
+import { format } from "date-fns";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
+
+type ItemProps = {
+  event: EventProps;
+  totalLike: number;
+};
 const OurEvent = () => {
+  const [listEvent, setListEvent] = useState<ItemProps[]>([]);
+
+  useEffect(() => {
+    const getItem = async () => {
+      try {
+        const res = await getEventLike(6);
+        if (res.code === 0) {
+          console.log(res.data);
+          setListEvent(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+        return toastifyUtils("error", "Lỗi server");
+      }
+    };
+    getItem();
+  }, []);
   return (
     <div className="w-full  h-[950px] bg-slate-50 flex flex-col justify-center items-center">
       <p className={`${dancing.className} font-bold text-red text-4xl mb-4 `}>
-        Our Event
+        Sự kiện thiện nguyện
       </p>
       <p
         className={`${inter.className} font-bold text-slate-800 text-4xl  mb-8`}
       >
-        Our
+        Sự kiện thiện nguyện
         <TextUnderline
-          chilldren=" Upcoming Event"
+          chilldren=" thiện nguyện "
           width={300}
           top="2.5rem"
-          left="0.6rem"
+          left="0.4rem"
         />
+        sắp tới.
       </p>
       <p
-        className={`${inter.className}  text-neutral-800  w-[40rem] text-[1.3rem] text-center mb-8`}
+        className={`${inter.className}  text-neutral-800  w-[50rem] text-[1.3rem] text-center mb-8`}
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem
-        voluptatem obcaecati consectetur adipisicing
+        Sự kiện thiện nguyện là cách để mọi người, tổ chức và cộng đồng đóng góp
+        và tham gia vào các hoạt động từ thiện nhằm hỗ trợ và cải thiện đời sống
+        của người khác. Đây là dịp để kết nối và lan tỏa những giá trị nhân văn,
+        khuyến khích sự đoàn kết và hỗ trợ lẫn nhau để đạt được mục đích chung
+        của từ thiện
       </p>
       <div className="grid grid-cols-3 gap-4 items-center  justify-center  w-[65rem]">
-        {event.map((item, index) => (
-          <div
-            key={index}
-            className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem] "
-            style={{ backgroundImage: "url(/event6.webp)" }}
-          >
+        {listEvent && listEvent.length > 0 ? (
+          listEvent.map((item, index) => (
             <div
-              className="w-full h-full opacity-[0] hover:opacity-[1] flex flex-col justify-end items-center pb-12 cursor-pointer"
+              key={index}
+              className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem] "
               style={{
-                background:
-                  "linear-gradient(179.98deg,rgba(37,41,47,.613) 15.88%,rgba(248,77,66,.84) 62.28%)",
+                backgroundImage: `${
+                  item?.event?.wallImg?.length > 0
+                    ? `url(${item.event.wallImg[0]})`
+                    : "/bg2.jpg"
+                }`,
               }}
             >
-              <p
-                className="font-semibold
-                 text-white text-[2rem]"
+              <div
+                className="w-full h-full opacity-[0] hover:opacity-[1] flex flex-col justify-end items-center pb-12 cursor-pointer"
+                style={{
+                  background:
+                    "linear-gradient(179.98deg,rgba(37,41,47,.613) 15.88%,rgba(248,77,66,.84) 62.28%)",
+                }}
               >
-                {item.title}
-              </p>
-              <div className="flex w-full justify-center mt-4 gap-4">
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/clock.png"
-                    alt="clock"
-                    loading="lazy"
-                    height={25}
-                    width={25}
-                  />
-                  <p
-                    className="
-                  text-white text-[1.2rem]"
-                  >
-                    {item.time}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/pin.png"
-                    alt="pin"
-                    loading="lazy"
-                    height={25}
-                    width={25}
-                  />
-                  <p
-                    className="
-                     text-white text-[1.2rem]"
-                  >
-                    {item.address}
-                  </p>
+                <p
+                  className="font-semibold
+                 text-white text-[2rem]"
+                >
+                  {item.event.eventName}
+                </p>
+                <div className="flex w-full justify-between p-2">
+                  <div className="flex items-center gap-1">
+                    <Image
+                      src="/clock.png"
+                      alt="clock"
+                      loading="lazy"
+                      height={25}
+                      width={25}
+                    />
+                    <p
+                      className="
+                  text-white text-[1rem] font-medium"
+                    >
+                      {format(new Date(item.event.timeStart), "MMM dd, yyyy")}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Image
+                      src="/pin.png"
+                      alt="pin"
+                      loading="lazy"
+                      height={25}
+                      width={25}
+                    />
+                    <p
+                      className="
+                     text-white text-[1rem] font-medium"
+                    >
+                      {item.event.city}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <>
+            {" "}
+            <Skeleton className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem]" />
+            <Skeleton className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem]" />
+            <Skeleton className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem]" />
+          </>
+        )}
       </div>
     </div>
   );

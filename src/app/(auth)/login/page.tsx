@@ -109,7 +109,7 @@ const LoginPage = () => {
           <p className="text-white 	">Hoặc</p>
           <div className="border-slate-300 w-[11rem] h-[10px] border-t-[1px]  mt-[0.65rem]"></div>
         </div>
-        <div className="w-[25rem] flex gap-4">
+        {/* <div className="w-[25rem] flex gap-4">
           <button className="bg-white w-[50%] p-1 rounded flex justify-center items-center text-gray-400 gap-2 hover:bg-slate-500/80">
             <Image
               src="/google.png"
@@ -132,7 +132,7 @@ const LoginPage = () => {
             />
             Facebook
           </button>
-        </div>
+        </div> */}
       </form>
       <p className="text-white text-center mt-8">Bạn chưa có tài khoản?</p>
       <Link

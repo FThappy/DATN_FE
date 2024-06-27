@@ -13,7 +13,7 @@ export default function TextUnderline ({chilldren,width,top,left}: {chilldren : 
         loading="lazy"
         height={10}
         width={width}
-        className="absolute "
+        className="absolute"
         style={{
           left: `${left}`,
           top: `${top}`,

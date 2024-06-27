@@ -22,7 +22,7 @@ const TabBarWhyChooseUs = () => {
       </div>
       <p
         className={`rounded 
-         text-white mt-4  text-[1.2rem] pr-10 h-[100px]`}
+         text-white mt-4  text-[1.2rem] pr-8 h-[100px]`}
       >
         {MVV[idActive].description}
       </p>

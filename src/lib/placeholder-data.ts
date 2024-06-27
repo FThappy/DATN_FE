@@ -43,18 +43,18 @@ export const causes = [
 
 export const MVV = [
   {
-    title: "Mission",
+    title: "Nhiệm vụ",
     description:
-      "Empower communities through compassionate action and sustainable solutions.",
+      "Mạng xã hội từ thiện là nơi kết nối và khuyến khích cộng đồng tham gia vào các hoạt động nhân đạo và từ thiện, nhằm giúp đỡ những người có hoàn cảnh khó khăn, cải thiện chất lượng cuộc sống và xây dựng cộng đồng vững mạnh. Mạng xã hội từ thiện cũng nỗ lực tăng cường nhận thức cộng đồng về các vấn đề xã hội và khuyến khích sự đóng góp từ các cá nhân, tổ chức và doanh nghiệp để đạt được tác động tích cực lớn hơn đối với xã hội.",
   },
   {
-    title: "Vission",
+    title: "Tầm nhìn",
     description:
-      "A world where every individual has the opportunity to thrive, supported by the collective generosity of humanity.",
+      "Tầm nhìn của chúng tôi là xây dựng một cộng đồng toàn cầu, nơi mọi người cùng nhau hỗ trợ và lan tỏa lòng nhân ái. Chúng tôi cam kết tạo ra một sự kết nối mạnh mẽ giữa các cá nhân, tổ chức và doanh nghiệp để giải quyết các vấn đề xã hội, mang lại sự thay đổi và tiến bộ đáng kể cho cộng đồng và thế giới.",
   },
   {
-    title: "Value",
-    description: "Compassion, Integrity, Equity, Collaboration.",
+    title: "Giá trị",
+    description: "Tính minh bạch và trung thực, Sự tận tâm và tôn trọng, Hiện quả và tác động, Sự đổi mới và khuyến khích, Sự hợp tác và kết nối, Sự công bằng và khả năng tiếp cận, Sự trách nhiệm và bền vững .",
   },
 ];
 export const ourcauses = [
@@ -96,19 +96,19 @@ export const logoSponsors = ['client-logo1', 'client-logo2','client-logo3','clie
 
 export const tabFAQ = [
   {
-    title: "How Can I Get Help?",
+    title: "Tạo và chia sẻ mục tiêu gây quý",
     description:
-      "Lorem ipsum dolor sit amet, vix an natum labitur eleifnd, mel am laoreet menandri. Ei justo complectitur duo. Ei mundi solet ut soletu possit quo.",
+      "Chúng tôi hỗ trợ bạn việc tạo, chia sẻ và quản lý dự án, sự kiện thiện nguyện.",
   },
   {
-    title: "What's Service We Provided?",
+    title: "Kết nối với mọi người xung quanh",
     description:
-      "Lorem ipsum dolor sit amet, vix an natum labitur eleifnd, mel am laoreet menandri. Ei justo complectitur duo. Ei mundi solet ut soletu possit quo.",
+      "Chúng tôi cung cấp cho bạn những tính năng giúp bạn có thể chat, bình luận, kết bạn, tương tác với người dùng khác để lan tỏa thiện nguyện",
   },
   {
-    title: "How Can I Get Help You?",
+    title: "Minh bạch về tài chính",
     description:
-      "Lorem ipsum dolor sit amet, vix an natum labitur eleifnd, mel am laoreet menandri. Ei justo complectitur duo. Ei mundi solet ut soletu possit quo.",
+      "Tự động báo cáo, thống kê, chia sẻ theo yêu cầu",
   },
 ];
 
@@ -161,12 +161,12 @@ export const sidebarLeft = [
   {
     name: "Chiến dịch gây quỹ",
     img: "/love.png",
-    href: "/",
+    href: "/project",
   },
   {
     name: "Dự án của bạn",
     img: "/task-management.png",
-    href: "/",
+    href: "/profile/project",
   },
 ];
 

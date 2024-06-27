@@ -15,9 +15,9 @@ const Welcome = () => {
         <p
           className={`text-white text-[3.3rem] font-bold ${inter.className} w-[55rem] text-center mb-4`}
         >
-          Welcome To Save Life And Make A Positive
+          Chào mừng bạn đến với chúng tôi nơi tạo ra những điều
           <TextUnderline
-            chilldren=" Impact"
+            chilldren=" tích cực"
             width={200}
             top="3.5rem"
             left="0.8rem"
@@ -26,10 +26,10 @@ const Welcome = () => {
         <p
           className={`${inter.className}  text-white mb-10 w-[40rem] text-[1.3rem] text-center`}
         >
-          Only when the society comes together and contributeswe will be able to
-          make an impact.
+          Chỉ khi xã hội đoàn kết và đóng góp, chúng ta mới có thể gây ảnh
+          hưởng.
         </p>
-        <ButtonHome link="/" title="DONATION NOW" width="12" color="#F84D42" />
+        <ButtonHome link="/project" title="DONATION NOW" width="12" color="#F84D42" />
       </div>
     </div>
   );

@@ -13,25 +13,30 @@ const Banner = () => {
     >
       <div className="flex flex-col items-center w-full h-full bg-black/75 py-8 laptop:px-[2rem] desktop:px-[16rem]">
         <p
-          className={`text-white text-[5rem] font-bold	${inter.className} text-center mt-16`}
+          className={`text-white text-[4.5rem] font-bold	${inter.className} text-center mt-16`}
         >
-          Donations Even If It Is A Small Can Bring
+          Đóng Góp Dù Chỉ Là Nhỏ Cũng Có Thể Mang Lại Giá Trị
           <TextUnderline
-            chilldren=" Bigger"
-            width={255}
-            top="5.5rem"
+            chilldren=" Lớn Hơn"
+            width={285}
+            top="5rem"
             left="1.5rem"
           />
         </p>
         <p
           className={`text-white text-[1.2rem]  ${inter.className} text-center mt-8 w-[46rem]`}
         >
-          Only when the society comes together and contributes It was
-          popularised in the we will be able to make an impact.
+          Chỉ khi cả xã hội cùng chung tay đóng góp, chúng ta mới có thể tạo ra
+          tác động. Hãy cùng chung tay để xã hội tốt đẹp hơn.
         </p>
         <div className="mt-8 flex items-center justify-center gap-8">
-          <ButtonHome link="/" title="DONATE NOW" width="10" color="#F84D42" />
-          <ButtonHome link="/" title="CONTACT US" width="8.75" color="#FFB840" />
+          <ButtonHome link="/project" title="DONATE NOW" width="10" color="#F84D42" />
+          <ButtonHome
+            link="/login"
+            title="THAM GIA"
+            width="8.75"
+            color="#FFB840"
+          />
         </div>
       </div>
     </div>

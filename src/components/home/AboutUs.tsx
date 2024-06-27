@@ -38,24 +38,23 @@ const AboutUs = () => {
       </div>
       <div className=" w-1/2 h-full pr-[10rem]">
         <p className={`${dancing.className} font-bold text-red text-4xl mb-4`}>
-          About us
+          Về chúng tôi
         </p>
         <p
-          className={`${inter.className} font-bold text-slate-800 text-[3rem] mb-12`}
+          className={`${inter.className} font-bold text-slate-800 text-[2.5rem] mb-12`}
         >
-          Check What Makes Us Different
+          Những điều khiến chúng tôi trở nên  
           <TextUnderline
-            chilldren=" Than Others"
+            chilldren=" đặc biệt "
             width={300}
-            top="2.5rem"
-            left="1rem"
+            top="2.8rem"
+            left="0.8rem"
           />
+          hơn những tổ trức khác.
         </p>
         <p className={`${inter.className}  text-neutral-800 mb-8`}>
-          There are many variations of passages of orem Ipsum available, but the
-          majority have suffered alteration in some form, by cted ipsum dolor
-          sit amet, consectetur adipisicing elit, sed do usmod mponcid idunt ut
-          labore et dolore magna aliqua.
+          Chúng tôi mang đến cho bạn những trải nghiệm thiết thực về việc tạo dự án từ thiện, chia sẻ dự án của bạn tới bạn bè,
+          người thân và những người xung quanh qua mạng xã hội cùng chúng tôi. Đồng thời cho phép bạn chia sẻ các bài đăng kêu gọi sự đồng hành và lan toản dự án
         </p>
         <div className="flex gap-4">
           <div
@@ -77,7 +76,7 @@ const AboutUs = () => {
               876,000
             </p>
             <p className={`${inter.className} font-bold text-gray-600 `}>
-              Raised by 78,000 people in one year
+              Mỗi năm có thêm 78.000 người tham gia.
             </p>
           </div>
         </div>
@@ -101,14 +100,14 @@ const AboutUs = () => {
               45,000
             </p>
             <p className={`${inter.className} font-bold text-gray-600 `}>
-              Volunteers are available to help you
+              Các nhà hảo tâm luôn sẵn sàng giúp đỡ bạn.
             </p>
           </div>
         </div>
         <div className="mt-6 flex ">
           <ButtonHome
-            link="/"
-            title="DISCOVER MORE"
+            link="/social"
+            title="Khám phá thêm"
             width="14"
             color="#F84D42"
           />

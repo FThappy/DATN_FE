@@ -33,9 +33,9 @@ const CreateBy = (props: Props) => {
       <span>
         <Link href={`/profile/${user?._id}`}>
           {" "}
-          <p className="px-2 font-bold text-[1.2rem] ">
+          <span className="px-2 font-bold text-[1.2rem] ">
             {user?.displayname ? user.displayname : user?.username}
-          </p>
+          </span>
         </Link>
       </span>
     </p>

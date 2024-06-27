@@ -13,23 +13,24 @@ const WhyChooseUs = () => {
       className="w-full h-[690px] bg-cover "
       style={{ backgroundImage: "url(/bg3.jpg)" }}
     >
-      <div className="flex items-center w-full h-[690px] bg-black/80 px-[3rem] py-8 gap-2 justify-center desktop:px-[12rem]">
+      <div className="flex items-center w-full h-[690px] bg-black/80 px-[1rem] py-8 gap-2 justify-center desktop:px-[12rem]">
         <div className="flex flex-col h-full justify-center p-4 laptop:w-1/2 desktop:w-auto">
           <p
             className={`${dancing.className} font-bold text-red text-4xl mb-1`}
           >
-            Why Choose Us
+            Tại sao lại chọn chúng tôi
           </p>
           <p
-            className={`text-white text-[3.3rem] font-bold	${inter.className} pr-8 mb-10   desktop:w-[45rem]`}
+            className={`text-white text-[3.3rem] font-bold	${inter.className} pr-16 mb-10   desktop:w-[45rem]`}
           >
-            Trusted Non Profit Donation
+            Mạng xã hội kết nối những nhà
             <TextUnderline
-              chilldren=" Center"
-              width={180}
+              chilldren=" hảo tâm "
+              width={220}
               top="3.2rem"
-              left="1.2rem"
+              left="1rem"
             />
+            .
           </p>
           <TabBarWhyChooseUs />
         </div>

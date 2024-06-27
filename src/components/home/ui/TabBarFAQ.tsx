@@ -47,8 +47,7 @@ const TabBarFAQ = () => {
               isActive === index ? "block" : " hidden"
             }`}
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-            voluptatem obcaecati consectetur adipisicing
+            {item.description}
           </p>
         </div>
       ))}

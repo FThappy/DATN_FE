@@ -23,14 +23,14 @@ const Features = () => {
       </div>
       <div className="flex flex-col pt-[5rem] pl-[4rem]">
         <p className={`${dancing.className} font-bold text-red text-4xl mb-2`}>
-          Our Features
+          Các tính năng
         </p>
         <p
           className={`${inter.className} font-bold text-slate-800 text-[3rem] mb-8`}
         >
-          How Could
+          Bạn có thể
           <TextUnderline
-            chilldren=" You Help?"
+            chilldren=" giúp gi?"
             width={240}
             top="3.2rem"
             left="1rem"
@@ -39,8 +39,8 @@ const Features = () => {
         <p
           className={`${inter.className}  text-neutral-800 mb-8 text-[1.2rem] w-[35rem]`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem
-          voluptatem obcaecati consectetur adipisicing
+          Một hành động giúp đỡ nhỏ bé từ bạn có thể lan tỏa niềm vui và đem lại
+          nụ cười lớn cho hàng triệu đứa trẻ trên khắp thế giới.
         </p>
         <div className="grid grid-cols-3 gap-2 pt-6">
           <div className="flex flex-col ">
@@ -59,13 +59,13 @@ const Features = () => {
             <p
               className={`${inter.className} font-bold text-slate-800 text-[2rem] `}
             >
-              Start Donating{" "}
+              Quyên góp từ thiện
             </p>
             <p
               className={`${inter.className}  text-neutral-800 mb-8 text-[1.2rem] `}
             >
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-              autem voluptatem obcaecati consectetur adipisicing
+              Một sự quyên góp từ bạn là hành động giúp đỡ nhằm cải thiện đời
+              sống và lan tỏa niềm vui cho những người có hoàn cảnh khó khăn.
             </p>
           </div>
           <div className="flex flex-col ">
@@ -84,13 +84,14 @@ const Features = () => {
             <p
               className={`${inter.className} font-bold text-slate-800 text-[2rem] `}
             >
-              Quick Fundraising
+              Lan tỏa
             </p>
             <p
               className={`${inter.className}  text-neutral-800 mb-8 text-[1.2rem] `}
             >
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-              autem voluptatem obcaecati consectetur adipisicing
+              Mỗi lần chia sẻ các dự án, sự kiện thiện nguyện sẽ giúp những
+              người khác biết đến và tham gia vào các hoạt động nhằm lan tỏa
+              lòng tốt đẹp đến những người có hoàn cảnh khó khăn.
             </p>
           </div>
           <div className="flex flex-col ">
@@ -107,15 +108,15 @@ const Features = () => {
               />
             </div>
             <p
-              className={`${inter.className} font-bold text-slate-800 text-[2rem]  `}
+              className={`${inter.className} font-bold text-slate-800 text-[1.8rem]  `}
             >
-              Become an volunteer
+              Trở thành nhà hảo tâm
             </p>
             <p
               className={`${inter.className}  text-neutral-800 mb-8 text-[1.2rem] `}
             >
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem
-              autem voluptatem obcaecati consectetur adipisicing
+              Bằng cách này, bạn có thể góp phần xây dựng một cộng đồng tốt đẹp
+              hơn và làm thay đổi tích cực cho thế giới xung quanh.
             </p>
           </div>
         </div>

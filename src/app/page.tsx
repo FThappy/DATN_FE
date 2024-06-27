@@ -23,7 +23,7 @@ export default function Home() {
       <WhyChooseUs />
       <OurCause />
       <OurEvent />
-      <ContactUs />
+      {/* <ContactUs /> */}
       <OurVolunteers />
       <Features />
       <Faq />

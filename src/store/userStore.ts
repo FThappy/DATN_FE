@@ -35,7 +35,7 @@ export const userStore = create(
     }),
     {
       name: "user-storage",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

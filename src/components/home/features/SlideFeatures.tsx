@@ -29,13 +29,12 @@ const SlideFeatures = () => {
             <p
               className={`text-white text-[3rem] font-bold ${inter.className} text-center`}
             >
-              Child Education Help
+              Giúp đỡ trẻ em đến trường
             </p>
             <p
               className={`text-white text-[1.2rem]  ${inter.className} text-center mb-10 `}
             >
-              Your little help can make milion children smile model sentence
-              structures
+            Sự giúp đỡ nhỏ bé của bạn có thể khiến hàng triệu đứa trẻ mỉm cười
             </p>
             <ButtonHome
               link="/"
@@ -51,13 +50,12 @@ const SlideFeatures = () => {
             <p
               className={`text-white text-[3rem] font-bold ${inter.className} text-center`}
             >
-              Child Education Help
+              Hỗ trợ y tế
             </p>
             <p
               className={`text-white text-[1.2rem]  ${inter.className} text-center mb-10 `}
             >
-              Your little help can make milion children smile model sentence
-              structures
+              Dù là việc nhỏ nhất, nhưng nó có thể khiến hàng triệu người được thăm khám chữa bệnh .
             </p>
             <ButtonHome
               link="/"
@@ -73,16 +71,15 @@ const SlideFeatures = () => {
             <p
               className={`text-white text-[3rem] font-bold ${inter.className} text-center`}
             >
-              Child Education Help
+              Biến đổi khí hậu & Thiên tai
             </p>
             <p
               className={`text-white text-[1.2rem]  ${inter.className} text-center mb-10 `}
             >
-              Your little help can make milion children smile model sentence
-              structures
+              Từng động thái nhỏ của bạn có thể giúp môi trường và khí hậu trở nên tốt hơn.
             </p>
             <ButtonHome
-              link="/"
+              link="/project"
               title="DONATION NOW"
               width="13"
               color="#20b86d"
