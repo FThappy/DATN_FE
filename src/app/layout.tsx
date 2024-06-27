@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NextTopLoader from "nextjs-toploader";
 import UserNewTab from "@/components/UserNewTab";
 import BoxChat from "@/components/BoxChat";
+import ConfigSocket from "@/components/ConfigSocket";
 
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -30,6 +31,7 @@ export default function RootLayout({
           {children}
           <ToastContainer />
           <BoxChat />
+          {/* <ConfigSocket /> */}
         </div>
       </body>
     </html>
