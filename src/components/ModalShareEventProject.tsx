@@ -6,7 +6,10 @@ import { PostProps, SharePostProps } from "@/utils/typePost";
 import { userStore } from "@/store/userStore";
 import toastifyUtils from "@/utils/toastify";
 import { createSharePost } from "@/actions/createSharePost";
-
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 type Props = {
   itemId: string;
   type: string;
@@ -24,6 +27,12 @@ const ModalShareEventProject = (props: Props) => {
   const [pending, setPending] = useState(false);
 
   const [open, setOpen] = useState(false);
+
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
+
+  const handleEmojiSelect = (emoji: any) => {
+      setDocumention((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+  };
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -66,7 +75,9 @@ const ModalShareEventProject = (props: Props) => {
       <DialogTrigger>
         <div className="h-[3rem] flex items-center p-2 gap-2 bg-gray-200 hover:bg-gray-300 rounded-[8px] ">
           <PiShareFatLight size={24} color={"#000000"} />
-          <p className="font-bold text-[1.1rem]">Chia sẻ {type === "project" ? "dự án" : "sự kiện"}</p>
+          <p className="font-bold text-[1.1rem]">
+            Chia sẻ {type === "project" ? "dự án" : "sự kiện"}
+          </p>
         </div>
       </DialogTrigger>
       <DialogContent
@@ -137,7 +148,21 @@ const ModalShareEventProject = (props: Props) => {
               e.preventDefault();
               setDocumention(e.target.value);
             }}
+            value={documention}
           />
+          <Popover open={openEmo} onOpenChange={setOpenEmo}>
+            <PopoverTrigger className="w-full flex justify-end ">
+              <div>
+                <MdOutlineEmojiEmotions
+                  size={24}
+                  color={openEmo ? "blue" : "gray"}
+                />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="z-[50000] w-auto h-auto">
+              <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+            </PopoverContent>
+          </Popover>
           <button
             type="submit"
             className="h-[40px] w-[98%] mt-2 mb-4 bg-green rounded flex justify-center items-center font-bold text-white text-[1.2rem]"

@@ -13,7 +13,9 @@ import { socket } from "@/utils/requestMethod";
 import toastifyUtils from "@/utils/toastify";
 import CommentProjectContainer from "../CommentProjectContainer";
 import { CommentProps } from "@/utils/typeComment";
-
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 type userProps = {
   id: string;
   img: string;
@@ -38,6 +40,9 @@ const ProjectCommentContainer = (props: Props) => {
 
   const [comments, setComments] = useState<CommentProps[]>([]);
 
+  
+    const [openEmo, setOpenEmo] = useState<boolean>(false);
+
     const handleSubmit = async (
       event: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>
     ) => {
@@ -53,6 +58,9 @@ const ProjectCommentContainer = (props: Props) => {
         console.log(error);
         toastifyUtils("error", "Lỗi server");
       }
+    };
+    const handleEmojiSelect = (emoji: any) => {
+      setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
     };
     useEffect(() => {
       socket.off("error-global").on("error-global", (error) => {
@@ -162,6 +170,26 @@ const ProjectCommentContainer = (props: Props) => {
             }}
             value={content}
           />
+          {openEmo && (
+            <Picker
+              data={data}
+              onEmojiSelect={handleEmojiSelect}
+              onClickOutside={(e: any) => {
+                e.preventDefault();
+                setOpenEmo(false);
+              }}
+            />
+          )}
+          {!openEmo && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenEmo(true);
+              }}
+            >
+              <MdOutlineEmojiEmotions size={24} />
+            </button>
+          )}
           <button
             type="submit"
             className="flex justify-end items-center h-full my-1"

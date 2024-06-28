@@ -13,6 +13,12 @@ import React, {
   ChangeEvent,
 } from "react";
 import { PiPaperPlaneRightFill } from "react-icons/pi";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import { FaCamera } from "react-icons/fa";
+import { FaRegFileImage } from "react-icons/fa6";
+import { CiCircleRemove } from "react-icons/ci";
 
 type Props = {
   active: CardRoom;
@@ -42,6 +48,10 @@ const MainMess = (props: Props) => {
   const textareaRef = useRef(null);
 
   const [page, setPage] = useState<number>(1);
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const [fileImage, setFileImage] = useState<File | null>();
 
   useEffect(() => {
     const getMess = async (): Promise<void> => {
@@ -90,7 +100,9 @@ const MainMess = (props: Props) => {
       textarea.style.height = height;
     }
   }, [height]);
-
+  const handleEmojiSelect = (emoji: any) => {
+    setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+  };
   const handleFirstMessage = async (
     event:
       | React.MouseEvent<HTMLButtonElement>
@@ -98,11 +110,15 @@ const MainMess = (props: Props) => {
   ) => {
     event.preventDefault();
     if (!content) {
-      return;
+      return toastifyUtils("error", "Không được để trống");
     }
+    // if (!fileImage || !fileImage.type.startsWith("image/")) {
+    //   return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+    // }
     try {
       socket.emit("send-message", active.room._id, content);
       setContent("");
+      setFileImage(null)
     } catch (error) {
       console.log(error);
       toastifyUtils("error", "Lỗi server");
@@ -230,8 +246,30 @@ const MainMess = (props: Props) => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
+      {fileImage && (
+        <div className="h-[10rem] p-2 w-full bg-white relative border-t-1 border-gray-300">
+          <img
+            src={URL.createObjectURL(fileImage)}
+            alt="image"
+            className="w-[10rem] h-full  cursor-pointer "
+          />
+          <button
+            className="absolute top-2 right-2  cursor-pointer  flex items-center justify-center w-[30px] h-[30px]  rounded-full"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              setFileImage(null);
+            }}
+          >
+            <CiCircleRemove
+              color="white"
+              size={32}
+              className="bg-black/40 rounded-full w-[30px] h-[30px]"
+            />
+          </button>
+        </div>
+      )}
       <div className="border-slate-300 w-full h-[1px] border-t-[1px] mb-1 "></div>
-      <div className="w-full  px-1 flex gap-2 items-end z-[51]">
+      <div className="w-full  px-1 flex gap-2 items-end z-[51] ">
         <textarea
           className="outline-none	bg-white/0 p-1 text-[1rem] w-[92%]  min-h-[2rem] max-h-[8rem] resize-none shadow-beautiful bg-gray-200 rounded-[12px]"
           placeholder="Aa"
@@ -247,17 +285,55 @@ const MainMess = (props: Props) => {
           ref={textareaRef}
           style={{ overflowY: "auto" }}
         />
+        {open && (
+          <Picker
+            data={data}
+            onEmojiSelect={handleEmojiSelect}
+            onClickOutside={(e: any) => {
+              e.preventDefault();
+              setOpen(false);
+            }}
+          />
+        )}
+        {!open && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+          >
+            <MdOutlineEmojiEmotions size={24} />
+          </button>
+        )}
+        {/* <label
+          htmlFor="fileImage"
+          className="rounded-full bottom-5 right-4 hover:bg-gray-100 cursor-pointer"
+        >
+          <FaRegFileImage size={24} />
+        </label>
+        <input
+          id="fileImage"
+          name="fileImage"
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => {
+            setFileImage(e.target.files![0]);
+            e.target.files = null;
+            e.target.value = "";
+          }}
+        /> */}
         <button
           type="submit"
           className="flex justify-end items-center w-[8%] mb-1 	"
-          disabled={content ? false : true}
+          disabled={content  ? false : true}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             handleFirstMessage(e);
           }}
         >
           <PiPaperPlaneRightFill
-            color={content ? "#1E90FF" : "gray"}
+            color={content  ? "#1E90FF" : "gray"}
             className="mr-2"
             size={20}
           />

@@ -40,7 +40,7 @@ const ChatContainer = (props: Props) => {
   }, [inView]);
 
   return (
-    <div className="w-full p-1 flex flex-col-reverse h-[78.5%]  z-[50] max-h-[78.5%] overflow-y-auto	">
+    <div className="w-full p-1 flex flex-col-reverse laptop:h-[78.5%] desktop:h-[84%] z-[50] laptop:max-h-[78.5%] desktop:max-h-[84 %] overflow-y-auto	">
       {listMessage && listMessage.length > 0
         ? listMessage.map((item, index) => (
             <BoxMessage

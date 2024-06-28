@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
       style={{ backgroundImage: "url(/bg3.jpg)" }}
     >
       <div className="flex items-center w-full h-[690px] bg-black/80 px-[1rem] py-8 gap-2 justify-center desktop:px-[12rem]">
-        <div className="flex flex-col h-full justify-center p-4 laptop:w-1/2 desktop:w-auto">
+        <div className="flex flex-col h-full justify-center p-4 laptop:w-1/2 desktop:w-1/2">
           <p
             className={`${dancing.className} font-bold text-red text-4xl mb-1`}
           >

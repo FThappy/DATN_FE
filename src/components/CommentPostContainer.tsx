@@ -29,6 +29,8 @@ const CommentPostContainer = (props: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+
+
   useEffect(() => {
     if (inView) {
       setIsLoading(true);

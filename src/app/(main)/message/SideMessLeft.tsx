@@ -64,9 +64,9 @@ const SideMessLeft = (props: Props) => {
           }}
         />
       </form>
-      <div className="flex flex-col max-h-[85%] overflow-y-auto gap-1 ">
+      <div className="flex flex-col gap-1 ">
         {!pendingSearch ? (
-          <div className="flex flex-col max-h-[85%] overflow-y-auto">
+          <div className="flex flex-col max-h-[85%]  overflow-y-auto">
             {listRoom && listRoom.length > 0
               ? listRoom.map((item, index) => (
                   <div key={index} onClick={(e)=>{

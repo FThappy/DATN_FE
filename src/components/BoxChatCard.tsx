@@ -14,7 +14,10 @@ import { MessageProp, Room } from "@/utils/typeMess";
 import ChatContainer from "./ChatContainer";
 import { Skeleton } from "./ui/skeleton";
 import { getMessageForRoom } from "@/actions/getMessageForRoom";
-
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 type Props = {
   roomId: string;
   index: number;
@@ -58,6 +61,8 @@ const BoxChatCard = (props: Props) => {
 
   const [page, setPage] = useState<number>(1);
 
+    const [openEmo, setOpenEmo] = useState<boolean>(false);
+
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     const textarea = textareaRef.current;
@@ -100,6 +105,10 @@ const BoxChatCard = (props: Props) => {
       toastifyUtils("error", "Lỗi server");
     }
   };
+
+      const handleEmojiSelect = (emoji: any) => {
+        setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+      };
   useEffect(() => {
     const handleNewMessage = (newMessage: MessageProp, roomIdRe: string) => {
       if (room?._id === roomIdRe) {
@@ -248,6 +257,19 @@ const BoxChatCard = (props: Props) => {
           ref={textareaRef}
           style={{ overflowY: "auto" }}
         />
+        <Popover open={openEmo} onOpenChange={setOpenEmo}>
+          <PopoverTrigger>
+            <div>
+              <MdOutlineEmojiEmotions
+                size={24}
+                color={openEmo ? "blue" : "gray"}
+              />
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="z-[50000] w-auto h-auto">
+            <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+          </PopoverContent>
+        </Popover>
         <button
           type="submit"
           className="flex justify-end items-center w-[8%] mb-1 	"

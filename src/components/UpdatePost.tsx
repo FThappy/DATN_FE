@@ -10,7 +10,10 @@ import ImageGroupPreview from "./utils/ImageGroupPreview";
 import ChangeImagePost from "./ChangeImagePost";
 import toastifyUtils from "@/utils/toastify";
 import { updatePost } from "@/actions/updatePost";
-
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 type Props = {
   post: PostProps;
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>;
@@ -37,6 +40,9 @@ const UpdatePost = (props: Props) => {
   const [pending, setPending] = useState(false);
 
   const [removeFiles, setRemoveFiles] = useState<string[]>([]);
+
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
+
 
   const removeFile = (index: number) => {
     if (typeof files[index] === "string") {
@@ -68,6 +74,9 @@ const UpdatePost = (props: Props) => {
     e.target.value = "";
   };
 
+    const handleEmojiSelect = (emoji: any) => {
+      setDocumention((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+    };
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const formData = new FormData();
@@ -225,6 +234,19 @@ const UpdatePost = (props: Props) => {
                   }}
                   value={documention}
                 />
+                <Popover open={openEmo} onOpenChange={setOpenEmo}>
+                  <PopoverTrigger className="w-full flex justify-end ">
+                    <div>
+                      <MdOutlineEmojiEmotions
+                        size={24}
+                        color={openEmo ? "blue" : "gray"}
+                      />
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="z-[50000] w-auto h-auto">
+                    <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+                  </PopoverContent>
+                </Popover>
                 {!(files.length > 0) ? (
                   <div className="w-[95%] border-slate-300 h-[25rem] mb-[1rem] border-[1px] mt-[0.65rem] rounded-[10px] p-2">
                     <label htmlFor="file">

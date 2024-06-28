@@ -5,12 +5,7 @@ import React, {
   useState,
   KeyboardEvent,
 } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-} from "./ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
 import Image from "next/image";
 import { FaRegComment } from "react-icons/fa6";
 import { PostProps } from "@/utils/typePost";
@@ -29,7 +24,10 @@ import ShareEvent from "./social/ShareEvent";
 import ShareProject from "./social/ShareProject";
 import LikeContainer from "./LikeContainer";
 import ImageContainer from "./utils/ImageContainer";
-
+import { MdOutlineEmojiEmotions } from "react-icons/md";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 type Props = {
   post: PostProps;
   userName: string | undefined;
@@ -41,7 +39,15 @@ type Props = {
 };
 
 const ModalPost = (props: Props) => {
-  const { post, userName, userImg, userId , displayName , totalLike , setTotalLike } = props;
+  const {
+    post,
+    userName,
+    userImg,
+    userId,
+    displayName,
+    totalLike,
+    setTotalLike,
+  } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -61,7 +67,9 @@ const ModalPost = (props: Props) => {
 
   const [repUser, setRepUser] = useState<string>();
 
-  const [toUserId , setToUserId] = useState<string>();
+  const [toUserId, setToUserId] = useState<string>();
+
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>
@@ -78,6 +86,9 @@ const ModalPost = (props: Props) => {
       console.log(error);
       toastifyUtils("error", "Lỗi server");
     }
+  };
+  const handleEmojiSelect = (emoji: any) => {
+    setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
   };
   useEffect(() => {
     socket.off("error-global").on("error-global", (error) => {
@@ -96,7 +107,11 @@ const ModalPost = (props: Props) => {
     socket.emit("leave-room", post._id);
   };
 
-  const handleSetRepUser = (user: string, commentId: string , toUserId : string) => {
+  const handleSetRepUser = (
+    user: string,
+    commentId: string,
+    toUserId: string
+  ) => {
     setRepUser(user);
     setCommentId(commentId);
     setToUserId(toUserId);
@@ -111,19 +126,16 @@ const ModalPost = (props: Props) => {
       return;
     }
     try {
-      socket.emit("rep-comment", commentId, content , toUserId);
+      socket.emit("rep-comment", commentId, content, toUserId);
       setContent("");
       setRepUser("");
       setCommentId("");
-      setToUserId("")
+      setToUserId("");
     } catch (error) {
       console.log(error);
       toastifyUtils("error", "Lỗi server");
     }
   };
-
-
-
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -143,7 +155,9 @@ const ModalPost = (props: Props) => {
         >
           <div className="pt-1 flex items-center w-full justify-center relative">
             {userName && (
-              <p className="text-[1.5rem] font-bold">Bài viết của {displayName ? displayName : userName}</p>
+              <p className="text-[1.5rem] font-bold">
+                Bài viết của {displayName ? displayName : userName}
+              </p>
             )}
             <DialogClose asChild>
               <button
@@ -223,7 +237,9 @@ const ModalPost = (props: Props) => {
                 width={20}
                 className="cursor-pointer"
               />
-              <p className=" w-[200px] text-gray-400 cursor-pointer">{totalLike}</p>
+              <p className=" w-[200px] text-gray-400 cursor-pointer">
+                {totalLike}
+              </p>
             </div>
             <div className="px-4 w-full ">
               <div className=" border-slate-300 w-full h-[1px] border-t-[1px] mt-[0.65rem] mb-1 "></div>
@@ -312,6 +328,20 @@ const ModalPost = (props: Props) => {
                 }}
                 value={content}
               />
+              <Popover open={openEmo} onOpenChange={setOpenEmo}>
+                <PopoverTrigger>
+                  <div>
+                    <MdOutlineEmojiEmotions
+                      size={24}
+                      color={openEmo ? "blue" : "gray"}
+                    />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="z-[50000] w-auto h-auto">
+                  <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+                </PopoverContent>
+              </Popover>
+
               <button
                 type="submit"
                 className="flex justify-end items-center h-full my-1"

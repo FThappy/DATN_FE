@@ -9,7 +9,10 @@ import { createSharePost } from "@/actions/createSharePost";
 import { BiSolidPencil } from "react-icons/bi";
 import { User } from "@/utils/typeAuth";
 import { updateChangeSharePost } from "@/actions/updateChangeSharePost";
-
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 type Props = {
   post: PostProps;
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>;
@@ -33,6 +36,13 @@ const ModalUpdateSharePost = (props: Props) => {
   const [pending, setPending] = useState(false);
 
   const [open, setOpen] = useState(false);
+
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
+
+    const handleEmojiSelect = (emoji: any) => {
+      setDocumention((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+    };
+
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -154,6 +164,19 @@ const ModalUpdateSharePost = (props: Props) => {
             }}
             value={documention}
           />
+          <Popover open={openEmo} onOpenChange={setOpenEmo}>
+            <PopoverTrigger className="w-full flex justify-end ">
+              <div>
+                <MdOutlineEmojiEmotions
+                  size={24}
+                  color={openEmo ? "blue" : "gray"}
+                />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="z-[50000] w-auto h-auto">
+              <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+            </PopoverContent>
+          </Popover>
           <button
             type="submit"
             className="h-[40px] w-[98%] mt-2 mb-4 bg-green rounded flex justify-center items-center font-bold text-white text-[1.2rem]"

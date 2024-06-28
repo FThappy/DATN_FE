@@ -9,7 +9,10 @@ import ChangeImagePost from "./ChangeImagePost";
 import toastifyUtils from "@/utils/toastify";
 import { createPost } from "@/actions/createPost";
 import { PostProps } from "@/utils/typePost";
-
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 type Props = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,6 +37,8 @@ const ModalCreatePost = (props: Props) => {
 
   const [pending, setPending] = useState(false);
 
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
+
   const removeFile = (index: number) => {
     setFiles((prevFiles) => {
       const newFiles = [...prevFiles];
@@ -47,6 +52,9 @@ const ModalCreatePost = (props: Props) => {
     const fileArray = Array.from(fileList!);
     setFiles((prevFiles) => [...(prevFiles || []), ...fileArray]);
     e.target.value = "";
+  };
+  const handleEmojiSelect = (emoji: any) => {
+    setDocumention((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
   };
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -132,7 +140,7 @@ const ModalCreatePost = (props: Props) => {
                     {user?.displayName ? user?.displayName : user?.username}
                   </p>
                   <select
-                    className="flex items-center justify-center bg-[#E8E5ED] rounded-[8px] w-[70%] text-[0.8rem] font-bold p-2 "
+                    className="flex items-center justify-center bg-[#E8E5ED] rounded-[8px] w-[75%] text-[0.8rem] font-bold p-2 "
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                       e.preventDefault();
                       setPrivacy(e.target.value);
@@ -186,7 +194,21 @@ const ModalCreatePost = (props: Props) => {
                   e.preventDefault();
                   setDocumention(e.target.value);
                 }}
+                value={documention}
               />
+              <Popover open={openEmo} onOpenChange={setOpenEmo} >
+                <PopoverTrigger className="w-full flex justify-end ">
+                  <div>
+                    <MdOutlineEmojiEmotions
+                      size={24}
+                      color={openEmo ? "blue" : "gray"}
+                    />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="z-[50000] w-auto h-auto">
+                  <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+                </PopoverContent>
+              </Popover>
 
               {!(files.length > 0) ? (
                 <div className="w-[95%] border-slate-300 h-[25rem] mb-[1rem] border-[1px] mt-[0.65rem] rounded-[10px] p-2">
