@@ -3,15 +3,19 @@ import React from "react";
 import { boxChatStore, State } from "@/store/boxChatStore";
 import BoxChatCardContainer from "./BoxChatCardContainer";
 import { userStore } from "@/store/userStore";
+import { usePathname } from "next/navigation";
 
 type Props = {};
 
 const BoxChat = (props: Props) => {
     const user = userStore((state: any) => state?.user);
 
+      const pathname = usePathname();
+
+
   const listBoxChat = boxChatStore((state: State) => state?.listBoxChat);
   return (
-    user && <div className="w-full flex flex-row-reverse	 fixed  bottom-0 px-16 gap-2 z-[49]">
+    user && pathname !== "/message" && <div className="w-full flex flex-row-reverse	 fixed  bottom-0 px-16 gap-2 z-[49]">
       {listBoxChat &&
         listBoxChat.length > 0 &&
         listBoxChat.slice(0, 3).map((item, index) => (

@@ -36,8 +36,8 @@ const ProjectCard = ({
           {cause.projectName}
         </p>
         <p className={`${inter.className}  text-neutral-800 h-[3rem]  mt-3`}>
-          {cause.description.length > 70
-            ? cause.description.slice(0, 70)+"...."
+          {cause.description.length > 60
+            ? cause.description.slice(0, 60)+"...."
             : cause.description}
         </p>
         <div className=" w-full  flex justify-between mt-3">
