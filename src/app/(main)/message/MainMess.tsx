@@ -16,9 +16,10 @@ import { PiPaperPlaneRightFill } from "react-icons/pi";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
-import { FaCamera } from "react-icons/fa";
 import { FaRegFileImage } from "react-icons/fa6";
 import { CiCircleRemove } from "react-icons/ci";
+import { createMessage } from "@/actions/createMessage";
+import { createFirstMess } from "@/actions/createFirstMess";
 
 type Props = {
   active: CardRoom;
@@ -37,7 +38,7 @@ const MainMess = (props: Props) => {
 
   const [user, setUser] = useState<UserPublic>();
 
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>("");
 
   const [pending, setPending] = useState<boolean>(false);
 
@@ -51,7 +52,15 @@ const MainMess = (props: Props) => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const [fileImage, setFileImage] = useState<File | null>();
+  const [fileImage, setFileImage] = useState<File[]>([]);
+
+  const removeFile = (index: number) => {
+    setFileImage((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
 
   useEffect(() => {
     const getMess = async (): Promise<void> => {
@@ -60,6 +69,7 @@ const MainMess = (props: Props) => {
         const res = await getMessageForRoom(active.room._id, 0);
         if (res.code === 0) {
           setIsLoading(false);
+          console.log(res)
           socket.emit("join-messageRoom", active.room._id);
           setListMessage(res.data);
           setUser(active?.user);
@@ -118,12 +128,61 @@ const MainMess = (props: Props) => {
     try {
       socket.emit("send-message", active.room._id, content);
       setContent("");
-      setFileImage(null)
+      // setFileImage([])
     } catch (error) {
       console.log(error);
       toastifyUtils("error", "Lỗi server");
     }
   };
+
+  const handleMessage = async (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    event.preventDefault();
+    if (!content && fileImage.length <= 0) {
+      return toastifyUtils("error", "Không được để trống");
+    }
+    if (fileImage && fileImage.length > 0) {
+      const nonImageFile = fileImage.find(
+        (file) => !file.type.startsWith("image/")
+      );
+      if (nonImageFile) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+    }
+    const formData = new FormData();
+    formData.append("roomId", active.room._id);
+    formData.append("content", content);
+    if (fileImage.length > 0) {
+      fileImage.forEach((file) => {
+        formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
+      });
+    }
+    setContent("");
+    setFileImage([]);
+    try {
+      const res = await createMessage(formData);
+
+      if (res.code === 1) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+      if (res.code === 8) {
+        return toastifyUtils("warning", "Không được để trống thông tin");
+      }
+      if (res.code === 9) {
+        return toastifyUtils("warning", "Không tồn tại người dùng");
+      }
+      if (res.code === 4) {
+        return toastifyUtils("error", "Lỗi server");
+      }
+    } catch (error) {
+      console.log(error);
+      toastifyUtils("error", "Lỗi server");
+    }
+  };
+
   useEffect(() => {
     const handleNewMessage = (newMessage: MessageProp, roomIdRe: string) => {
       if (active.room._id === roomIdRe) {
@@ -213,7 +272,7 @@ const MainMess = (props: Props) => {
     };
   }, [setListMessage, active.room._id]);
   return (
-    <div className="w-[56%] bg-white laptop:h-[39.5rem] desktop:h[53rem] flex flex-col">
+    <div className="w-[56%] bg-white laptop:h-[39.5rem] desktop:h-[53rem] flex flex-col">
       <div className="h-[4rem] w-full rounded-t-[8px] flex justify-between px-2 py-1 items-center border-b-2 border-b-gray-300">
         {user ? (
           <div className="flex gap-2 items-center">
@@ -246,26 +305,30 @@ const MainMess = (props: Props) => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
-      {fileImage && (
-        <div className="h-[10rem] p-2 w-full bg-white relative border-t-1 border-gray-300">
-          <img
-            src={URL.createObjectURL(fileImage)}
-            alt="image"
-            className="w-[10rem] h-full  cursor-pointer "
-          />
-          <button
-            className="absolute top-2 right-2  cursor-pointer  flex items-center justify-center w-[30px] h-[30px]  rounded-full"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              setFileImage(null);
-            }}
-          >
-            <CiCircleRemove
-              color="white"
-              size={32}
-              className="bg-black/40 rounded-full w-[30px] h-[30px]"
-            />
-          </button>
+      {fileImage && fileImage.length > 0 && (
+        <div className="h-[10rem] p-2 w-full flex flex-wrap gap-1 bg-white relative border-t-1 border-gray-300 max-w-[100%] overflow-y-auto">
+          {fileImage.map((file, index) => (
+            <div key={index} className="relative">
+              <img
+                src={URL.createObjectURL(file)}
+                alt="image"
+                className="w-[10rem] h-[10rem] cursor-pointer"
+              />
+              <button
+                className="absolute top-2 right-2 cursor-pointer flex items-center justify-center w-[30px] h-[30px] rounded-full"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  removeFile(index);
+                }}
+              >
+                <CiCircleRemove
+                  color="white"
+                  size={32}
+                  className="bg-black/40 rounded-full w-[30px] h-[30px]"
+                />
+              </button>
+            </div>
+          ))}
         </div>
       )}
       <div className="border-slate-300 w-full h-[1px] border-t-[1px] mb-1 "></div>
@@ -276,7 +339,7 @@ const MainMess = (props: Props) => {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
-              handleFirstMessage(e);
+              handleMessage(e);
               e.currentTarget.value = "";
             }
           }}
@@ -305,7 +368,7 @@ const MainMess = (props: Props) => {
             <MdOutlineEmojiEmotions size={24} />
           </button>
         )}
-        {/* <label
+        <label
           htmlFor="fileImage"
           className="rounded-full bottom-5 right-4 hover:bg-gray-100 cursor-pointer"
         >
@@ -316,24 +379,27 @@ const MainMess = (props: Props) => {
           name="fileImage"
           type="file"
           className="hidden"
+          multiple
           accept="image/*"
           onChange={(e) => {
-            setFileImage(e.target.files![0]);
-            e.target.files = null;
+            e.preventDefault();
+            const fileList = e.target.files;
+            const fileArray = Array.from(fileList!);
+            setFileImage((prevFiles) => [...(prevFiles || []), ...fileArray]);
             e.target.value = "";
           }}
-        /> */}
+        />
         <button
           type="submit"
           className="flex justify-end items-center w-[8%] mb-1 	"
-          disabled={content  ? false : true}
+          disabled={content || fileImage.length > 0 ? false : true}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
-            handleFirstMessage(e);
+            handleMessage(e);
           }}
         >
           <PiPaperPlaneRightFill
-            color={content  ? "#1E90FF" : "gray"}
+            color={content || fileImage.length ? "#1E90FF" : "gray"}
             className="mr-2"
             size={20}
           />

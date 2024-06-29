@@ -2,13 +2,15 @@ import { UserPublic } from "./typeAuth";
 
 export type MessageProp = {
   _id: string;
-   from: string;
+  from: string;
   to: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
-  isRead : string[];
+  isRead: string[];
+  img: string[];
+  filePath: string;
 };
 export type Room = {
   _id: string;

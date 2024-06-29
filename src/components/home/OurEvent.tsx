@@ -10,6 +10,7 @@ import toastifyUtils from "@/utils/toastify";
 import { Skeleton } from "../ui/skeleton";
 import { EventProps } from "@/utils/typeEvent";
 import { format } from "date-fns";
+import Link from "next/link";
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -64,7 +65,7 @@ const OurEvent = () => {
       <div className="grid grid-cols-3 gap-4 items-center  justify-center  w-[65rem]">
         {listEvent && listEvent.length > 0 ? (
           listEvent.map((item, index) => (
-            <div
+            <Link href={item?.event?._id}
               key={index}
               className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem] "
               style={{
@@ -121,7 +122,7 @@ const OurEvent = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <>

@@ -64,7 +64,7 @@ const SideMessLeft = (props: Props) => {
           }}
         />
       </form>
-      <div className="flex flex-col gap-1 ">
+      <div className="flex flex-col gap-1 h-[85%]">
         {!pendingSearch ? (
           <div className="flex flex-col max-h-[85%]  overflow-y-auto">
             {listRoom && listRoom.length > 0

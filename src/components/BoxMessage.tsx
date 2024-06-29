@@ -17,6 +17,13 @@ import { BsThreeDots } from "react-icons/bs";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { socket } from "@/utils/requestMethod";
 import { InView } from "react-intersection-observer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
 
 type Props = {
   item: MessageProp;
@@ -125,9 +132,12 @@ const BoxMessage = (props: Props) => {
                   </PopoverContent>
                 </Popover>
               )}
-              <p className="text-white px-2 py-1 text-[1.05rem] bg-sky-600 rounded-t-[12px] rounded-br-[8px] rounded-bl-[12px] mb-1  w-auto max-w-[75%] break-all">
-                {item.content}
-              </p>
+              {item.content && (
+                <p className="text-white px-2 py-1 text-[1.05rem] bg-sky-600 rounded-t-[12px] rounded-br-[8px] rounded-bl-[12px] mb-1  w-auto max-w-[75%] break-all">
+                  {item.content}
+                </p>
+              )}
+
               {/* <div className="h-4 w-4">
               {shouldShowAvatar && (
                 <Avatar className="h-4 w-4">
@@ -140,6 +150,47 @@ const BoxMessage = (props: Props) => {
               )}
             </div> */}
             </div>
+            {item.img.length > 0 && (
+              <div
+                className="flex w-full  "
+                onMouseEnter={(e) => {
+                  e.preventDefault();
+                  if (!item.content) {
+                    setIsHide(true);
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.preventDefault();
+                  if (!openPopover && !item.content) {
+                    setIsHide(false);
+                  }
+                }}
+              >
+                <Carousel>
+                  <CarouselContent className="desktop:w-full laptop:w-full  desktop:h-full laptop:h-full ml-0 pl-0 mt-0 pt-0">
+                    {item.img.map((url, index) => (
+                      <CarouselItem
+                        key={index}
+                        className="p-2 w-full h-[15rem] flex justify-end  "
+                      >
+                        <img
+                          src={url}
+                          alt="image"
+                          className="w-[75%] h-full cursor-pointer  border-1 border-gray-200 rounded-[8px]"
+                          loading="lazy"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  {item.img.length > 1 && (
+                    <>
+                      <CarouselPrevious className="left-6" />
+                      <CarouselNext className="left-6 top-[10rem]" />
+                    </>
+                  )}
+                </Carousel>
+              </div>
+            )}
             {/* {pending && (
             <p className="text-red text-[0.8rem] flex w-full justify-end items-end">
               Đang xử lý...
@@ -173,8 +224,8 @@ const BoxMessage = (props: Props) => {
             }}
           >
             <div className="flex w-full justify-start gap-1 items-end">
-              <div className="h-4 w-4">
-                {shouldShowAvatar && (
+              {shouldShowAvatar && (
+                <div className="h-4 w-4">
                   <Avatar className="h-4 w-4">
                     <AvatarImage
                       src={receiver?.img ? receiver.img : "/twitter.png"}
@@ -182,12 +233,53 @@ const BoxMessage = (props: Props) => {
                     />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                )}
-              </div>
-              <p className="text-black px-2 py-1 text-[1.05rem] bg-gray-300 rounded-t-[12px] rounded-br-[12px] rounded-bl-[8px] mb-1   w-auto max-w-[75%] break-all">
-                {item.content}
-              </p>
+                </div>
+              )}
+              {item.content && (
+                <p className="text-black px-2 py-1 text-[1.05rem] bg-gray-300 rounded-t-[12px] rounded-br-[12px] rounded-bl-[8px] mb-1   w-auto max-w-[75%] break-all">
+                  {item.content}
+                </p>
+              )}
             </div>
+            {item.img.length > 0 && (
+              <div
+                className="flex w-full "
+                onMouseEnter={(e) => {
+                  e.preventDefault();
+                  setIsHide(true);
+                }}
+                onMouseLeave={(e) => {
+                  e.preventDefault();
+                  if (!openPopover) {
+                    setIsHide(false);
+                  }
+                }}
+              >
+                <Carousel>
+                  <CarouselContent className=" desktop:w-full laptop:w-full  desktop:h-full laptop:h-full ml-0 pl-0 mt-0 pt-0">
+                    {item.img.map((url, index) => (
+                      <CarouselItem
+                        key={index}
+                        className="p-2 w-full h-[15rem] flex "
+                      >
+                        <img
+                          src={url}
+                          alt="image"
+                          className="w-[75%] h-full cursor-pointer  border-1 border-gray-200 rounded-[8px]"
+                          loading="lazy"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  {item.img.length > 1 && (
+                    <>
+                      <CarouselPrevious className="left-[17rem]" />
+                      <CarouselNext className="right-4 " />
+                    </>
+                  )}
+                </Carousel>
+              </div>
+            )}
           </InView>
         </TooltipTrigger>
         <TooltipContent className="flex flex-col gap-2">

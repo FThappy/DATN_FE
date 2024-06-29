@@ -62,6 +62,10 @@ const MessageCard = (props: Props) => {
             {item?.lastMess?.content && item?.lastMess?.content?.length > 40
               ? item?.lastMess?.content.slice(0, 40) + "..."
               : item?.lastMess?.content}
+            {!item?.lastMess?.content &&
+              item?.lastMess?.img &&
+              item?.lastMess?.img.length > 0 &&
+              "Đã gửi file ảnh"}
           </p>
         </div>
       </div>

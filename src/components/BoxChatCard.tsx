@@ -18,6 +18,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import { FaRegFileImage } from "react-icons/fa6";
+import { createFirstMess } from "@/actions/createFirstMess";
+import { createMessage } from "@/actions/createMessage";
+import { CiCircleRemove } from "react-icons/ci";
 type Props = {
   roomId: string;
   index: number;
@@ -49,7 +53,7 @@ const BoxChatCard = (props: Props) => {
     setIsLoading,
   } = props;
 
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>("");
 
   const [pending, setPending] = useState<boolean>(false);
 
@@ -61,7 +65,17 @@ const BoxChatCard = (props: Props) => {
 
   const [page, setPage] = useState<number>(1);
 
-    const [openEmo, setOpenEmo] = useState<boolean>(false);
+  const [openEmo, setOpenEmo] = useState<boolean>(false);
+
+  const [fileImage, setFileImage] = useState<File[]>([]);
+
+  const removeFile = (index: number) => {
+    setFileImage((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
 
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -84,31 +98,126 @@ const BoxChatCard = (props: Props) => {
     }
   }, [height]);
 
-  const handleFirstMessage = async (
+  // const handleFirstMessage = async (
+  //   event:
+  //     | React.MouseEvent<HTMLButtonElement>
+  //     | KeyboardEvent<HTMLTextAreaElement>
+  // ) => {
+  //   event.preventDefault();
+  //   if (!content) {
+  //     return;
+  //   }
+  //   try {
+  //     if (room || listMessage.length > 0) {
+  //       handleMessageFirst(event);
+  //     } else {
+  //       handleMessageFirst(event);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toastifyUtils("error", "Lỗi server");
+  //   }
+  // };
+
+  const handleMessage = async (
     event:
       | React.MouseEvent<HTMLButtonElement>
       | KeyboardEvent<HTMLTextAreaElement>
   ) => {
     event.preventDefault();
-    if (!content) {
-      return;
+    if (!content && fileImage.length <= 0) {
+      return toastifyUtils("error", "Không được để trống");
     }
-    try {
-      if (room || listMessage.length > 0) {
-        socket.emit("send-message", room?._id, content);
-      } else {
-        socket.emit("send-first-message", roomId, content);
+    if (fileImage && fileImage.length > 0) {
+      const nonImageFile = fileImage.find(
+        (file) => !file.type.startsWith("image/")
+      );
+      if (nonImageFile) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
       }
-      setContent("");
+    }
+    const formData = new FormData();
+    formData.append("roomId", room?._id!);
+    formData.append("content", content);
+    if (fileImage.length > 0) {
+      fileImage.forEach((file) => {
+        formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
+      });
+    }
+    setContent("");
+    setFileImage([]);
+    try {
+      const res = await createMessage(formData);
+
+      if (res.code === 1) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+      if (res.code === 8) {
+        return toastifyUtils("warning", "Không được để trống thông tin");
+      }
+      if (res.code === 9) {
+        return toastifyUtils("warning", "Không tồn tại người dùng");
+      }
+      if (res.code === 4) {
+        return toastifyUtils("error", "Lỗi server");
+      }
     } catch (error) {
       console.log(error);
       toastifyUtils("error", "Lỗi server");
     }
   };
 
-      const handleEmojiSelect = (emoji: any) => {
-        setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
-      };
+  const handleMessageFirst = async (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    event.preventDefault();
+    if (!content && fileImage.length <= 0) {
+      return toastifyUtils("error", "Không được để trống");
+    }
+    if (fileImage && fileImage.length > 0) {
+      const nonImageFile = fileImage.find(
+        (file) => !file.type.startsWith("image/")
+      );
+      if (nonImageFile) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+    }
+    const formData = new FormData();
+    formData.append("roomId", roomId);
+    formData.append("content", content);
+    if (fileImage.length > 0) {
+      fileImage.forEach((file) => {
+        formData.append("file", file); // Sử dụng cùng một tên "files[]" cho tất cả các file
+      });
+    }
+    setContent("");
+    setFileImage([]);
+    try {
+      const res = await createFirstMess(formData);
+
+      if (res.code === 1) {
+        return toastifyUtils("warning", "Hiện chỉ hỗ trợ file ảnh");
+      }
+      if (res.code === 8) {
+        return toastifyUtils("warning", "Không được để trống thông tin");
+      }
+      if (res.code === 9) {
+        return toastifyUtils("warning", "Không tồn tại người dùng");
+      }
+      if (res.code === 4) {
+        return toastifyUtils("error", "Lỗi server");
+      }
+    } catch (error) {
+      console.log(error);
+      toastifyUtils("error", "Lỗi server");
+    }
+  };
+
+  const handleEmojiSelect = (emoji: any) => {
+    setContent((prev) => (prev ? prev + emoji.native : emoji.native)); // Thêm emoji vào nội dung hiện tại của textarea
+  };
   useEffect(() => {
     const handleNewMessage = (newMessage: MessageProp, roomIdRe: string) => {
       if (room?._id === roomIdRe) {
@@ -127,7 +236,6 @@ const BoxChatCard = (props: Props) => {
       newMessage: MessageProp,
       userId: string
     ) => {
-      console.log("aaaa");
       if (roomId === userId) {
         setRoom(newRoom);
         setListMessage((prevMessage) => [newMessage, ...prevMessage]);
@@ -200,13 +308,13 @@ const BoxChatCard = (props: Props) => {
 
   useEffect(() => {
     const handleRead = (message: MessageProp) => {
-     setListMessage((prevMessages) =>
-       prevMessages.map((item) =>
-         item._id === message._id
-           ? { ...item, isRead: [...message.isRead] }
-           : item
-       )
-     );
+      setListMessage((prevMessages) =>
+        prevMessages.map((item) =>
+          item._id === message._id
+            ? { ...item, isRead: [...message.isRead] }
+            : item
+        )
+      );
     };
     socket.on("read-message", handleRead);
 
@@ -240,6 +348,32 @@ const BoxChatCard = (props: Props) => {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
+      {fileImage && fileImage.length > 0 && (
+        <div className="h-[5rem] p-2 w-full flex flex-wrap gap-1 bg-white relative border-t-1 border-gray-300 max-w-[100%] overflow-y-auto">
+          {fileImage.map((file, index) => (
+            <div key={index} className="relative">
+              <img
+                src={URL.createObjectURL(file)}
+                alt="image"
+                className="w-[5rem] h-[5rem] cursor-pointer"
+              />
+              <button
+                className="absolute top-2 right-2 cursor-pointer flex items-center justify-center w-[30px] h-[30px] rounded-full"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  removeFile(index);
+                }}
+              >
+                <CiCircleRemove
+                  color="white"
+                  size={32}
+                  className="bg-black/40 rounded-full w-[30px] h-[30px]"
+                />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="border-slate-300 w-full h-[1px] border-t-[1px] mb-1 "></div>
       <div className="w-full  px-1 flex gap-2 items-end z-[51]">
         <textarea
@@ -248,7 +382,11 @@ const BoxChatCard = (props: Props) => {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
-              handleFirstMessage(e);
+              if (room || listMessage.length > 0) {
+                handleMessage(e);
+              } else {
+                handleMessageFirst(e);
+              }
               e.currentTarget.value = "";
             }
           }}
@@ -270,17 +408,42 @@ const BoxChatCard = (props: Props) => {
             <Picker data={data} onEmojiSelect={handleEmojiSelect} />
           </PopoverContent>
         </Popover>
+        <label
+          htmlFor={`fileImage-${roomId}`}
+          className="rounded-full bottom-5 right-4 hover:bg-gray-100 cursor-pointer"
+        >
+          <FaRegFileImage size={24} />
+        </label>
+        <input
+          id={`fileImage-${roomId}`}
+          name="fileImage"
+          type="file"
+          className="hidden"
+          multiple
+          accept="image/*"
+          onChange={(e) => {
+            e.preventDefault();
+            const fileList = e.target.files;
+            const fileArray = Array.from(fileList!);
+            setFileImage((prevFiles) => [...(prevFiles || []), ...fileArray]);
+            e.target.value = "";
+          }}
+        />
         <button
           type="submit"
           className="flex justify-end items-center w-[8%] mb-1 	"
-          disabled={content ? false : true}
+          disabled={content || fileImage.length > 0 ? false : true}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
-            handleFirstMessage(e);
+            if (room || listMessage.length > 0) {
+              handleMessage(e);
+            } else {
+              handleMessageFirst(e);
+            }
           }}
         >
           <PiPaperPlaneRightFill
-            color={content ? "#1E90FF" : "gray"}
+            color={content || fileImage.length > 0 ? "#1E90FF" : "gray"}
             className="mr-2"
             size={20}
           />
