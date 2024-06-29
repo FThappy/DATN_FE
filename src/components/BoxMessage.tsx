@@ -171,7 +171,7 @@ const BoxMessage = (props: Props) => {
                     {item.img.map((url, index) => (
                       <CarouselItem
                         key={index}
-                        className="p-2 w-full h-[15rem] flex justify-end  "
+                        className="p-2 w-full h-[25rem] flex justify-end"
                       >
                         <img
                           src={url}
@@ -182,12 +182,6 @@ const BoxMessage = (props: Props) => {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  {item.img.length > 1 && (
-                    <>
-                      <CarouselPrevious className="left-6" />
-                      <CarouselNext className="left-6 top-[10rem]" />
-                    </>
-                  )}
                 </Carousel>
               </div>
             )}
@@ -260,7 +254,7 @@ const BoxMessage = (props: Props) => {
                     {item.img.map((url, index) => (
                       <CarouselItem
                         key={index}
-                        className="p-2 w-full h-[15rem] flex "
+                        className="p-2 w-full h-[25rem] flex "
                       >
                         <img
                           src={url}
@@ -271,12 +265,6 @@ const BoxMessage = (props: Props) => {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  {item.img.length > 1 && (
-                    <>
-                      <CarouselPrevious className="left-[17rem]" />
-                      <CarouselNext className="right-4 " />
-                    </>
-                  )}
                 </Carousel>
               </div>
             )}
