@@ -65,7 +65,7 @@ const OurEvent = () => {
       <div className="grid grid-cols-3 gap-4 items-center  justify-center  w-[65rem]">
         {listEvent && listEvent.length > 0 ? (
           listEvent.map((item, index) => (
-            <Link href={item?.event?._id}
+            <Link href={`/event/${item?.event?._id}`}
               key={index}
               className="flex flex-col bg-cover rounded-[12px] w-[20rem] h-[20rem] "
               style={{
