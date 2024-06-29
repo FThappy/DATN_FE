@@ -237,6 +237,7 @@ const BoxChatCard = (props: Props) => {
       userId: string
     ) => {
       if (roomId === userId) {
+        socket.emit("join-messageRoom", newRoom._id);
         setRoom(newRoom);
         setListMessage((prevMessage) => [newMessage, ...prevMessage]);
       }

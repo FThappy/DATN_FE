@@ -65,14 +65,17 @@ const MessengerTopBar = (props: Props) => {
   useEffect(() => {
     const handleRead = (message: MessageProp) => {
       setListRoom((prevRooms) =>
-        prevRooms.map((room) =>
-          room?.lastMess?._id === message._id
-            ? {
-                ...room,
-                lastMess: { ...room.lastMess, isRead: [...message.isRead] },
-              }
-            : room
-        )
+        prevRooms.map((room) =>{
+          if (room?.lastMess?._id === message._id) {
+            setTotalNewMess((prev) => (prev > 0 ? prev - 1 : 0));
+
+            return {
+              ...room,
+              lastMess: { ...room.lastMess, isRead: [...message.isRead] },
+            };
+          }
+          return room;
+        })
       );
     };
 

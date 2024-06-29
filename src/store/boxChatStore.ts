@@ -38,6 +38,14 @@ export const boxChatStore = create<State>((set) => ({
           return { listBoxChat: [...state.listBoxChat] };
         }
       }
+      if (type !== "person") {
+        const exitsBox = state.listBoxChat.find(
+          (box) => box.idBox === roomMsg?.user._id
+        );
+        if (exitsBox) {
+          return { listBoxChat: [...state.listBoxChat] };
+        }
+      }
       if (state.listBoxChat.length === 3) {
         return {
           listBoxChat: [

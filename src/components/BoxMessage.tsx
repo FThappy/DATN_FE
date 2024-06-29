@@ -82,7 +82,7 @@ const BoxMessage = (props: Props) => {
 
   const handleReadMessage = async () => {
     try {
-      socket.emit("read-message", room?._id, item._id);
+      socket.emit("read-message", room?._id, item._id, user?.id);
     } catch (error) {
       console.log(error);
     }
@@ -166,8 +166,8 @@ const BoxMessage = (props: Props) => {
                   }
                 }}
               >
-                <Carousel>
-                  <CarouselContent className="desktop:w-full laptop:w-full  desktop:h-full laptop:h-full ml-0 pl-0 mt-0 pt-0">
+                <Carousel className="w-full flex justify-end">
+                  <CarouselContent className="desktop:w-full laptop:w-full desktop:h-full laptop:h-full ml-0 pl-0 mt-0 pt-0">
                     {item.img.map((url, index) => (
                       <CarouselItem
                         key={index}
