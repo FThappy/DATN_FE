@@ -32,7 +32,6 @@ const CommentProjectContainer = (props: Props) => {
   useEffect(() => {
     if (inView) {
       setIsLoading(true);
-      console.log("a")
       socket.emit("join-room", project._id, "project");
       socket.on("comment-room", (listComment) => {
         console.log(listComment)

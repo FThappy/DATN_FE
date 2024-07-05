@@ -199,7 +199,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="flex flex-wrap items-center w-[80%] gap-2 justify-end">
                 {project && project.type.length > 0
                   ? project.type.map((item, index) => (
-                      <div key={index} className=" h-[2rem] relative">
+                      <div key={index} className=" h-[2rem] relative mt-1 mb-1">
                         <p className="bg-gray-200 rounded-[10px] p-2">{item}</p>
                         <div
                           className="absolute top-[-2px] right-[-2px] bg-white rounded-full"
@@ -217,7 +217,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             {user && project ? (
               <ProjectCommentContainer user={user} project={project} />
             ) : (
-              <Skeleton className="w-full h-[30rem] rounded-sm" />
+              <></>
             )}
           </div>
         ) : (

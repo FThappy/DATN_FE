@@ -38,7 +38,7 @@ const UserNewTab = (props: Props) => {
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [user]);
+  }, [user?.id]);
   return <></>;
 };
 
