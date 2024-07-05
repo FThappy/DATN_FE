@@ -5,10 +5,9 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import ImageResize from "tiptap-extension-resize-image";
-import Image from "@tiptap/extension-image";
-import { useState } from "react";
 import Toolbar from "../Toolbar";
-
+import Link from "@tiptap/extension-link";
+import Youtube from "@tiptap/extension-youtube";
 type Props = {
   content: string;
   onChange: (newContent: string) => void;
@@ -35,12 +34,17 @@ const TiptapUpdate = ({
   };
 
   const editor = useEditor({
-    extensions: [
+     extensions: [
       StarterKit,
       Underline,
       ImageResize,
       TextAlign.configure({
         types: ["heading", "paragraph"],
+      }),
+      Link,
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
       }),
     ],
     editorProps: {
