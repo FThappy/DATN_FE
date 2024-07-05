@@ -32,7 +32,7 @@ const CommentPostContainer = (props: Props) => {
 
 
   useEffect(() => {
-    if (inView) {
+    if (inView && comments.length <= 0) {
       setIsLoading(true);
       socket.emit("join-room", post._id);
       socket.on("comment-room", (listComment) => {
@@ -44,6 +44,8 @@ const CommentPostContainer = (props: Props) => {
       };
     }
   }, [post._id, inView]);
+
+  console.log(comments.length , endComment , newComments.length)
 
   useEffect(() => {
     socket.off("error-comment").on("error-comment", (error) => {

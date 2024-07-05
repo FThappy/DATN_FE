@@ -53,12 +53,6 @@ const ModalPost = (props: Props) => {
 
   const user = userStore((state: any) => state?.user);
 
-  const [openPopover, setOpenPopover] = useState(false);
-
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const [pending, setPending] = useState(false);
-
   const [content, setContent] = useState<string>();
 
   const [comments, setComments] = useState<CommentProps[]>([]);
@@ -136,9 +130,17 @@ const ModalPost = (props: Props) => {
       toastifyUtils("error", "Lỗi server");
     }
   };
+
+  const handleOpenChange = (isOpen : boolean) => {
+    setOpen(isOpen);
+    setComments([]);
+  };
   return (
     <div>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(open: boolean) => handleOpenChange(open)}
+      >
         <DialogTrigger className="w-full">
           <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-full">
             <FaRegComment size={28} color={"#9ca3af"} />

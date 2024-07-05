@@ -141,7 +141,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                 >
                   <div className="h-[3rem] flex items-center p-2 px-4 gap-2 bg-gray-200 hover:bg-gray-300 rounded-[8px] ">
                     <BiSolidCommentError size={24} />
-                    <p className="font-bold text-[1.1rem]">Báo cáo sự kiện</p>
+                    <p className="font-bold text-[1.1rem]">Báo cáo dự án</p>
                   </div>
                 </ReportModal>
                 <ModalShareEventProject itemId={project?._id} type="project" />
