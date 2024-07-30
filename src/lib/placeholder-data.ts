@@ -156,7 +156,7 @@ export const sidebarLeft = [
   {
     name: "Sự kiện của bạn",
     img: "/event.png",
-    href: "/event-owner?page=0",
+    href: "/profile/event-owner?page=0",
   },
   {
     name: "Chiến dịch gây quỹ",

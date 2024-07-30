@@ -44,7 +44,7 @@ const OurEvent = () => {
       <p
         className={`${inter.className} font-bold text-slate-800 text-4xl  mb-8`}
       >
-        Sự kiện thiện nguyện
+        Sự kiện 
         <TextUnderline
           chilldren=" thiện nguyện "
           width={300}
