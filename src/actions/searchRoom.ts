@@ -1,17 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const searchRoom = async (
-  qSearch: string | null,
-
-) => {
+export const searchRoom = async (qSearch: string | null) => {
   try {
     const res = await userRequest.get(`api/message/search`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        qSearch: qSearch,
-      },
+        qSearch: qSearch
+      }
     });
     return res.data;
   } catch (error: any) {

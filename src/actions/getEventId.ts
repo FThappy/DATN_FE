@@ -1,14 +1,14 @@
-"use server";
+'use server';
 
-import { userRequest } from "@/utils/requestMethod";
-import { cookies } from "next/headers";
+import { userRequest } from '@/utils/requestMethod';
+import { cookies } from 'next/headers';
 
-export const getEventById = async ( eventId: string) => {
+export const getEventById = async (eventId: string) => {
   try {
     const res = await userRequest.get(`/api/event/${eventId}`, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {
@@ -16,5 +16,3 @@ export const getEventById = async ( eventId: string) => {
     return error.response.data;
   }
 };
-
-

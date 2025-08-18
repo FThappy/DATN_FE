@@ -9,7 +9,7 @@ export type ReqAddFriendProps = {
 
 export type FriendProps = {
   _id: string;
-  friend : string[];
+  friend: string[];
   createdAt: Date;
   updatedAt: Date;
   __v: number;

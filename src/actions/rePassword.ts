@@ -1,17 +1,17 @@
-"use server";
-import { userRequest } from "@/utils/requestMethod";
+'use server';
+import { userRequest } from '@/utils/requestMethod';
 
-export const rePasswordAction = async (email: string, tokenRePassword : string , _password : string) => {
+export const rePasswordAction = async (email: string, tokenRePassword: string, _password: string) => {
   try {
     const res = await userRequest.post(
-      "/api/auth/re-password",
+      '/api/auth/re-password',
       { password: _password },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           email: email,
-          tokenRePassword: tokenRePassword,
-        },
+          tokenRePassword: tokenRePassword
+        }
       }
     );
     return res.data;

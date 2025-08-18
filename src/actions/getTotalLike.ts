@@ -1,13 +1,13 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getTotalLike = async (itemId : string) => {
+export const getTotalLike = async (itemId: string) => {
   try {
-    const res = await userRequest.get("/api/like/total", {
+    const res = await userRequest.get('/api/like/total', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      params:{
-        itemId : itemId
+      params: {
+        itemId: itemId
       }
     });
     return res.data;

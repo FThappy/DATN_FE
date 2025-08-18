@@ -1,7 +1,7 @@
-import { getUserPublic } from "@/actions/getInfoUserPublic";
-import toastifyUtils from "@/utils/toastify";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { getUserPublic } from '@/actions/getInfoUserPublic';
+import toastifyUtils from '@/utils/toastify';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   toUserId: string;
@@ -22,12 +22,12 @@ const LinkToUser = (props: Props) => {
     try {
       const res = await getUserPublic(toUserId);
       if (res.code === 3) {
-        toastifyUtils("error", "Không tồn tại người dùng");
+        toastifyUtils('error', 'Không tồn tại người dùng');
       }
       setToUser(res.data);
     } catch (error) {
       console.log(error);
-      toastifyUtils("error", "Lỗi server");
+      toastifyUtils('error', 'Lỗi server');
     }
   };
 
@@ -37,7 +37,7 @@ const LinkToUser = (props: Props) => {
     }
   }, [toUserId]);
   return (
-    <Link href={`/profile/${toUserId}`} className="font-bold">
+    <Link href={`/profile/${toUserId}`} className='font-bold'>
       {toUser?.displayname ? toUser?.displayname : toUser?.username}
     </Link>
   );

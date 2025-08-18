@@ -1,11 +1,11 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const getTotalNotifications = async () => {
   try {
-    const res = await userRequest.get("/api/notification/total", {
+    const res = await userRequest.get('/api/notification/total', {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

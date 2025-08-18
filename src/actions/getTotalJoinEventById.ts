@@ -1,16 +1,16 @@
-"use server";
+'use server';
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getTotalJoinEventById = async (eventId : string) => {
+export const getTotalJoinEventById = async (eventId: string) => {
   try {
     const res = await userRequest.get(`/api/event/total-join`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        eventId: eventId,
-      },
+        eventId: eventId
+      }
     });
     return res.data;
   } catch (error: any) {

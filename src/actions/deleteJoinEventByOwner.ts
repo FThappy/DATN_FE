@@ -24,24 +24,19 @@
 //   }
 // };
 
+import { userRequest } from '@/utils/requestMethod';
 
-import { userRequest } from "@/utils/requestMethod";
-
-export const deleteJoinEventByOwner = async (
-  userId: string,
-  eventId: string,
-  ownerId: string
-) => {
+export const deleteJoinEventByOwner = async (userId: string, eventId: string, ownerId: string) => {
   try {
-    const res = await userRequest.delete("/api/event/join-owner", {
+    const res = await userRequest.delete('/api/event/join-owner', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
         userId: userId,
         eventId: eventId,
-        ownerId: ownerId,
-      },
+        ownerId: ownerId
+      }
     });
     return res.data;
   } catch (error: any) {

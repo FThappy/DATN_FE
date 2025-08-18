@@ -18,6 +18,7 @@ import Notification from "./Notification";
 import { socket } from "@/utils/requestMethod";
 import { boxChatStore } from "@/store/boxChatStore";
 import { usePathname } from "next/navigation";
+import { motion } from 'motion/react';
 
 const dancing = Dancing_Script({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -27,9 +28,7 @@ const Navbar = () => {
   const deleteUser = userStore((state: any) => state?.deleteUser);
   const deleteAll = boxChatStore((state: any) => state?.deleteAll);
   const pathname = usePathname();
-
-
-
+  console.log(pathname)
   const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
@@ -45,6 +44,14 @@ const Navbar = () => {
       return toastifyUtils("error", "Lỗi server");
     }
   };
+  const underline: React.CSSProperties = {
+  position: 'absolute',
+  bottom: -10,
+  left: 0,
+  right: 0,
+  height: 2,
+  background: '#16a34a'
+};
   return (
     <div className="flex px-8 bg-white w-screen h-24 items-center justify-between sticky top-0 z-[99]">
       <div className="flex justify-center items-center ">
@@ -66,9 +73,18 @@ const Navbar = () => {
           <Link
             href={item.url}
             key={index}
-            className="font-normal text-2xl text-slate-800 "
+            className={`font-normal text-2xl ${item.url === pathname ? "text-green-600" : "text-slate-800"}`}
           >
-            {item.name}
+            <motion.div className="relative inline-block px-1">
+              <span>{item.name}</span>
+              {item.url === pathname && (
+                <motion.div
+                  style={underline}
+                  layoutId="underline"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+            </motion.div>
           </Link>
         ))}
         <div className="h-[24px] w-[1px] border-r-2 border-slate-500	"></div>
@@ -173,7 +189,7 @@ const Navbar = () => {
           <>
             <Link
               href={"/login"}
-              className={`h-[55px] w-[120px] bg-green rounded flex justify-center items-center font-bold text-white text-[1.2rem] ${inter.className}	`}
+              className={`h-[55px] w-[120px] bg-greenPrimary rounded flex justify-center items-center font-bold text-white text-[1.2rem] ${inter.className}	`}
             >
               Đăng Nhập
             </Link>

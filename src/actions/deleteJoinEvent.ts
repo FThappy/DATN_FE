@@ -23,19 +23,18 @@
 //   }
 // };
 
-
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const deleteJoinEvent = async (userId: string, eventId: string) => {
   try {
-    const res = await userRequest.delete("/api/event/join", {
+    const res = await userRequest.delete('/api/event/join', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
         userId: userId,
-        eventId: eventId,
-      },
+        eventId: eventId
+      }
     });
     return res.data;
   } catch (error: any) {

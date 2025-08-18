@@ -1,11 +1,11 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const createMessage= async (formData: FormData) => {
+export const createMessage = async (formData: FormData) => {
   try {
-    const res = await userRequest.post("/api/message", formData, {
+    const res = await userRequest.post('/api/message', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     });
     return res.data;
   } catch (error: any) {

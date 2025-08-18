@@ -1,4 +1,4 @@
-import { getTotalPageEvent } from "@/actions/getTotalPageEvent";
+import { getTotalPageEvent } from '@/actions/getTotalPageEvent';
 import {
   Pagination,
   PaginationContent,
@@ -6,13 +6,13 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import toastifyUtils from "@/utils/toastify";
-import { EventProps } from "@/utils/typeEvent";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Id } from "react-toastify";
+  PaginationPrevious
+} from '@/components/ui/pagination';
+import toastifyUtils from '@/utils/toastify';
+import { EventProps } from '@/utils/typeEvent';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Id } from 'react-toastify';
 
 type Props = {
   setEvents: React.Dispatch<React.SetStateAction<EventProps[]>>;
@@ -25,27 +25,20 @@ type Props = {
 };
 
 export function PaginationPage(props: Props) {
-  const {
-    setTotalPage,
-    totalPage,
-    getTotalPageEvent,
-    active,
-    setActive,
-    page,
-  } = props;
+  const { setTotalPage, totalPage, getTotalPageEvent, active, setActive, page } = props;
   const number = 28;
 
   const pathname = usePathname();
 
   const searchParams = useSearchParams();
 
-  const qSearch = searchParams.get("qSearch");
+  const qSearch = searchParams.get('qSearch');
 
-  const qDate = searchParams.get("qDate");
+  const qDate = searchParams.get('qDate');
 
-  const qSort = searchParams.get("qSort");
+  const qSort = searchParams.get('qSort');
 
-  const qCity = searchParams.get("qCity");
+  const qCity = searchParams.get('qCity');
 
   useEffect(() => {
     getTotalPageEvent();
@@ -91,14 +84,14 @@ export function PaginationPage(props: Props) {
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              className="hover:bg-white cursor-pointer"
+              className='hover:bg-white cursor-pointer'
               // onClick={handlePrev}
               href={
                 !(
-                  (qSearch && qSearch !== "undefined") ||
-                  (qDate && qDate !== "undefined") ||
-                  (qSort && qSort !== "undefined") ||
-                  (qCity && qCity !== "undefined")
+                  (qSearch && qSearch !== 'undefined') ||
+                  (qDate && qDate !== 'undefined') ||
+                  (qSort && qSort !== 'undefined') ||
+                  (qCity && qCity !== 'undefined')
                 )
                   ? `${pathname}?page=${page - 1}`
                   : `${pathname}?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
@@ -114,14 +107,14 @@ export function PaginationPage(props: Props) {
               // }}
             >
               <PaginationLink
-                className="hover:bg-white cursor-pointer"
+                className='hover:bg-white cursor-pointer'
                 isActive={active === numberPage}
                 href={
                   !(
-                    (qSearch && qSearch !== "undefined") ||
-                    (qDate && qDate !== "undefined") ||
-                    (qSort && qSort !== "undefined") ||
-                    (qCity && qCity !== "undefined")
+                    (qSearch && qSearch !== 'undefined') ||
+                    (qDate && qDate !== 'undefined') ||
+                    (qSort && qSort !== 'undefined') ||
+                    (qCity && qCity !== 'undefined')
                   )
                     ? `${pathname}?page=${numberPage - 1}`
                     : `${pathname}?page=${
@@ -135,14 +128,12 @@ export function PaginationPage(props: Props) {
           ))}
           <PaginationItem>
             <PaginationNext
-              className="hover:bg-white cursor-pointer"
+              className='hover:bg-white cursor-pointer'
               // onClick={handleNext}
               href={
-                qSearch || qDate || qSort !== "" || qCity !== ""
+                qSearch || qDate || qSort !== '' || qCity !== ''
                   ? `${pathname}?page=${page + 1}`
-                  : `${pathname}?page=${
-                      page + 1
-                    }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
+                  : `${pathname}?page=${page + 1}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
               }
             />
           </PaginationItem>
@@ -156,9 +147,9 @@ export function PaginationPage(props: Props) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className="hover:bg-white cursor-pointer"
+            className='hover:bg-white cursor-pointer'
             href={
-              !(qSearch || qDate || qSort !== "" || qCity !== "")
+              !(qSearch || qDate || qSort !== '' || qCity !== '')
                 ? `${pathname}?page=${page - 1}`
                 : `${pathname}?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
             }
@@ -180,10 +171,10 @@ export function PaginationPage(props: Props) {
               // }}
             >
               <PaginationLink
-                className="hover:bg-white cursor-pointer"
+                className='hover:bg-white cursor-pointer'
                 isActive={active === numberPage}
                 href={
-                  !(qSearch || qDate || qSort !== "" || qCity !== "")
+                  !(qSearch || qDate || qSort !== '' || qCity !== '')
                     ? `${pathname}?page=${numberPage - 1}`
                     : `${pathname}?page=${
                         numberPage - 1
@@ -199,40 +190,36 @@ export function PaginationPage(props: Props) {
             <PaginationEllipsis />
           </PaginationItem>
         )}
-        {totalPage
-          .slice(totalPage.length - 3, totalPage.length)
-          .map((numberPage, index) => (
-            <PaginationItem
-              key={index}
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   handleClick(numberPage);
-              // }}
+        {totalPage.slice(totalPage.length - 3, totalPage.length).map((numberPage, index) => (
+          <PaginationItem
+            key={index}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   handleClick(numberPage);
+            // }}
+          >
+            <PaginationLink
+              className='hover:bg-white cursor-pointer'
+              isActive={active === numberPage}
+              href={
+                !(qSearch || qDate || qSort !== '' || qCity !== '')
+                  ? `${pathname}?page=${numberPage - 1}`
+                  : `${pathname}?page=${
+                      numberPage - 1
+                    }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
+              }
             >
-              <PaginationLink
-                className="hover:bg-white cursor-pointer"
-                isActive={active === numberPage}
-                href={
-                  !(qSearch || qDate || qSort !== "" || qCity !== "")
-                    ? `${pathname}?page=${numberPage - 1}`
-                    : `${pathname}?page=${
-                        numberPage - 1
-                      }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-                }
-              >
-                {numberPage}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
+              {numberPage}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
         <PaginationItem>
           <PaginationNext
-            className="hover:bg-white cursor-pointer"
+            className='hover:bg-white cursor-pointer'
             href={
-              !(qSearch || qDate || qSort !== "" || qCity !== "")
+              !(qSearch || qDate || qSort !== '' || qCity !== '')
                 ? `${pathname}?page=${page + 1}`
-                : `${pathname}?page=${
-                    page + 1
-                  }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
+                : `${pathname}?page=${page + 1}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
             }
           />
         </PaginationItem>

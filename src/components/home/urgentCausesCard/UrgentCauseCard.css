@@ -9,7 +9,7 @@
     transparent 0,
     transparent
   );
-  background-size:  1rem 1rem;
+  background-size: 1rem 1rem;
 }
 .progress-bar-animated {
   animation: progress-bar-stripes 1s linear infinite;

@@ -1,7 +1,6 @@
-
 .inputContact::-webkit-calendar-picker-indicator {
-        filter: invert(1);
+  filter: invert(1);
 }
-.animatie::after{
-    transition:  0.25s ease-out;
+.animatie::after {
+  transition: 0.25s ease-out;
 }

@@ -1,31 +1,31 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { PostProps } from "@/utils/typePost";
-import { differenceInHours, differenceInDays } from "date-fns";
-import Readmore from "../utils/Readmore";
-import toastifyUtils from "@/utils/toastify";
-import { userStore } from "@/store/userStore";
-import Link from "next/link";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { FaTrashCan } from "react-icons/fa6";
-import { BiSolidCommentError } from "react-icons/bi";
-import { deletePost } from "@/actions/deletePost";
-import { Dialog, DialogContentCustom, DialogTrigger } from "../ui/dialog";
-import DeletePost from "../DeleteSure";
-import ReportModal from "../ReportModal";
-import ModalPost from "../ModalPost";
-import UpdatePost from "../UpdatePost";
-import { getUser } from "@/actions/getUser";
-import { User } from "@/utils/typeAuth";
-import ModalShare from "../ModalShare";
-import SharePost from "./SharePost";
-import ShareEvent from "./ShareEvent";
-import ShareProject from "./ShareProject";
-import LikeContainer from "../LikeContainer";
-import { getTotalLike } from "@/actions/getTotalLike";
-import ModalUpdateSharePost from "../ModalUpdateSharePost";
-import ImageContainer from "../utils/ImageContainer";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { PostProps } from '@/utils/typePost';
+import { differenceInHours, differenceInDays } from 'date-fns';
+import Readmore from '../utils/Readmore';
+import toastifyUtils from '@/utils/toastify';
+import { userStore } from '@/store/userStore';
+import Link from 'next/link';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { FaTrashCan } from 'react-icons/fa6';
+import { BiSolidCommentError } from 'react-icons/bi';
+import { deletePost } from '@/actions/deletePost';
+import { Dialog, DialogContentCustom, DialogTrigger } from '../ui/dialog';
+import DeletePost from '../DeleteSure';
+import ReportModal from '../ReportModal';
+import ModalPost from '../ModalPost';
+import UpdatePost from '../UpdatePost';
+import { getUser } from '@/actions/getUser';
+import { User } from '@/utils/typeAuth';
+import ModalShare from '../ModalShare';
+import SharePost from './SharePost';
+import ShareEvent from './ShareEvent';
+import ShareProject from './ShareProject';
+import LikeContainer from '../LikeContainer';
+import { getTotalLike } from '@/actions/getTotalLike';
+import ModalUpdateSharePost from '../ModalUpdateSharePost';
+import ImageContainer from '../utils/ImageContainer';
 
 type Props = {
   post: PostProps;
@@ -51,12 +51,12 @@ const Post = (props: Props) => {
     try {
       const res = await getUser(post.userId);
       if (res.code === 3) {
-        toastifyUtils("error", "Không tồn tại người dùng");
+        toastifyUtils('error', 'Không tồn tại người dùng');
       }
       setPoster(res.data);
     } catch (error) {
       console.log(error);
-      toastifyUtils("error", "Lỗi server");
+      toastifyUtils('error', 'Lỗi server');
     }
   };
 
@@ -85,27 +85,27 @@ const Post = (props: Props) => {
       const res = await deletePost(poster!._id, post._id);
       if (res.code === 4) {
         setPending(false);
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
       if (res.code === 3) {
         setPending(false);
-        toastifyUtils("error", "Không tồn tại post này");
+        toastifyUtils('error', 'Không tồn tại post này');
       }
       if (res.code === 0) {
         setPending(false);
         removePost();
         setOpenDeleteModal(false);
         setOpenPopover(false);
-        toastifyUtils("success", "Xóa bài viết thành công");
+        toastifyUtils('success', 'Xóa bài viết thành công');
       }
     } catch (error) {
       setPending(false);
       console.log(error);
-      toastifyUtils("error", "Lỗi server");
+      toastifyUtils('error', 'Lỗi server');
     }
   };
   const handleNewSharePost = (newPost: PostProps) => {
-    setPosts((prev) => [newPost, ...prev]);
+    setPosts(prev => [newPost, ...prev]);
   };
 
   useEffect(() => {
@@ -118,69 +118,56 @@ const Post = (props: Props) => {
         }
       } catch (error) {
         console.log(error);
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
     };
     totalLike();
   }, [post._id]);
 
   return (
-    <div className="py-4 shadow-beautiful rounded-[0.5rem]	bg-white mt-4">
-      <div className="flex justify-between items-center w-full px-4">
-        <div className="flex items-center">
+    <div className='py-4 shadow-beautiful rounded-[0.5rem]	bg-white mt-4'>
+      <div className='flex justify-between items-center w-full px-4'>
+        <div className='flex items-center'>
           <Link href={`/profile/${poster?._id}`}>
-            <div className="h-12 w-12 rounded-full  flex justify-center items-center ">
+            <div className='h-12 w-12 rounded-full  flex justify-center items-center '>
               <Image
-                src={poster?.img ? poster.img : "/twitter.png"}
-                alt="logo-user"
-                loading="lazy"
+                src={poster?.img ? poster.img : '/twitter.png'}
+                alt='logo-user'
+                loading='lazy'
                 height={80}
                 width={80}
-                className="cursor-pointer w-[50px] h-[50px] border-slate-300	border rounded-full"
+                className='cursor-pointer w-[50px] h-[50px] border-slate-300	border rounded-full'
               />
             </div>
           </Link>
-          <div className=" ml-2 ">
+          <div className=' ml-2 '>
             <Link href={`/profile/${poster?._id}`}>
-              <p className=" w-[250px] font-bold cursor-pointer">
+              <p className=' w-[250px] font-bold cursor-pointer'>
                 {poster?.displayname ? poster?.displayname : poster?.username}
               </p>
             </Link>
-            <p className=" w-[200px] text-gray-400 cursor-pointer">
+            <p className=' w-[200px] text-gray-400 cursor-pointer'>
               {differenceInHours(new Date(), new Date(post.createdAt)) <= 0
-                ? "Vài phút trước"
+                ? 'Vài phút trước'
                 : differenceInHours(new Date(), new Date(post.createdAt)) >= 24
-                ? differenceInDays(new Date(), new Date(post.createdAt)) +
-                  " ngày trước"
-                : differenceInHours(new Date(), new Date(post.createdAt)) + "h"}
+                  ? differenceInDays(new Date(), new Date(post.createdAt)) + ' ngày trước'
+                  : differenceInHours(new Date(), new Date(post.createdAt)) + 'h'}
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className='flex gap-2'>
           <Popover open={openPopover} onOpenChange={setOpenPopover}>
             <PopoverTrigger asChild>
-              <div className="flex w-[40px] h-[40px] p-2 justify-center items-center hover:bg-gray-300 rounded-full">
-                <Image
-                  src="/more.png"
-                  alt="more"
-                  loading="lazy"
-                  height={30}
-                  width={30}
-                  className="cursor-pointer"
-                />
+              <div className='flex w-[40px] h-[40px] p-2 justify-center items-center hover:bg-gray-300 rounded-full'>
+                <Image src='/more.png' alt='more' loading='lazy' height={30} width={30} className='cursor-pointer' />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="mr-[12rem] p-1 w-[18rem] px-4">
+            <PopoverContent className='mr-[12rem] p-1 w-[18rem] px-4'>
               {user?.id !== poster?._id ? (
-                <ReportModal
-                  postId={post._id}
-                  type="post"
-                  userId={poster?._id}
-                  setOpenPopover={setOpenPopover}
-                >
-                  <button className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-1  rounded-[0.5rem] mt-1 ">
+                <ReportModal postId={post._id} type='post' userId={poster?._id} setOpenPopover={setOpenPopover}>
+                  <button className='w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-1  rounded-[0.5rem] mt-1 '>
                     <BiSolidCommentError size={24} />
-                    <p className="font-bold text-[1.1rem]">Báo cáo bài viết</p>
+                    <p className='font-bold text-[1.1rem]'>Báo cáo bài viết</p>
                   </button>
                 </ReportModal>
               ) : (
@@ -203,22 +190,15 @@ const Post = (props: Props) => {
                     />
                   )}
 
-                  <Dialog
-                    open={openDeleteModal}
-                    onOpenChange={setOpenDeleteModal}
-                  >
-                    <DialogTrigger className="w-full">
-                      <button className="w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-1  rounded-[0.5rem] mt-1 ">
+                  <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
+                    <DialogTrigger className='w-full'>
+                      <button className='w-full h-[50px] cursor-pointer flex items-center gap-2 hover:bg-gray-100 p-1  rounded-[0.5rem] mt-1 '>
                         <FaTrashCan size={24} />
-                        <p className="font-bold text-[1.1rem]">Xóa bài viết</p>
+                        <p className='font-bold text-[1.1rem]'>Xóa bài viết</p>
                       </button>
                     </DialogTrigger>
-                    <DialogContentCustom className="rounded-[8px] px-0 py-2 w-[20rem]">
-                      <DeletePost
-                        pending={pending}
-                        handleDelete={handleDeletePost}
-                        type="bài viết"
-                      />
+                    <DialogContentCustom className='rounded-[8px] px-0 py-2 w-[20rem]'>
+                      <DeletePost pending={pending} handleDelete={handleDeletePost} type='bài viết' />
                     </DialogContentCustom>
                   </Dialog>
                 </>
@@ -227,27 +207,20 @@ const Post = (props: Props) => {
           </Popover>
           {user?.id !== poster?._id && (
             <button
-              className="flex w-[40px] h-[40px] p-2 justify-center items-center hover:bg-gray-300 rounded-full"
+              className='flex w-[40px] h-[40px] p-2 justify-center items-center hover:bg-gray-300 rounded-full'
               onClick={removePost}
             >
-              {" "}
-              <Image
-                src="/reject.png"
-                alt="reject"
-                loading="lazy"
-                height={30}
-                width={30}
-                className="cursor-pointer"
-              />
+              {' '}
+              <Image src='/reject.png' alt='reject' loading='lazy' height={30} width={30} className='cursor-pointer' />
             </button>
           )}
         </div>
       </div>
       {post.document && <Readmore documentation={post.document} />}
       {post.typeShare ? (
-        post.typeShare === "post" ? (
+        post.typeShare === 'post' ? (
           <SharePost itemId={post?.linkItem} />
-        ) : post.typeShare === "event" ? (
+        ) : post.typeShare === 'event' ? (
           <ShareEvent itemId={post?.linkItem} />
         ) : (
           <ShareProject itemId={post?.linkItem} />
@@ -255,36 +228,24 @@ const Post = (props: Props) => {
       ) : (
         post.img.length > 0 && <ImageContainer postImg={post.img} />
       )}
-      <div className="flex items-center gap-2 mt-4 px-4">
-        <Image
-          src="/like.png"
-          alt="like"
-          loading="lazy"
-          height={20}
-          width={20}
-          className="cursor-pointer"
-        />
-        <p className=" w-[200px] text-gray-400 cursor-pointer">{totalLike}</p>
+      <div className='flex items-center gap-2 mt-4 px-4'>
+        <Image src='/like.png' alt='like' loading='lazy' height={20} width={20} className='cursor-pointer' />
+        <p className=' w-[200px] text-gray-400 cursor-pointer'>{totalLike}</p>
       </div>
-      <div className="px-4">
-        <div className=" border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem] "></div>
+      <div className='px-4'>
+        <div className=' border-slate-300 w-full h-[10px] border-t-[1px] mt-[0.65rem] '></div>
       </div>
       {user && (
-        <div className="flex items-center justify-between w-full px-4">
-          <div className="w-1/3">
-            <LikeContainer
-              itemId={post._id}
-              type="post"
-              totalLike={totalLike}
-              setTotalLike={setTotalLike}
-            />
+        <div className='flex items-center justify-between w-full px-4'>
+          <div className='w-1/3'>
+            <LikeContainer itemId={post._id} type='post' totalLike={totalLike} setTotalLike={setTotalLike} />
           </div>
 
           {/* <div className="flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-300 rounded-[10px] p-2 w-1/3">
           <FaRegComment size={28} color={"#9ca3af"} />
           <p className="text-gray-400 font-bold text-[1rem] ">Bình Luận</p>
         </div> */}
-          <div className="w-1/3">
+          <div className='w-1/3'>
             <ModalPost
               post={post}
               userName={poster?.username}
@@ -295,12 +256,8 @@ const Post = (props: Props) => {
               setTotalLike={setTotalLike}
             />
           </div>
-          <div className="w-1/3">
-            <ModalShare
-              itemId={post._id}
-              handleNewSharePost={handleNewSharePost}
-              type="post"
-            />
+          <div className='w-1/3'>
+            <ModalShare itemId={post._id} handleNewSharePost={handleNewSharePost} type='post' />
           </div>
         </div>
       )}

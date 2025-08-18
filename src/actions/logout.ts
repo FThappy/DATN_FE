@@ -1,5 +1,5 @@
 // "use server"
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 // import { cookies } from "next/headers";
 
 // export const logout = async () => {
@@ -20,12 +20,11 @@ import { userRequest } from "@/utils/requestMethod";
 // };
 
 export const logout = async () => {
-
   try {
     const res = await userRequest.delete(`api/auth/logout`, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

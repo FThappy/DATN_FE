@@ -1,14 +1,14 @@
-"use client";
-import Image from "next/image";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import CertaintUser from "../../CertaintUser";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getUser } from "@/actions/getUser";
-import { userStore } from "@/store/userStore";
-import { useRouter } from "next/navigation";
-import { User } from "@/utils/typeAuth";
-import toastifyUtils from "@/utils/toastify";
-import { updateUserName } from "@/actions/updateUserName";
+'use client';
+import Image from 'next/image';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import CertaintUser from '../../CertaintUser';
+import { Skeleton } from '@/components/ui/skeleton';
+import { getUser } from '@/actions/getUser';
+import { userStore } from '@/store/userStore';
+import { useRouter } from 'next/navigation';
+import { User } from '@/utils/typeAuth';
+import toastifyUtils from '@/utils/toastify';
+import { updateUserName } from '@/actions/updateUserName';
 
 type Props = {};
 
@@ -17,11 +17,11 @@ const Page = (props: Props) => {
 
   const [successActive, setSuccessActive] = useState(false);
 
-  const [tokenChange, setTokenChange] = useState<string>("");
+  const [tokenChange, setTokenChange] = useState<string>('');
 
   const [pending, setPending] = useState(false);
 
-  const [userName, setUserName] = useState<string>("");
+  const [userName, setUserName] = useState<string>('');
 
   const user = userStore((state: any) => state?.user);
 
@@ -34,14 +34,14 @@ const Page = (props: Props) => {
       try {
         const res = await getUser(user?.id);
         if (res.code === 3) {
-          router.push("/404");
+          router.push('/404');
         }
         if (res.code === 4) {
-          throw new Error("Server Error");
+          throw new Error('Server Error');
         }
         setUserInfo(res.data);
       } catch (error) {
-        throw new Error("Server Error");
+        throw new Error('Server Error');
       }
     };
     if (user) {
@@ -56,27 +56,27 @@ const Page = (props: Props) => {
       const res = await updateUserName(userName, tokenChange);
       if (res.code === 1) {
         setPending(false);
-        return toastifyUtils("warning", "Không tồn tại người dùng");
+        return toastifyUtils('warning', 'Không tồn tại người dùng');
       }
       if (res.code === 3) {
         setPending(false);
-        return toastifyUtils("warning", "Không đủ quyền hạn");
+        return toastifyUtils('warning', 'Không đủ quyền hạn');
       }
       if (res.code === 6) {
         setPending(false);
-        return toastifyUtils("warning", "Tên đăng nhập này đã tồn tại ");
+        return toastifyUtils('warning', 'Tên đăng nhập này đã tồn tại ');
       }
       if (res.code === 4) {
         setPending(false);
-        return toastifyUtils("error", "Lỗi server");
+        return toastifyUtils('error', 'Lỗi server');
       }
       setPending(false);
       updateUsername(userName);
-      toastifyUtils("success", "Thay đổi tên người dùng thành công");
+      toastifyUtils('success', 'Thay đổi tên người dùng thành công');
     } catch (error) {
       console.log(error);
       setPending(false);
-      return toastifyUtils("error", "Lỗi server");
+      return toastifyUtils('error', 'Lỗi server');
     }
   };
 
@@ -84,34 +84,29 @@ const Page = (props: Props) => {
     return <p>bạn không đủ quyền</p>;
   } else {
     return userInfo ? (
-      <div className="p-2 w-5/6 ">
-        <div className="shadow-beautiful w-full h-screen flex flex-col bg-white rounded-[8px] items-center">
+      <div className='p-2 w-5/6 '>
+        <div className='shadow-beautiful w-full h-screen flex flex-col bg-white rounded-[8px] items-center'>
           {!tokenChange ? (
             <CertaintUser
               email={userInfo.email}
-              type="username_reset"
-              message="Mã xác thực đổi tên người dùng"
+              type='username_reset'
+              message='Mã xác thực đổi tên người dùng'
               setTokenChange={setTokenChange}
             />
           ) : (
-            <div className="flex flex-col w-[60%] items-center mt-8">
-              <p className={` font-bold text-red text-[5rem] mt-4 mb-2`}>
-                Thay đổi tên đăng nhập
-              </p>
-              <form
-                onSubmit={handleSubmit}
-                className="gap-2 flex flex-col justify-center items-center w-full"
-              >
-                <label htmlFor="username" className="text-white text-[1.3rem] ">
+            <div className='flex flex-col w-[60%] items-center mt-8'>
+              <p className={` font-bold text-red text-[5rem] mt-4 mb-2`}>Thay đổi tên đăng nhập</p>
+              <form onSubmit={handleSubmit} className='gap-2 flex flex-col justify-center items-center w-full'>
+                <label htmlFor='username' className='text-white text-[1.3rem] '>
                   Nhập tên đăng nhập mới
                 </label>
-                <div className="flex items-center bg-white rounded h-[3rem] w-[23rem] p-2 gap-2 mt-2">
+                <div className='flex items-center bg-white rounded h-[3rem] w-[23rem] p-2 gap-2 mt-2'>
                   <input
-                    type="text"
-                    className="h-[3rem] w-[23rem] focus:outline-none p-2 border-2 border-slate-300 rounded-[8px]"
-                    placeholder="Nhập tên đăng nhập mới....."
-                    id="username"
-                    name="username"
+                    type='text'
+                    className='h-[3rem] w-[23rem] focus:outline-none p-2 border-2 border-slate-300 rounded-[8px]'
+                    placeholder='Nhập tên đăng nhập mới.....'
+                    id='username'
+                    name='username'
                     value={userName}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       e.preventDefault();
@@ -120,20 +115,20 @@ const Page = (props: Props) => {
                   />
                 </div>
                 <button
-                  type="submit"
+                  type='submit'
                   className={`h-[2.5rem] w-[22rem] relative flex items-center justify-center rounded font-bold text-white text-xl  after:absolute after:left-[-5px] after:bottom-[-5px]
-      after:border-dashed after:border-[1px]  after:border-green after:z-10 after:visible after:w-full  after:h-[2.3rem] after:rounded 
-      after:hover:left-[0px] after:hover:bottom-[0px] after:hover:z-[-20]  bg-green	 animatie  col-span-2	 mx-[9rem] mt-[1rem]
+      after:border-dashed after:border-[1px]  after:border-greenPrimary after:z-10 after:visible after:w-full  after:h-[2.3rem] after:rounded 
+      after:hover:left-[0px] after:hover:bottom-[0px] after:hover:z-[-20]  bg-greenPrimary	 animatie  col-span-2	 mx-[9rem] mt-[1rem]
       `}
                   disabled={pending}
                 >
                   {pending ? (
                     <>
                       <p>Loading</p>
-                      <div className="loader"></div>
+                      <div className='loader'></div>
                     </>
                   ) : (
-                    "Xác nhận"
+                    'Xác nhận'
                   )}
                 </button>
               </form>
@@ -142,7 +137,7 @@ const Page = (props: Props) => {
         </div>
       </div>
     ) : (
-      <Skeleton className="w-5/6 p-2 h-screen" />
+      <Skeleton className='w-5/6 p-2 h-screen' />
     );
   }
 };

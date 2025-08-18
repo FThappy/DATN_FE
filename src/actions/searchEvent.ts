@@ -1,4 +1,4 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 type DataSearch = {
   qSearch: string | undefined;
@@ -8,12 +8,12 @@ type DataSearch = {
   page: number;
 };
 
-export const searchEvent = async (dataSend : DataSearch) => {
+export const searchEvent = async (dataSend: DataSearch) => {
   try {
     const res = await userRequest.post(`api/event/search`, dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

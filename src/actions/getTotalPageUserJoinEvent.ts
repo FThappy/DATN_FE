@@ -19,15 +19,14 @@
 //   }
 // };
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const getTotalPageUserJoinEvent = async () => {
-
   try {
-    const res = await userRequest.get("/api/event/user-event/total-page", {
+    const res = await userRequest.get('/api/event/user-event/total-page', {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

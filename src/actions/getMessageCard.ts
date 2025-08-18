@@ -1,11 +1,11 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getMessageCard= async () => {
+export const getMessageCard = async () => {
   try {
-    const res = await userRequest.get("/api/message/user", {
+    const res = await userRequest.get('/api/message/user', {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

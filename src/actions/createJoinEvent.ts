@@ -23,7 +23,7 @@
 //   }
 // };
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 type dataSendProps = {
   userId: string;
@@ -32,10 +32,10 @@ type dataSendProps = {
 
 export const createJoinEvent = async (dataSend: dataSendProps) => {
   try {
-    const res = await userRequest.post("/api/event/join", dataSend, {
+    const res = await userRequest.post('/api/event/join', dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

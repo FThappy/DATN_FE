@@ -8,7 +8,11 @@ body {
 }
 
 body {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 14px;
   color: #000;
   margin: 0;
@@ -44,7 +48,7 @@ body {
 .swiper-pagination .swiper-pagination-bullet {
   width: 1.5rem;
   height: 8px;
-  background-color: rgb(211, 211, 211); 
+  background-color: rgb(211, 211, 211);
   border-radius: 4px;
   margin-left: 0.5rem;
   margin-right: 0.5rem;

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { User } from "@/utils/typeAuth";
-import toastifyUtils from "@/utils/toastify";
-import { useInView } from "react-intersection-observer";
-import { PostProps } from "@/utils/typePost";
-import PostSkeleton from "@/components/PostSkeleton";
-import { getPostByUserId } from "@/actions/getPostByUserId";
-import PostForeign from "./PostForeign";
-import { userStore } from "@/store/userStore";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { User } from '@/utils/typeAuth';
+import toastifyUtils from '@/utils/toastify';
+import { useInView } from 'react-intersection-observer';
+import { PostProps } from '@/utils/typePost';
+import PostSkeleton from '@/components/PostSkeleton';
+import { getPostByUserId } from '@/actions/getPostByUserId';
+import PostForeign from './PostForeign';
+import { userStore } from '@/store/userStore';
 type Props = {
   user: User;
 };
@@ -31,19 +31,19 @@ const ListPostForeign = (props: Props) => {
     try {
       const res = await getPostByUserId(page, user._id);
       if (res.code === 4) {
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
       if (res.code === 3) {
-        toastifyUtils("error", "Không có người dùng này");
+        toastifyUtils('error', 'Không có người dùng này');
       }
       if (res.data.length === 0) {
         setEndPost(false);
       }
-      setPosts((prevPost) => [...prevPost, ...res.data]);
+      setPosts(prevPost => [...prevPost, ...res.data]);
       setPage(page + 1);
     } catch (error) {
       console.log(error);
-      toastifyUtils("error", "Lỗi server");
+      toastifyUtils('error', 'Lỗi server');
     }
   };
 
@@ -55,10 +55,10 @@ const ListPostForeign = (props: Props) => {
   }, [inView]);
 
   return (
-    <div className="w-1/2 ml-[5rem]">
+    <div className='w-1/2 ml-[5rem]'>
       <div>
         {posts.map((item, index) => (
-          <div className="" key={index}>
+          <div className='' key={index}>
             <PostForeign post={item} user={user} />
           </div>
         ))}
@@ -68,9 +68,7 @@ const ListPostForeign = (props: Props) => {
             <PostSkeleton />
           </div>
         ) : (
-          <p className="text-center text-[1.5rem] my-4 text-gray-400 font-bold">
-            Đã hết bài viết
-          </p>
+          <p className='text-center text-[1.5rem] my-4 text-gray-400 font-bold'>Đã hết bài viết</p>
         )}
       </div>
     </div>

@@ -1,14 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const checkNewEmail = async (dataSend: string, type: string) => {
   try {
     const res = await userRequest.post(
-      "/api/auth/new-mail",
+      '/api/auth/new-mail',
       { email: dataSend, type: type },
       {
         headers: {
-          "Content-Type": "application/json",
-        },
+          'Content-Type': 'application/json'
+        }
       }
     );
     return res.data;

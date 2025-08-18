@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import React from 'react'
-import "./button.css";
+import Link from 'next/link';
+import React from 'react';
+import './button.css';
 
-
-const ButtonHome = ({link,title,width,color} : {link : string,title : string,width : string,color : string}) => {
-
+const ButtonHome = ({ link, title, width, color }: { link: string; title: string; width: string; color: string }) => {
   return (
     <Link
       href={link}
@@ -15,12 +13,12 @@ const ButtonHome = ({link,title,width,color} : {link : string,title : string,wid
       style={{
         width: `${width}rem`,
         backgroundColor: `${color}`,
-        "--color": `${color}`,
+        '--color': `${color}`
       }}
     >
       {title}
     </Link>
   );
-}
+};
 
-export default ButtonHome
+export default ButtonHome;

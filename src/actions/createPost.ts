@@ -20,14 +20,14 @@
 //   }
 // };
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const createPost = async (formData: FormData) => {
   try {
-    const res = await userRequest.post("/api/post/", formData, {
+    const res = await userRequest.post('/api/post/', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     });
     return res.data;
   } catch (error: any) {

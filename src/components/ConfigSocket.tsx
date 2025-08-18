@@ -1,16 +1,14 @@
-"use client"
-import { socket } from '@/utils/requestMethod'
-import React, { useEffect } from 'react'
+'use client';
+import { socket } from '@/utils/requestMethod';
+import React, { useEffect } from 'react';
 
-type Props = {}
+type Props = {};
 
 const ConfigSocket = (props: Props) => {
-    useEffect(() =>{
-       socket.emit("first-connect");
-    },[])
-  return (
-    <></>
-  )
-}
+  useEffect(() => {
+    socket.emit('first-connect');
+  }, []);
+  return <></>;
+};
 
-export default ConfigSocket
+export default ConfigSocket;

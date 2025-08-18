@@ -1,12 +1,12 @@
-import React, { ChangeEvent } from "react";
-import { IoIosSearch } from "react-icons/io";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { format } from "date-fns";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { FaCalendarAlt } from "react-icons/fa";
-import { Calendar } from "./ui/calendar";
-import { cityDummy } from "@/lib/placeholder-data";
-import { Id } from "react-toastify";
+import React, { ChangeEvent } from 'react';
+import { IoIosSearch } from 'react-icons/io';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { format } from 'date-fns';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { FaCalendarAlt } from 'react-icons/fa';
+import { Calendar } from './ui/calendar';
+import { cityDummy } from '@/lib/placeholder-data';
+import { Id } from 'react-toastify';
 
 type Props = {
   qSearch: string | undefined;
@@ -20,12 +20,7 @@ type Props = {
   setQCity: React.Dispatch<React.SetStateAction<string>>;
   setIsSearch: React.Dispatch<React.SetStateAction<boolean>>;
   handleSearch: (page: number) => Promise<Id | undefined>;
-  handlePushParams: (
-    qDate: Date | undefined,
-    qSearch: string | undefined,
-    qSort: string,
-    qCity: string
-  ) => void;
+  handlePushParams: (qDate: Date | undefined, qSearch: string | undefined, qSort: string, qCity: string) => void;
 };
 
 const SearchContainer = (props: Props) => {
@@ -41,44 +36,44 @@ const SearchContainer = (props: Props) => {
     qSearch,
     qCity,
     qSort,
-    handlePushParams,
+    handlePushParams
   } = props;
 
   return (
-    <div className="flex justify-between w-full  mt-2">
+    <div className='flex justify-between w-full  mt-2'>
       <form
-        className="flex shadow-beautiful bg-white items-center justify-center rounded-[12px] p-2"
-        onSubmit={(e) => {
+        className='flex shadow-beautiful bg-white items-center justify-center rounded-[12px] p-2'
+        onSubmit={e => {
           e.preventDefault();
           handlePushParams(qDate, qSearch, qSort, qCity);
           handleSearch(page);
         }}
       >
-        <IoIosSearch size={24} color="gray" />
+        <IoIosSearch size={24} color='gray' />
         <input
-          type="text"
-          name=""
-          id=""
-          className="outline-none px-2 white"
-          placeholder="Tìm kiếm sự kiện........"
+          type='text'
+          name=''
+          id=''
+          className='outline-none px-2 white'
+          placeholder='Tìm kiếm sự kiện........'
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setQSearch(e.target.value);
           }}
         />
       </form>
-      <div className="flex gap-2">
-        <input type="date" name="dateEvent" id="dateEvent" className="hidden" />
+      <div className='flex gap-2'>
+        <input type='date' name='dateEvent' id='dateEvent' className='hidden' />
         <Popover>
           <PopoverTrigger asChild>
             {!qDate ? (
-              <button className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4">
+              <button className='flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4'>
                 <FaCalendarAlt size={24} />
                 <p>Ngày tổ chức sự kiện</p>
               </button>
             ) : (
-              <div className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4 w-[10rem]">
-                {" "}
-                {format(qDate, "dd/MM/yyyy")}
+              <div className='flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 px-4 w-[10rem]'>
+                {' '}
+                {format(qDate, 'dd/MM/yyyy')}
                 <AiOutlineCloseCircle
                   onClick={() => {
                     setQDate(undefined);
@@ -88,11 +83,11 @@ const SearchContainer = (props: Props) => {
               </div>
             )}
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className='w-auto p-0' align='start'>
             <Calendar
-              mode="single"
+              mode='single'
               selected={qDate}
-              onSelect={(date) => {
+              onSelect={date => {
                 setQDate(date);
                 handlePushParams(date, qSearch, qSort, qCity);
               }}
@@ -101,7 +96,7 @@ const SearchContainer = (props: Props) => {
           </PopoverContent>
         </Popover>
         <select
-          className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
+          className='flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 '
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
             setQCity(e.target.value);
@@ -109,7 +104,7 @@ const SearchContainer = (props: Props) => {
           }}
           defaultValue={qCity}
         >
-          <option value="">Tất cả các tỉnh</option>
+          <option value=''>Tất cả các tỉnh</option>
           {cityDummy.map((item, index) => (
             <option key={index} value={item.name}>
               {item.name}

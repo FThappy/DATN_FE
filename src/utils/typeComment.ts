@@ -9,6 +9,4 @@ export type CommentProps = {
   toUserId: string;
   __v: number;
 };
-export type ListRepComment = {
-  
-}
+export type ListRepComment = {};

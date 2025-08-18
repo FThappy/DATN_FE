@@ -1,12 +1,12 @@
-import { userRequest } from "@/utils/requestMethod";
-import { SharePostProps } from "@/utils/typePost";
+import { userRequest } from '@/utils/requestMethod';
+import { SharePostProps } from '@/utils/typePost';
 
 export const createSharePost = async (dataSend: SharePostProps) => {
   try {
-    const res = await userRequest.post("/api/post/share", dataSend, {
+    const res = await userRequest.post('/api/post/share', dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

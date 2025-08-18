@@ -1,15 +1,15 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getUserDonate = async (page: number , projectId : string) => {
+export const getUserDonate = async (page: number, projectId: string) => {
   try {
-    const res = await userRequest.get("/api/transcation/project", {
+    const res = await userRequest.get('/api/transcation/project', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
         page: page,
-        projectId: projectId,
-      },
+        projectId: projectId
+      }
     });
     return res.data;
   } catch (error: any) {

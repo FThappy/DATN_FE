@@ -1,17 +1,17 @@
-"use server";
+'use server';
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getPostByEventId = async (page: number, organizationId :string) => {
+export const getPostByEventId = async (page: number, organizationId: string) => {
   try {
-    const res = await userRequest.get("/api/post/event", {
+    const res = await userRequest.get('/api/post/event', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
         page: page,
-        organizationId: organizationId,
-      },
+        organizationId: organizationId
+      }
     });
     return res.data;
   } catch (error: any) {
@@ -19,4 +19,3 @@ export const getPostByEventId = async (page: number, organizationId :string) => 
     return error.response.data;
   }
 };
-

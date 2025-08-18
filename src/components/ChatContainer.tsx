@@ -1,7 +1,7 @@
-import { MessageProp, Room } from "@/utils/typeMess";
-import React, { useEffect, useState } from "react";
-import BoxMessage from "./BoxMessage";
-import { useInView } from "react-intersection-observer";
+import { MessageProp, Room } from '@/utils/typeMess';
+import React, { useEffect, useState } from 'react';
+import BoxMessage from './BoxMessage';
+import { useInView } from 'react-intersection-observer';
 
 type Props = {
   listMessage: MessageProp[];
@@ -28,7 +28,7 @@ const ChatContainer = (props: Props) => {
     setPending,
     isLoading,
     setIsLoading,
-    room,
+    room
   } = props;
 
   const { ref, inView } = useInView();
@@ -40,7 +40,7 @@ const ChatContainer = (props: Props) => {
   }, [inView]);
 
   return (
-    <div className="w-full p-1 flex flex-col-reverse h-[78.5%] desktop:h-[84%] z-[50] laptop:max-h-[78.5%] desktop:max-h-[84%] overflow-y-auto	">
+    <div className='w-full p-1 flex flex-col-reverse h-[78.5%] desktop:h-[84%] z-[50] laptop:max-h-[78.5%] desktop:max-h-[84%] overflow-y-auto	'>
       {listMessage && listMessage.length > 0
         ? listMessage.map((item, index) => (
             <BoxMessage
@@ -55,20 +55,16 @@ const ChatContainer = (props: Props) => {
               setPending={setPending}
             />
           ))
-        : !isLoading && (
-            <p className="text-gray-400 text-center">
-              - Hãy tạo tin nhắn đầu tiên nào -
-            </p>
-          )}
+        : !isLoading && <p className='text-gray-400 text-center'>- Hãy tạo tin nhắn đầu tiên nào -</p>}
       {end && (
         <>
           {!isLoading ? (
-            <div className="w-full flex items-center justify-center mb-1 mt-1  ">
-              <div className="spinner2" ref={ref}></div>
+            <div className='w-full flex items-center justify-center mb-1 mt-1  '>
+              <div className='spinner2' ref={ref}></div>
             </div>
           ) : (
-            <div className="w-full flex items-center justify-center mb-1 mt-1 ">
-              <div className="spinner2"></div>
+            <div className='w-full flex items-center justify-center mb-1 mt-1 '>
+              <div className='spinner2'></div>
             </div>
           )}
         </>

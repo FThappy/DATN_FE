@@ -1,10 +1,10 @@
-import { CardRoom } from "@/utils/typeMess";
-import React, { useState } from "react";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import { userStore } from "@/store/userStore";
-import { boxChatStore, State } from "@/store/boxChatStore";
-import { usePathname } from "next/navigation";
+import { CardRoom } from '@/utils/typeMess';
+import React, { useState } from 'react';
+import { Avatar, AvatarFallback } from './ui/avatar';
+import { AvatarImage } from '@radix-ui/react-avatar';
+import { userStore } from '@/store/userStore';
+import { boxChatStore, State } from '@/store/boxChatStore';
+import { usePathname } from 'next/navigation';
 
 type Props = {
   item: CardRoom;
@@ -23,49 +23,37 @@ const MessageCard = (props: Props) => {
 
   return (
     <div
-      className="flex gap-2 hover:bg-gray-300 rounded-[8px] p-2 cursor-pointer w-full justify-between"
+      className='flex gap-2 hover:bg-gray-300 rounded-[8px] p-2 cursor-pointer w-full justify-between'
       key={index}
-      onClick={(e) => {
+      onClick={e => {
         e.preventDefault();
-        if (pathname !== "/message") {
+        if (pathname !== '/message') {
           updateBoxChat(item?.room?._id, item.room.type, item);
         }
         setRead(false);
-        if (
-          read &&
-          !item.lastMess?.isRead.includes(user?.id) &&
-          item?.lastMess?.from !== user?.id
-        ) {
-          setTotalNewMess((prev) => (prev > 0 ? prev - 1 : 0));
+        if (read && !item.lastMess?.isRead.includes(user?.id) && item?.lastMess?.from !== user?.id) {
+          setTotalNewMess(prev => (prev > 0 ? prev - 1 : 0));
         }
       }}
     >
-      {" "}
-      <div className="flex gap-2">
-        <div className="h-12 w-12">
-          <Avatar className="h-12 w-12">
-            <AvatarImage
-              src={item?.user?.img ? item?.user.img : "/twitter.png"}
-              alt="@shadcn"
-            />
+      {' '}
+      <div className='flex gap-2'>
+        <div className='h-12 w-12'>
+          <Avatar className='h-12 w-12'>
+            <AvatarImage src={item?.user?.img ? item?.user.img : '/twitter.png'} alt='@shadcn' />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <div className="flex flex-col  justify-center">
-          <p className="text-[1.2rem] font-medium">
-            {item?.user?.displayname
-              ? item?.user.displayname
-              : item?.user?.username}
+        <div className='flex flex-col  justify-center'>
+          <p className='text-[1.2rem] font-medium'>
+            {item?.user?.displayname ? item?.user.displayname : item?.user?.username}
           </p>
-          <p className="text-[0.8rem] text-gray-400">
-            {user?.id === item?.lastMess?.from && "Bạn :"}{" "}
+          <p className='text-[0.8rem] text-gray-400'>
+            {user?.id === item?.lastMess?.from && 'Bạn :'}{' '}
             {item?.lastMess?.content && item?.lastMess?.content?.length > 40
-              ? item?.lastMess?.content.slice(0, 40) + "..."
+              ? item?.lastMess?.content.slice(0, 40) + '...'
               : item?.lastMess?.content}
-            {!item?.lastMess?.content &&
-              item?.lastMess?.img &&
-              item?.lastMess?.img.length > 0 &&
-              "Đã gửi file ảnh"}
+            {!item?.lastMess?.content && item?.lastMess?.img && item?.lastMess?.img.length > 0 && 'Đã gửi file ảnh'}
           </p>
         </div>
       </div>
@@ -73,7 +61,7 @@ const MessageCard = (props: Props) => {
         item?.lastMess?.isRead &&
         !item?.lastMess?.isRead.includes(user?.id) &&
         item?.lastMess?.from !== user?.id && (
-          <div className="w-[1rem] h-[1rem] bg-blue rounded-full self-center p-2"></div>
+          <div className='w-[1rem] h-[1rem] bg-blue rounded-full self-center p-2'></div>
         )}
     </div>
   );

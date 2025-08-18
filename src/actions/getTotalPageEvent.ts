@@ -1,13 +1,13 @@
-"use server";
+'use server';
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const getTotalPageEvent = async () => {
   try {
-    const res = await userRequest.get("/api/event/total", {
+    const res = await userRequest.get('/api/event/total', {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

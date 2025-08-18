@@ -1,15 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-
-export const searchUser = async (page:number, qSearch : string) => {
+export const searchUser = async (page: number, qSearch: string) => {
   try {
     const res = await userRequest.get(`api/user/search`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      params : {
-        page : page,
-        qSearch : qSearch
+      params: {
+        page: page,
+        qSearch: qSearch
       }
     });
     return res.data;

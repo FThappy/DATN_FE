@@ -1,14 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const getEventLike = async (number: number) => {
   try {
-    const res = await userRequest.get("/api/event/like", {
+    const res = await userRequest.get('/api/event/like', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        number: number,
-      },
+        number: number
+      }
     });
     return res.data;
   } catch (error: any) {

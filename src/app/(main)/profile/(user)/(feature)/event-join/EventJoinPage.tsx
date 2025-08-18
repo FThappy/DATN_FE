@@ -1,13 +1,13 @@
-"use client";
-import { getEventUserJoin } from "@/actions/getEventUserJoin";
-import { getTotalPageUserJoinEvent } from "@/actions/getTotalPageUserJoinEvent";
-import EventCard from "@/components/event/EventCard";
-import { PaginationPage } from "@/components/PaginationPage";
-import { Skeleton } from "@/components/ui/skeleton";
-import toastifyUtils from "@/utils/toastify";
-import { EventProps } from "@/utils/typeEvent";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+'use client';
+import { getEventUserJoin } from '@/actions/getEventUserJoin';
+import { getTotalPageUserJoinEvent } from '@/actions/getTotalPageUserJoinEvent';
+import EventCard from '@/components/event/EventCard';
+import { PaginationPage } from '@/components/PaginationPage';
+import { Skeleton } from '@/components/ui/skeleton';
+import toastifyUtils from '@/utils/toastify';
+import { EventProps } from '@/utils/typeEvent';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 type Props = {};
 
@@ -23,7 +23,7 @@ const EventJoinPage = (props: Props) => {
 
   const searchParams = useSearchParams();
 
-  const page = parseInt(searchParams.get("page")!);
+  const page = parseInt(searchParams.get('page')!);
 
   const [events, setEvents] = useState<EventProps[]>([]);
 
@@ -36,7 +36,7 @@ const EventJoinPage = (props: Props) => {
       try {
         const res = await getEventUserJoin(page);
         if (res.code === 4) {
-          toastifyUtils("error", "Lỗi server");
+          toastifyUtils('error', 'Lỗi server');
         }
         if (res.data.length === 0) {
           setEndEvent(true);
@@ -46,7 +46,7 @@ const EventJoinPage = (props: Props) => {
         }
       } catch (error) {
         console.log(error);
-        return toastifyUtils("error", "Lỗi server");
+        return toastifyUtils('error', 'Lỗi server');
       }
     };
     getListEvent();
@@ -56,14 +56,14 @@ const EventJoinPage = (props: Props) => {
     try {
       const res = await getTotalPageUserJoinEvent();
       if (res.code === 4) {
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
       if (res.code === 0) {
         setTotalPage(res.data);
       }
     } catch (error) {
       console.log(error);
-      return toastifyUtils("error", "Lỗi server");
+      return toastifyUtils('error', 'Lỗi server');
     }
   };
 
@@ -74,7 +74,7 @@ const EventJoinPage = (props: Props) => {
     try {
       const res = await getEventUserJoin(page);
       if (res.code === 4) {
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
       if (res.data.length === 0) {
         setEndEvent(true);
@@ -84,7 +84,7 @@ const EventJoinPage = (props: Props) => {
       }
     } catch (error) {
       console.log(error);
-      return toastifyUtils("error", "Lỗi server");
+      return toastifyUtils('error', 'Lỗi server');
     }
     // }
   };
@@ -121,29 +121,27 @@ const EventJoinPage = (props: Props) => {
   // }, [qSearch]);
 
   return (
-    <div className="p-2 w-full ">
-      <div className="shadow-beautiful w-full h-[55rem] flex flex-col bg-white rounded-[8px]">
-        <div className="h-[53.25rem] w-full px-8 pt-1 flex flex-col items-center">
+    <div className='p-2 w-full '>
+      <div className='shadow-beautiful w-full h-[55rem] flex flex-col bg-white rounded-[8px]'>
+        <div className='h-[53.25rem] w-full px-8 pt-1 flex flex-col items-center'>
           {!endEvent ? (
             !(events.length <= 0) ? (
-              <div className="grid grid-cols-3 gap-2 w-full mt-2 mb-8">
+              <div className='grid grid-cols-3 gap-2 w-full mt-2 mb-8'>
                 {events.map((event, index) => (
-                  <div className="w-full" key={index}>
+                  <div className='w-full' key={index}>
                     <EventCard event={event} index={index} />
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-3 gap-2 w-full mt-2 mb-2">
-                <Skeleton className="w-full h-[23rem]  rounded-[8px] " />
-                <Skeleton className="w-full h-[23rem]  rounded-[8px] " />
-                <Skeleton className="w-full h-[23rem]  rounded-[8px] " />
+              <div className='grid grid-cols-3 gap-2 w-full mt-2 mb-2'>
+                <Skeleton className='w-full h-[23rem]  rounded-[8px] ' />
+                <Skeleton className='w-full h-[23rem]  rounded-[8px] ' />
+                <Skeleton className='w-full h-[23rem]  rounded-[8px] ' />
               </div>
             )
           ) : (
-            <p className="text-center text-[1.5rem] my-4 text-gray-400 font-bold">
-              Đã hết Sự kiện
-            </p>
+            <p className='text-center text-[1.5rem] my-4 text-gray-400 font-bold'>Đã hết Sự kiện</p>
           )}
 
           <PaginationPage

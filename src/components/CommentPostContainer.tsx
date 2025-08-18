@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import CommentSkeleton from "./CommentSkeleton";
-import CommentCard from "./CommentCard";
-import { socket } from "@/utils/requestMethod";
-import { PostProps } from "@/utils/typePost";
-import { CommentProps } from "@/utils/typeComment";
-import toastifyUtils from "@/utils/toastify";
-import { useInView } from "react-intersection-observer";
+import React, { useEffect, useState } from 'react';
+import CommentSkeleton from './CommentSkeleton';
+import CommentCard from './CommentCard';
+import { socket } from '@/utils/requestMethod';
+import { PostProps } from '@/utils/typePost';
+import { CommentProps } from '@/utils/typeComment';
+import toastifyUtils from '@/utils/toastify';
+import { useInView } from 'react-intersection-observer';
 
 type Props = {
   post: PostProps;
@@ -29,42 +29,40 @@ const CommentPostContainer = (props: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   useEffect(() => {
     if (inView && comments.length <= 0) {
       setIsLoading(true);
-      socket.emit("join-room", post._id);
-      socket.on("comment-room", (listComment) => {
+      socket.emit('join-room', post._id);
+      socket.on('comment-room', listComment => {
         setComments(listComment);
         setIsLoading(false);
       });
       return () => {
-        socket.off("comment-room");
+        socket.off('comment-room');
       };
     }
   }, [post._id, inView]);
 
-  console.log(comments.length , endComment , newComments.length)
+  console.log(comments.length, endComment, newComments.length);
 
   useEffect(() => {
-    socket.off("error-comment").on("error-comment", (error) => {
-      return toastifyUtils("error", error.msg);
+    socket.off('error-comment').on('error-comment', error => {
+      return toastifyUtils('error', error.msg);
     });
 
     return () => {
-      socket.off("error-comment");
+      socket.off('error-comment');
     };
   }, []);
 
   useEffect(() => {
     const handleNewComment = (newComment: CommentProps) => {
-      setNewComments((prevComments) => [...prevComments, newComment]);
+      setNewComments(prevComments => [...prevComments, newComment]);
     };
-    socket.on("new-comment", handleNewComment);
+    socket.on('new-comment', handleNewComment);
 
     return () => {
-      socket.off("new-comment");
+      socket.off('new-comment');
     };
   }, [setComments]);
 
@@ -72,30 +70,28 @@ const CommentPostContainer = (props: Props) => {
     event.preventDefault();
     setPending(true);
     try {
-      socket.emit("load-more", post._id, page + 1, newComments.length);
+      socket.emit('load-more', post._id, page + 1, newComments.length);
       setPage(page + 1);
-      socket
-        .off("load-more")
-        .on("load-more", (newListComments: CommentProps[]) => {
-          if (newListComments.length === 0) {
-            setPending(false);
-            return setEndComment(false);
-          }
-          console.log(newListComments);
-          setComments((prevComments) => [...prevComments, ...newListComments]);
+      socket.off('load-more').on('load-more', (newListComments: CommentProps[]) => {
+        if (newListComments.length === 0) {
           setPending(false);
-        });
+          return setEndComment(false);
+        }
+        console.log(newListComments);
+        setComments(prevComments => [...prevComments, ...newListComments]);
+        setPending(false);
+      });
     } catch (error) {
       setPending(false);
       console.log(error);
-      return toastifyUtils("error", "Lỗi server");
+      return toastifyUtils('error', 'Lỗi server');
     }
   };
 
   const handleSocketChangeComment = (newComment: CommentProps) => {
-    setComments((prevComments) => {
+    setComments(prevComments => {
       const comments = [...prevComments];
-      const index = comments.findIndex((item) => item._id === newComment._id);
+      const index = comments.findIndex(item => item._id === newComment._id);
       if (index < 0) {
         return comments;
       } else {
@@ -103,9 +99,9 @@ const CommentPostContainer = (props: Props) => {
         return comments;
       }
     });
-    setNewComments((prevComments) => {
+    setNewComments(prevComments => {
       const comments = [...prevComments];
-      const index = comments.findIndex((item) => item._id === newComment._id);
+      const index = comments.findIndex(item => item._id === newComment._id);
       if (index < 0) {
         return comments;
       } else {
@@ -114,12 +110,12 @@ const CommentPostContainer = (props: Props) => {
       }
     });
   };
-  socket.off("change-comment").on("change-comment", handleSocketChangeComment);
+  socket.off('change-comment').on('change-comment', handleSocketChangeComment);
 
   const handleSocketDeleteComment = (oldCommentId: string) => {
-    setComments((prevComments) => {
+    setComments(prevComments => {
       const comments = [...prevComments];
-      const index = comments.findIndex((item) => item._id === oldCommentId);
+      const index = comments.findIndex(item => item._id === oldCommentId);
       if (index < 0) {
         return comments;
       } else {
@@ -127,9 +123,9 @@ const CommentPostContainer = (props: Props) => {
         return comments;
       }
     });
-    setNewComments((prevComments) => {
+    setNewComments(prevComments => {
       const comments = [...prevComments];
-      const index = comments.findIndex((item) => item._id === oldCommentId);
+      const index = comments.findIndex(item => item._id === oldCommentId);
       if (index < 0) {
         return comments;
       } else {
@@ -138,35 +134,35 @@ const CommentPostContainer = (props: Props) => {
       return comments;
     });
   };
-  socket.off("delete-comment").on("delete-comment", handleSocketDeleteComment);
+  socket.off('delete-comment').on('delete-comment', handleSocketDeleteComment);
 
   return (
-    <div ref={ref} className="flex flex-col w-full gap-2  mt-4">
-      <div className=" flex flex-col border-l-4 border-sky-600 gap-2">
+    <div ref={ref} className='flex flex-col w-full gap-2  mt-4'>
+      <div className=' flex flex-col border-l-4 border-sky-600 gap-2'>
         {newComments.map((comment, index) => (
-          <div className="px-4" key={index}>
+          <div className='px-4' key={index}>
             <CommentCard
               comment={comment}
               setComment={setNewComments}
               index={index}
               postId={post._id}
-              type="new"
+              type='new'
               handleSetRepUser={handleSetRepUser}
-              typeItem="post"
+              typeItem='post'
             />
           </div>
         ))}
       </div>
       {comments.map((comment, index) => (
-        <div className="px-4" key={index}>
+        <div className='px-4' key={index}>
           <CommentCard
             comment={comment}
             setComment={setComments}
             index={index}
             postId={post._id}
-            type="load"
+            type='load'
             handleSetRepUser={handleSetRepUser}
-            typeItem="post"
+            typeItem='post'
           />
         </div>
       ))}
@@ -177,29 +173,21 @@ const CommentPostContainer = (props: Props) => {
             <CommentSkeleton />
           </>
         ) : (
-          <p className="text-gray-400 font-[500] mt-2 text-center">
-            - Chưa có bình luận nào -
-          </p>
+          <p className='text-gray-400 font-[500] mt-2 text-center'>- Chưa có bình luận nào -</p>
         )
       ) : comments.length >= 8 && endComment ? (
-        <button
-          className="text-gray-400 font-[500]"
-          onClick={handleLoadMore}
-          disabled={pending}
-        >
+        <button className='text-gray-400 font-[500]' onClick={handleLoadMore} disabled={pending}>
           {pending ? (
-            <div className="flex w-full justify-center">
+            <div className='flex w-full justify-center'>
               <p>Loading</p>
-              <div className="loader1"></div>
+              <div className='loader1'></div>
             </div>
           ) : (
-            "Xem thêm bình luận..."
+            'Xem thêm bình luận...'
           )}
         </button>
       ) : (
-        <p className="text-gray-400 font-[500] text-center">
-          - Đã hết bình luận -
-        </p>
+        <p className='text-gray-400 font-[500] text-center'>- Đã hết bình luận -</p>
       )}
     </div>
   );

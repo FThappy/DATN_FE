@@ -1,4 +1,4 @@
-"use server";
+'use server';
 
 import { userRequest } from '@/utils/requestMethod';
 
@@ -6,8 +6,8 @@ export const getProjectById = async (projectId: string) => {
   try {
     const res = await userRequest.get(`/api/project/${projectId}`, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

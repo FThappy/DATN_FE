@@ -1,14 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const getNotifiTrans = async (projectId: string) => {
   try {
-    const res = await userRequest.get("/api/notification/trans", {
+    const res = await userRequest.get('/api/notification/trans', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        projectId: projectId,
-      },
+        projectId: projectId
+      }
     });
     return res.data;
   } catch (error: any) {

@@ -23,17 +23,17 @@
 
 // DEPLOY
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const updateProject = async (formData: FormData, projectId: string) => {
   try {
-    const res = await userRequest.put("/api/project/", formData, {
+    const res = await userRequest.put('/api/project/', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data'
       },
       params: {
-        projectId: projectId,
-      },
+        projectId: projectId
+      }
     });
     return res.data;
   } catch (error: any) {

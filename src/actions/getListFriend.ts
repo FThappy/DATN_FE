@@ -1,13 +1,13 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const getListFriend= async (page : number) => {
+export const getListFriend = async (page: number) => {
   try {
-    const res = await userRequest.get("/api/friend/id", {
+    const res = await userRequest.get('/api/friend/id', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      params:{
-        page : page
+      params: {
+        page: page
       }
     });
     return res.data;

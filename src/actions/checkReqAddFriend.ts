@@ -1,14 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const checkReqAddFriend = async (userId: string ) => {
+export const checkReqAddFriend = async (userId: string) => {
   try {
-    const res = await userRequest.get("/api/reqAddFriend/check", {
+    const res = await userRequest.get('/api/reqAddFriend/check', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        userId: userId,
-      },
+        userId: userId
+      }
     });
     return res.data;
   } catch (error: any) {

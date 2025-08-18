@@ -7,4 +7,3 @@ export type TranscationProps = {
   updatedAt: Date;
   __v: number;
 };
-

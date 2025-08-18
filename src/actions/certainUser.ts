@@ -1,20 +1,16 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const certainUser = async (
-  email: string,
-  formData: FormData,
-  type: string
-) => {
+export const certainUser = async (email: string, formData: FormData, type: string) => {
   const data = {
     email: email,
-    otp: formData.get("otp"),
-    type: type,
+    otp: formData.get('otp'),
+    type: type
   };
   try {
-    const res = await userRequest.post("/api/auth/certain", data, {
+    const res = await userRequest.post('/api/auth/certain', data, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

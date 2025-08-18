@@ -27,8 +27,7 @@
 //   }
 // };
 
-
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 type DataSearch = {
   qSearch: string | undefined;
@@ -39,12 +38,11 @@ type DataSearch = {
 };
 
 export const searchEventOwner = async (dataSend: DataSearch) => {
-
   try {
     const res = await userRequest.post(`api/event/owner/search`, dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

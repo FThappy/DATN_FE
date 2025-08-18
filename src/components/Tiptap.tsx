@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import { useEditor, EditorContent, Editor, JSONContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Toolbar from "./Toolbar";
-import TextAlign from "@tiptap/extension-text-align";
-import ImageResize from "tiptap-extension-resize-image";
-import Image from "@tiptap/extension-image";
-import { useState } from "react";
-import Link from "@tiptap/extension-link";
-import Youtube from "@tiptap/extension-youtube";
-
+import { useEditor, EditorContent, Editor, JSONContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import Toolbar from './Toolbar';
+import TextAlign from '@tiptap/extension-text-align';
+import ImageResize from 'tiptap-extension-resize-image';
+import Image from '@tiptap/extension-image';
+import { useState } from 'react';
+import Link from '@tiptap/extension-link';
+import Youtube from '@tiptap/extension-youtube';
 
 type Props = {
   content: string;
@@ -23,13 +22,19 @@ type Props = {
   setTmpImg: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSON , setContentJSON
-  ,tmpImg, setTmpImg
+const Tiptap = ({
+  onChange,
+  content,
+  imageContent,
+  setImageContent,
+  contentJSON,
+  setContentJSON,
+  tmpImg,
+  setTmpImg
 }: Props) => {
   const handleChange = (newContent: string) => {
     onChange(newContent);
   };
-
 
   const editor = useEditor({
     extensions: [
@@ -37,19 +42,19 @@ const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSO
       Underline,
       ImageResize,
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ['heading', 'paragraph']
       }),
       Link,
       Youtube.configure({
         controls: false,
-        nocookie: true,
-      }),
+        nocookie: true
+      })
     ],
     editorProps: {
       attributes: {
         class:
-          "flex flex-col bg-white px-6 py-3 max-h-[40rem] min-h-[40rem] overflow-y-scroll border-b border-r border-l border-gray-700  w-[55rem] h-[40rem] gap-3 pt-4 rounded-bl-md rounded-br-md outline-none",
-      },
+          'flex flex-col bg-white px-6 py-3 max-h-[40rem] min-h-[40rem] overflow-y-scroll border-b border-r border-l border-gray-700  w-[55rem] h-[40rem] gap-3 pt-4 rounded-bl-md rounded-br-md outline-none'
+      }
     },
     onUpdate: ({ editor, transaction }) => {
       setContentJSON(editor.getJSON());
@@ -57,11 +62,11 @@ const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSO
       console.log(editor.getJSON());
     },
 
-    content: content,
+    content: content
   });
 
   return (
-    <div className="">
+    <div className=''>
       <Toolbar
         editor={editor}
         content={content}
@@ -76,6 +81,3 @@ const Tiptap = ({ onChange, content , imageContent , setImageContent, contentJSO
 };
 
 export default Tiptap;
-
-
-

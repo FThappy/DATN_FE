@@ -23,19 +23,18 @@
 //   }
 // };
 
+import { userRequest } from '@/utils/requestMethod';
 
-import { userRequest } from "@/utils/requestMethod";
-
-export const deletePost = async (userId : string, postId : string) => {
+export const deletePost = async (userId: string, postId: string) => {
   try {
-    const res = await userRequest.delete("/api/post", {
+    const res = await userRequest.delete('/api/post', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
         userId: userId,
-        postId: postId,
-      },
+        postId: postId
+      }
     });
     return res.data;
   } catch (error: any) {

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEditor, EditorContent, Editor, JSONContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import ImageResize from "tiptap-extension-resize-image";
-import Toolbar from "../Toolbar";
-import Link from "@tiptap/extension-link";
-import Youtube from "@tiptap/extension-youtube";
+import { useEditor, EditorContent, Editor, JSONContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import ImageResize from 'tiptap-extension-resize-image';
+import Toolbar from '../Toolbar';
+import Link from '@tiptap/extension-link';
+import Youtube from '@tiptap/extension-youtube';
 type Props = {
   content: string;
   onChange: (newContent: string) => void;
@@ -27,42 +27,42 @@ const TiptapUpdate = ({
   contentJSON,
   setContentJSON,
   tmpImg,
-  setTmpImg,
+  setTmpImg
 }: Props) => {
   const handleChange = (newContent: string) => {
     onChange(newContent);
   };
 
   const editor = useEditor({
-     extensions: [
+    extensions: [
       StarterKit,
       Underline,
       ImageResize,
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ['heading', 'paragraph']
       }),
       Link,
       Youtube.configure({
         controls: false,
-        nocookie: true,
-      }),
+        nocookie: true
+      })
     ],
     editorProps: {
       attributes: {
         class:
-          "flex flex-col bg-white px-6 py-3 max-h-[40rem] min-h-[40rem] overflow-y-scroll border-b border-r border-l border-gray-700  w-[55rem] h-[40rem] gap-3 pt-4 rounded-bl-md rounded-br-md outline-none",
-      },
+          'flex flex-col bg-white px-6 py-3 max-h-[40rem] min-h-[40rem] overflow-y-scroll border-b border-r border-l border-gray-700  w-[55rem] h-[40rem] gap-3 pt-4 rounded-bl-md rounded-br-md outline-none'
+      }
     },
     onUpdate: ({ editor, transaction }) => {
       setContentJSON(editor.getJSON());
       handleChange(editor.getHTML());
     },
 
-    content: contentJSON,
+    content: contentJSON
   });
 
   return (
-    <div className="">
+    <div className=''>
       <Toolbar
         editor={editor}
         content={content}

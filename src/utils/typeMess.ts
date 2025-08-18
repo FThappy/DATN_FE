@@ -1,4 +1,4 @@
-import { UserPublic } from "./typeAuth";
+import { UserPublic } from './typeAuth';
 
 export type MessageProp = {
   _id: string;
@@ -22,7 +22,7 @@ export type Room = {
 };
 
 export type CardRoom = {
-  room : Room;
+  room: Room;
   lastMess: MessageProp | undefined;
-  user : UserPublic
+  user: UserPublic;
 };

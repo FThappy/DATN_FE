@@ -1,4 +1,4 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 type UpdateSharePost = {
   document: string;
   privacy: string;
@@ -6,10 +6,10 @@ type UpdateSharePost = {
 };
 export const updateChangeSharePost = async (dataSend: UpdateSharePost) => {
   try {
-    const res = await userRequest.put("/api/post/share", dataSend, {
+    const res = await userRequest.put('/api/post/share', dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

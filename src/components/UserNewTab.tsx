@@ -1,9 +1,8 @@
-"use client";
-import { getUserAuth } from "@/actions/getUserAuth";
-import { boxChatStore } from "@/store/boxChatStore";
-import { userStore } from "@/store/userStore";
-import toastifyUtils from "@/utils/toastify";
-import React, { useEffect } from "react";
+'use client';
+import { getUserAuth } from '@/actions/getUserAuth';
+import { boxChatStore } from '@/store/boxChatStore';
+import { userStore } from '@/store/userStore';
+import React, { useEffect } from 'react';
 
 type Props = {};
 
@@ -24,14 +23,14 @@ const UserNewTab = (props: Props) => {
             deleteAll();
           }
           if (res.code === 4) {
-            deleteUser()
-            deleteAll()
+            deleteUser();
+            deleteAll();
           }
           if (res.code === 0) {
             updateUser(res.data);
           }
         } catch (error) {
-          console.error("Server Error", error);
+          console.error('Server Error', error);
         }
       };
       getUserAuthInNewTab();

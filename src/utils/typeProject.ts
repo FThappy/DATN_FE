@@ -5,7 +5,7 @@ export type ProjectProps = {
   timeEnd: Date;
   city: string;
   description: string;
-  cardNumber : string;
+  cardNumber: string;
   content: Object;
   filePath: string;
   type: string[];

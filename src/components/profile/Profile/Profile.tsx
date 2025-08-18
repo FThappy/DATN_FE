@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import NavProfile from "./NavProfile";
-import { User } from "@/utils/typeAuth";
-import { getUser } from "@/actions/getUser";
-import { notFound } from "next/navigation";
-import Info from "./Info";
-import ListPostProfile from "./ListPostProfile";
+import React, { useState, useEffect } from 'react';
+import NavProfile from './NavProfile';
+import { User } from '@/utils/typeAuth';
+import { getUser } from '@/actions/getUser';
+import { notFound } from 'next/navigation';
+import Info from './Info';
+import ListPostProfile from './ListPostProfile';
 
 type Props = {
   id: string;
@@ -23,11 +23,11 @@ const Profile = (props: Props) => {
           return notFound();
         }
         if (res.code === 4) {
-          throw new Error("Server Error");
+          throw new Error('Server Error');
         }
         setUser(res.data);
       } catch (error) {
-        throw new Error("Server Error");
+        throw new Error('Server Error');
       }
     };
     getUserData();
@@ -36,9 +36,9 @@ const Profile = (props: Props) => {
   return (
     <>
       {user && <NavProfile user={user} setUser={setUser} />}
-      <div className="flex gap-2 pl-[4rem] mt-4 desktop:pl-[8rem] laptop:pl-[4rem]">
-        <div>{user && <Info user={user}  />}</div>
-        {user && <ListPostProfile user={user}  />}
+      <div className='flex gap-2 pl-[4rem] mt-4 desktop:pl-[8rem] laptop:pl-[4rem]'>
+        <div>{user && <Info user={user} />}</div>
+        {user && <ListPostProfile user={user} />}
       </div>
     </>
   );

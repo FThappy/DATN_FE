@@ -1,15 +1,15 @@
-"use client";
-import React, { FormEvent, useEffect, useState } from "react";
-import SideMessLeft from "./SideMessLeft";
-import { socket } from "@/utils/requestMethod";
-import { getMessageCard } from "@/actions/getMessageCard";
-import { userStore } from "@/store/userStore";
-import { CardRoom, MessageProp } from "@/utils/typeMess";
-import toastifyUtils from "@/utils/toastify";
-import { Skeleton } from "@/components/ui/skeleton";
-import MainMess from "./MainMess";
-import SideMessRight from "./SideMessRight";
-import { searchRoom } from "@/actions/searchRoom";
+'use client';
+import React, { FormEvent, useEffect, useState } from 'react';
+import SideMessLeft from './SideMessLeft';
+import { socket } from '@/utils/requestMethod';
+import { getMessageCard } from '@/actions/getMessageCard';
+import { userStore } from '@/store/userStore';
+import { CardRoom, MessageProp } from '@/utils/typeMess';
+import toastifyUtils from '@/utils/toastify';
+import { Skeleton } from '@/components/ui/skeleton';
+import MainMess from './MainMess';
+import SideMessRight from './SideMessRight';
+import { searchRoom } from '@/actions/searchRoom';
 
 type Props = {};
 
@@ -26,7 +26,7 @@ const Page = (props: Props) => {
 
   const [pending, setPending] = useState<boolean>(false);
 
-  const [qSearch, setQSearch] = useState<string>("");
+  const [qSearch, setQSearch] = useState<string>('');
 
   const [pendingSearch, setPendingSearch] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ const Page = (props: Props) => {
       try {
         const res = await getMessageCard();
         if (res.code === 0) {
-          setTotalNewMess((prev) =>
+          setTotalNewMess(prev =>
             res.data.reduce(
               (total: number, value: CardRoom) =>
                 !value?.lastMess?.isRead.includes(user?.id) &&
@@ -61,7 +61,7 @@ const Page = (props: Props) => {
       } catch (error) {
         setPending(false);
         setPendingSearch(false);
-        toastifyUtils("error", "Lỗi server");
+        toastifyUtils('error', 'Lỗi server');
       }
     };
     if (!qSearch) {
@@ -71,57 +71,51 @@ const Page = (props: Props) => {
 
   useEffect(() => {
     const handleRead = (message: MessageProp) => {
-      setListRoom((prevRooms) =>
-        prevRooms.map((room) =>
+      setListRoom(prevRooms =>
+        prevRooms.map(room =>
           room?.lastMess?._id === message._id
             ? {
                 ...room,
-                lastMess: { ...room.lastMess, isRead: [...message.isRead] },
+                lastMess: { ...room.lastMess, isRead: [...message.isRead] }
               }
             : room
         )
       );
     };
 
-    socket.on("top-message", handleRead);
+    socket.on('top-message', handleRead);
 
     return () => {
-      socket.off("top-message", handleRead);
+      socket.off('top-message', handleRead);
     };
   }, [setListRoom]);
 
   useEffect(() => {
     const handle = (newCardRoom: CardRoom) => {
       if (newCardRoom?.lastMess?.from !== user?.id) {
-        setTotalNewMess((prev) => prev + 1);
+        setTotalNewMess(prev => prev + 1);
       }
-      setListRoom((prevRooms) => [newCardRoom, ...prevRooms]);
+      setListRoom(prevRooms => [newCardRoom, ...prevRooms]);
     };
 
-    socket.on("new-card", handle);
+    socket.on('new-card', handle);
     return () => {
-      socket.off("new-card", handle);
+      socket.off('new-card', handle);
     };
   }, [setListRoom]);
 
   useEffect(() => {
     const handle = (lastMessage: MessageProp) => {
       if (lastMessage?.from !== user?.id) {
-        const pre = listRoom.find(
-          (room) => room?.room?._id === lastMessage?.to
-        );
+        const pre = listRoom.find(room => room?.room?._id === lastMessage?.to);
         console.log(pre?.lastMess);
         if (pre?.lastMess?.isRead.includes(user?.id)) {
-          setTotalNewMess((prev) => prev + 1);
+          setTotalNewMess(prev => prev + 1);
         }
       }
-      setListRoom((prevRooms) => {
-        const updatedRoom = prevRooms.find(
-          (room) => room?.room?._id === lastMessage?.to
-        );
-        const otherRooms = prevRooms.filter(
-          (room) => room?.room?._id !== lastMessage?.to
-        );
+      setListRoom(prevRooms => {
+        const updatedRoom = prevRooms.find(room => room?.room?._id === lastMessage?.to);
+        const otherRooms = prevRooms.filter(room => room?.room?._id !== lastMessage?.to);
         if (updatedRoom) {
           const newRoom = { ...updatedRoom, lastMess: lastMessage };
           console.log(newRoom);
@@ -131,44 +125,40 @@ const Page = (props: Props) => {
       });
     };
 
-    socket.on("new-last", handle);
+    socket.on('new-last', handle);
     return () => {
-      socket.off("new-last", handle);
+      socket.off('new-last', handle);
     };
   }, [setListRoom, listRoom]);
 
   useEffect(() => {
-    const handle = (
-      lastMessage: MessageProp,
-      roomId: string,
-      lastId: string
-    ) => {
+    const handle = (lastMessage: MessageProp, roomId: string, lastId: string) => {
       if (lastMessage?.from !== user?.id) {
-        const roomPresent = listRoom.find((room) => room?.room?._id === roomId);
+        const roomPresent = listRoom.find(room => room?.room?._id === roomId);
         if (!roomPresent?.lastMess?.isRead.includes(user?.id)) {
-          setTotalNewMess((prev) => (prev > 0 ? prev - 1 : 0));
+          setTotalNewMess(prev => (prev > 0 ? prev - 1 : 0));
         }
       }
-      setListRoom((prevRooms) =>
-        prevRooms.map((room) =>
+      setListRoom(prevRooms =>
+        prevRooms.map(room =>
           room?.lastMess?._id === lastId
             ? lastMessage
               ? {
                   ...room,
-                  lastMess: lastMessage,
+                  lastMess: lastMessage
                 }
               : {
                   ...room,
-                  lastMess: undefined,
+                  lastMess: undefined
                 }
             : room
         )
       );
     };
 
-    socket.on("delete-last", handle);
+    socket.on('delete-last', handle);
     return () => {
-      socket.off("delete-last", handle);
+      socket.off('delete-last', handle);
     };
   }, [setListRoom]);
 
@@ -187,12 +177,12 @@ const Page = (props: Props) => {
     } catch (error) {
       setPendingSearch(false);
 
-      toastifyUtils("error", "Lỗi server");
+      toastifyUtils('error', 'Lỗi server');
     }
   };
 
   return (
-    <div className="flex">
+    <div className='flex'>
       {!pending ? (
         <>
           {listRoom && listRoom.length > 0 ? (
@@ -205,7 +195,7 @@ const Page = (props: Props) => {
               setTotalNewMess={setTotalNewMess}
               active={active}
               setActive={setActive}
-              qSearch ={qSearch}
+              qSearch={qSearch}
               setQSearch={setQSearch}
               pendingSearch={pendingSearch}
               setPendingSearch={setPendingSearch}
@@ -213,10 +203,10 @@ const Page = (props: Props) => {
             />
           ) : (
             !end && (
-              <div className="flex flex-col gap-2">
-                <Skeleton className="w-full h-[3rem] rounded-[8px]" />
-                <Skeleton className="w-full h-[3rem] rounded-[8px]" />
-                <Skeleton className="w-full h-[3rem] rounded-[8px]" />
+              <div className='flex flex-col gap-2'>
+                <Skeleton className='w-full h-[3rem] rounded-[8px]' />
+                <Skeleton className='w-full h-[3rem] rounded-[8px]' />
+                <Skeleton className='w-full h-[3rem] rounded-[8px]' />
               </div>
             )
           )}
@@ -225,9 +215,9 @@ const Page = (props: Props) => {
         </>
       ) : (
         <>
-          <Skeleton className="w-[22%] h-[39rem] mr-1" />
-          <Skeleton className="w-[56%] h-[39rem] mr-1" />
-          <Skeleton className="w-[22%] h-[39rem] mr-1" />
+          <Skeleton className='w-[22%] h-[39rem] mr-1' />
+          <Skeleton className='w-[56%] h-[39rem] mr-1' />
+          <Skeleton className='w-[22%] h-[39rem] mr-1' />
         </>
       )}
     </div>

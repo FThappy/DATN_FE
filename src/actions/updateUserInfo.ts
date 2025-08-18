@@ -1,5 +1,4 @@
-import { userRequest } from "@/utils/requestMethod";
-
+import { userRequest } from '@/utils/requestMethod';
 
 type DataSend = {
   displayName: string | undefined;
@@ -7,14 +6,14 @@ type DataSend = {
   phone: string | undefined;
   address: string | undefined;
   type: string | undefined;
-}; 
+};
 
 export const updateUserInfo = async (dataSend: DataSend) => {
   try {
-    const res = await userRequest.put("/api/user", dataSend, {
+    const res = await userRequest.put('/api/user', dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

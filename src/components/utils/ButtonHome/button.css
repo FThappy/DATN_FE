@@ -1,4 +1,4 @@
-.animaties::after{
-    transition:  0.25s ease-out;
-    border-color: var(--color);
+.animaties::after {
+  transition: 0.25s ease-out;
+  border-color: var(--color);
 }

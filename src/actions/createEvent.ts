@@ -18,14 +18,14 @@
 //   }
 // };
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const createEvent = async (formData: FormData) => {
   try {
-    const res = await userRequest.post("/api/event/", formData, {
+    const res = await userRequest.post('/api/event/', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     });
     return res.data;
   } catch (error: any) {

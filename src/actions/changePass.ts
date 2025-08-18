@@ -1,19 +1,18 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
-export const changePass = async (oldPass: string, newPass : string ,tokenChange: string) => {
-
+export const changePass = async (oldPass: string, newPass: string, tokenChange: string) => {
   try {
     const res = await userRequest.put(
-      "/api/user/pass",
+      '/api/user/pass',
       {
-        newPassword : newPass,
-        oldPassword : oldPass,
-        tokenChange: tokenChange,
+        newPassword: newPass,
+        oldPassword: oldPass,
+        tokenChange: tokenChange
       },
       {
         headers: {
-          "Content-Type": "application/json",
-        },
+          'Content-Type': 'application/json'
+        }
       }
     );
     return res.data;

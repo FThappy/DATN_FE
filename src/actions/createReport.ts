@@ -26,7 +26,7 @@
 //   }
 // };
 
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 type Props = {
   itemId: string;
@@ -38,10 +38,10 @@ type Props = {
 
 export const createReport = async (dataSend: Props) => {
   try {
-    const res = await userRequest.post("/api/report", dataSend, {
+    const res = await userRequest.post('/api/report', dataSend, {
       headers: {
-        "Content-Type": "application/json",
-      },
+        'Content-Type': 'application/json'
+      }
     });
     return res.data;
   } catch (error: any) {

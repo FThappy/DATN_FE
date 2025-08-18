@@ -24,21 +24,17 @@
 //   }
 // };
 
+import { userRequest } from '@/utils/requestMethod';
 
-import { userRequest } from "@/utils/requestMethod";
-
-export const updateEvent = async (
-  formData: FormData,
-  eventId: string,
-) => {
+export const updateEvent = async (formData: FormData, eventId: string) => {
   try {
-    const res = await userRequest.put("/api/event/", formData, {
+    const res = await userRequest.put('/api/event/', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data'
       },
       params: {
-        eventId: eventId,
-      },
+        eventId: eventId
+      }
     });
     return res.data;
   } catch (error: any) {

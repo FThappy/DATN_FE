@@ -1,8 +1,8 @@
-"use client"
-import React, { Suspense } from 'react'
+'use client';
+import React, { Suspense } from 'react';
 import ContentProject from './ContentProject';
 
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
   return (
@@ -12,6 +12,6 @@ const page = (props: Props) => {
       </Suspense>
     </div>
   );
-}
+};
 
-export default page
+export default page;

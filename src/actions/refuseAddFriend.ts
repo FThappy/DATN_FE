@@ -1,14 +1,14 @@
-import { userRequest } from "@/utils/requestMethod";
+import { userRequest } from '@/utils/requestMethod';
 
 export const refuseAddFriend = async (userId: string) => {
   try {
-    const res = await userRequest.delete("/api/reqAddFriend/refuse", {
+    const res = await userRequest.delete('/api/reqAddFriend/refuse', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       params: {
-        userId: userId,
-      },
+        userId: userId
+      }
     });
     return res.data;
   } catch (error: any) {
