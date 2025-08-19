@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ContentProject from './ContentProject';
 
 const page = () => {
-  return <ContentProject />;
+  return   <Suspense fallback={<div>Loading...</div>}>
+      <ContentProject />
+    </Suspense>;
 };
 
 export default page;
