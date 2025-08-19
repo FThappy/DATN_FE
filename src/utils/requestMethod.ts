@@ -6,6 +6,6 @@ export const userRequest = axios.create({
   baseURL: process.env.NEXT_PUBLIC_LINK_SERVER
 });
 
-export const socket = io(process.env.NEXT_PUBLIC_LINK_SERVER as string, {
+export const socket = io('https://datn-be-zrcv.onrender.com', {
   withCredentials: true
 });

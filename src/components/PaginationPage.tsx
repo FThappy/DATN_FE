@@ -15,18 +15,14 @@ import { useEffect, useState } from 'react';
 import { Id } from 'react-toastify';
 
 type Props = {
-  setEvents: React.Dispatch<React.SetStateAction<EventProps[]>>;
   totalPage: number[];
-  setTotalPage: React.Dispatch<React.SetStateAction<number[]>>;
   getTotalPageEvent: () => Promise<Id | undefined>;
   active: number;
-  setActive: React.Dispatch<React.SetStateAction<number>>;
   page: number;
 };
 
 export function PaginationPage(props: Props) {
-  const { setTotalPage, totalPage, getTotalPageEvent, active, setActive, page } = props;
-  const number = 28;
+  const { totalPage, getTotalPageEvent, active, page } = props;
 
   const pathname = usePathname();
 
@@ -52,90 +48,38 @@ export function PaginationPage(props: Props) {
     }
   }, [page, totalPage.length]);
 
-  // const handleClick = (page: number) => {
-  //   setActive(page);
-  //   handleGetEventPage(page - 1);
-  // };
+  const buildHref = (targetPage: number) => {
+    const params = new URLSearchParams();
 
-  // const handlePrev = () => {
-  //   setActive((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
-  //   if (
-  //     (active - 1) % 3 === 0 &&
-  //     active >= 3 &&
-  //     active < totalPage.length - 3
-  //   ) {
-  //     setIndexPage((number) => number - 3);
-  //   }
-  //   handleGetEventPage(active - 2);
-  // };
+    params.set('page', String(targetPage));
 
-  // const handleNext = () => {
-  //   setActive((prevPage) => (prevPage < number ? prevPage + 1 : prevPage));
-  //   if (active % 3 === 0 && active >= 3 && active < totalPage.length - 3) {
-  //     console.log(active);
-  //     setIndexPage((number) => number + 3);
-  //   }
-  //   handleGetEventPage(active);
-  // };
+    if (qDate) params.set('qDate', qDate);
+    if (qSearch) params.set('qSearch', qSearch);
+    if (qSort) params.set('qSort', qSort);
+    if (qCity) params.set('qCity', qCity);
 
+    return `${pathname}?${params.toString()}`;
+  };
   if (totalPage.length <= 6) {
     return (
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
-              className='hover:bg-white cursor-pointer'
-              // onClick={handlePrev}
-              href={
-                !(
-                  (qSearch && qSearch !== 'undefined') ||
-                  (qDate && qDate !== 'undefined') ||
-                  (qSort && qSort !== 'undefined') ||
-                  (qCity && qCity !== 'undefined')
-                )
-                  ? `${pathname}?page=${page - 1}`
-                  : `${pathname}?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-              }
-            />
+            <PaginationPrevious className='hover:bg-white cursor-pointer' href={buildHref(Math.max(page - 1, 0))} />
           </PaginationItem>
           {totalPage.map((numberPage, index) => (
-            <PaginationItem
-              key={index}
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   handleClick(numberPage);
-              // }}
-            >
+            <PaginationItem key={index}>
               <PaginationLink
                 className='hover:bg-white cursor-pointer'
                 isActive={active === numberPage}
-                href={
-                  !(
-                    (qSearch && qSearch !== 'undefined') ||
-                    (qDate && qDate !== 'undefined') ||
-                    (qSort && qSort !== 'undefined') ||
-                    (qCity && qCity !== 'undefined')
-                  )
-                    ? `${pathname}?page=${numberPage - 1}`
-                    : `${pathname}?page=${
-                        numberPage - 1
-                      }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-                }
+                href={buildHref(numberPage - 1)}
               >
                 {numberPage}
               </PaginationLink>
             </PaginationItem>
           ))}
           <PaginationItem>
-            <PaginationNext
-              className='hover:bg-white cursor-pointer'
-              // onClick={handleNext}
-              href={
-                qSearch || qDate || qSort !== '' || qCity !== ''
-                  ? `${pathname}?page=${page + 1}`
-                  : `${pathname}?page=${page + 1}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-              }
-            />
+            <PaginationNext className='hover:bg-white cursor-pointer' href={buildHref(page + 1)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
@@ -146,14 +90,7 @@ export function PaginationPage(props: Props) {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious
-            className='hover:bg-white cursor-pointer'
-            href={
-              !(qSearch || qDate || qSort !== '' || qCity !== '')
-                ? `${pathname}?page=${page - 1}`
-                : `${pathname}?page=${page}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-            }
-          />
+          <PaginationPrevious className='hover:bg-white cursor-pointer' href={buildHref(Math.max(page - 1, 0))} />
         </PaginationItem>
         {totalPage
           .slice(
@@ -163,23 +100,11 @@ export function PaginationPage(props: Props) {
               : indexPage + 3
           )
           .map((numberPage, index) => (
-            <PaginationItem
-              key={index}
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   handleClick(numberPage);
-              // }}
-            >
+            <PaginationItem key={index}>
               <PaginationLink
                 className='hover:bg-white cursor-pointer'
                 isActive={active === numberPage}
-                href={
-                  !(qSearch || qDate || qSort !== '' || qCity !== '')
-                    ? `${pathname}?page=${numberPage - 1}`
-                    : `${pathname}?page=${
-                        numberPage - 1
-                      }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-                }
+                href={buildHref(numberPage - 1)}
               >
                 {numberPage}
               </PaginationLink>
@@ -191,37 +116,18 @@ export function PaginationPage(props: Props) {
           </PaginationItem>
         )}
         {totalPage.slice(totalPage.length - 3, totalPage.length).map((numberPage, index) => (
-          <PaginationItem
-            key={index}
-            // onClick={(e) => {
-            //   e.preventDefault();
-            //   handleClick(numberPage);
-            // }}
-          >
+          <PaginationItem key={index}>
             <PaginationLink
               className='hover:bg-white cursor-pointer'
               isActive={active === numberPage}
-              href={
-                !(qSearch || qDate || qSort !== '' || qCity !== '')
-                  ? `${pathname}?page=${numberPage - 1}`
-                  : `${pathname}?page=${
-                      numberPage - 1
-                    }&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-              }
+              href={buildHref(numberPage - 1)}
             >
               {numberPage}
             </PaginationLink>
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext
-            className='hover:bg-white cursor-pointer'
-            href={
-              !(qSearch || qDate || qSort !== '' || qCity !== '')
-                ? `${pathname}?page=${page + 1}`
-                : `${pathname}?page=${page + 1}&&qDate=${qDate}&&qSearch=${qSearch}&&qSort=${qSort}&&qCity=${qCity}`
-            }
-          />
+          <PaginationNext className='hover:bg-white cursor-pointer' href={buildHref(page + 1)} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

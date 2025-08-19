@@ -1,14 +1,6 @@
 import { userRequest } from '@/utils/requestMethod';
 
-type DataSearch = {
-  qSearch: string | undefined;
-  qType: string[] | undefined;
-  qSort: string | undefined;
-  qCity: string | undefined;
-  page: number;
-};
-
-export const searchProjectByOwner = async (dataSend: DataSearch) => {
+export const searchProjectByOwner = async (dataSend: Record<string, any>) => {
   try {
     const res = await userRequest.post(`api/project/search/owner`, dataSend, {
       headers: {

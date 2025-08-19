@@ -14,7 +14,7 @@ const config = {
     screens: {
       desktop: { max: '2100px' },
       laptop: { max: '1800px' },
-      laptopDefault : {
+      laptopDefault: {
         max: '1536px'
       }
     },

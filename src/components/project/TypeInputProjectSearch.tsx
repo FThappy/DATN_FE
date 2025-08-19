@@ -1,21 +1,20 @@
-import React, { KeyboardEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import { typeProjectDefault } from '@/lib/placeholder-data';
 import { IoIosSend } from 'react-icons/io';
 import toastifyUtils from '@/utils/toastify';
 import { CiCircleRemove } from 'react-icons/ci';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
-  type: string[] | undefined;
-  setType: React.Dispatch<React.SetStateAction<string[] | undefined>>;
   width: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setPageSearch: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const TypeInputProjectSearch = (props: Props) => {
-  const { type, setType, width, setPage, setPageSearch } = props;
-
+  const { width } = props;
+  const searchParams = useSearchParams();
+  const initialType = searchParams.getAll('qType');
+  const [type, setType] = useState<string[]>(initialType);
   const [otherType, setOtherType] = useState<string>();
 
   const [isActive, setIsActive] = useState<boolean[]>([]);
@@ -23,8 +22,6 @@ const TypeInputProjectSearch = (props: Props) => {
   const handleAddType = (value: string) => {
     if (value) {
       setType(prev => [value, ...(prev ? prev : [])]);
-      setPageSearch(0);
-      setPage(0);
     } else {
       return toastifyUtils('warning', 'Hãy nhập giá trị');
     }
@@ -35,8 +32,6 @@ const TypeInputProjectSearch = (props: Props) => {
       newPrev.splice(index, 1);
       return newPrev;
     });
-    setPageSearch(0);
-    setPage(0);
     if (typeProjectDefault.includes(type![index])) {
       setIsActive(prev => {
         prev[typeProjectDefault.findIndex(item => item === type![index])] = false;
@@ -53,10 +48,15 @@ const TypeInputProjectSearch = (props: Props) => {
       );
       return newPrev;
     });
-    setPageSearch(0);
-    setPage(0);
   };
-
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.delete('qType');
+    type.forEach(t => params.append('qType', t));
+    params.set('page', '0');
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, '', newUrl);
+  }, [type]);
   return (
     <Accordion type='single' collapsible className='w-full'>
       <AccordionItem value='item-1'>

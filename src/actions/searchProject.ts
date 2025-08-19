@@ -1,14 +1,6 @@
 import { userRequest } from '@/utils/requestMethod';
 
-type DataSearch = {
-  qSearch: string | undefined;
-  qType: string[] | undefined;
-  qSort: string | undefined;
-  qCity: string | undefined;
-  page: number;
-};
-
-export const searchProject = async (dataSend: DataSearch) => {
+export const searchProject = async (dataSend: Record<string, any>) => {
   try {
     const res = await userRequest.post(`api/project/search`, dataSend, {
       headers: {

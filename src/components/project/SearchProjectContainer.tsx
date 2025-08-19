@@ -1,68 +1,22 @@
 'use client';
-import { cityDummy, typeProjectDefault } from '@/lib/placeholder-data';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { cityDummy } from '@/lib/placeholder-data';
+import React, { ChangeEvent } from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import TypeInputProject from './TypeInputProject';
-import { Id } from 'react-toastify';
 import TypeInputProjectSearch from './TypeInputProjectSearch';
-
+import { debounce } from 'lodash';
+import { updateQueryParam } from '@/utils/helper';
 type Props = {
-  qSearch: string | undefined;
-  qType: string[] | undefined;
-  qSort: string;
-  qCity: string;
-  setQSearch: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setQType: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  setQSort: React.Dispatch<React.SetStateAction<string>>;
-  setQCity: React.Dispatch<React.SetStateAction<string>>;
-  handlePushParams: (
-    qType: string[] | undefined,
-    qSearch: string | undefined,
-    qSort: string,
-    qCity: string,
-    isQSearch: boolean
-  ) => void;
-  handleSearch: () => Promise<Id | undefined>;
-  handleQSearch: (page: number) => Promise<Id | undefined>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
   setPageSearch: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const SearchProjectContainer = (props: Props) => {
-  const {
-    setQSearch,
-    setQType,
-    setQSort,
-    setQCity,
-    qType,
-    qSearch,
-    qCity,
-    qSort,
-    handlePushParams,
-    handleSearch,
-    handleQSearch,
-    setPage,
-    setPageSearch
-  } = props;
-
-  useEffect(() => {
-    if (qType && qType.length >= 0) {
-      handlePushParams(qType, qSearch, qSort, qCity, false);
-    }
-  }, [qType]);
-
+  const { setPageSearch } = props;
+  const handleChangeTextField = debounce((value: string) => {
+    updateQueryParam('qSearch', value);
+  }, 1000);
   return (
     <div className='flex justify-between w-full  mt-2'>
-      <form
-        className='flex shadow-beautiful h-[2.5rem] bg-white items-center justify-center rounded-[12px] p-2'
-        onSubmit={e => {
-          e.preventDefault();
-          handlePushParams(qType, qSearch, qSort, qCity, true);
-          handleQSearch(0);
-          setPageSearch(0);
-          setPage(0);
-        }}
-      >
+      <div className='flex shadow-beautiful h-[2.5rem] bg-white items-center justify-center rounded-[12px] p-2'>
         <IoIosSearch size={24} color='gray' />
         <input
           type='text'
@@ -71,28 +25,19 @@ const SearchProjectContainer = (props: Props) => {
           className='outline-none px-2 white'
           placeholder='Tìm kiếm sự kiện........'
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setQSearch(e.target.value);
+            handleChangeTextField(e.target.value);
           }}
         />
-      </form>
+      </div>
       <div className='flex gap-2'>
-        <TypeInputProjectSearch
-          type={qType}
-          setType={setQType}
-          width={35}
-          setPageSearch={setPageSearch}
-          setPage={setPage}
-        />
+        <TypeInputProjectSearch width={35} />
         <select
           className='flex shadow-beautiful h-[2.5rem] bg-white items-center justify-center gap-2 rounded-[12px] p-2 '
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
-            setQCity(e.target.value);
-            handlePushParams(qType, qSearch, qSort, e.target.value, false);
+            updateQueryParam('qCity', e.target.value);
             setPageSearch(0);
-            setPage(0);
           }}
-          defaultValue={qCity}
         >
           <option value=''>Tất cả các tỉnh</option>
           {cityDummy.map((item, index) => (
@@ -105,12 +50,9 @@ const SearchProjectContainer = (props: Props) => {
           className='flex shadow-beautiful h-[2.5rem] bg-white items-center justify-center gap-2 rounded-[12px] p-2 '
           onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             e.preventDefault();
-            setQSort(e.target.value);
-            handlePushParams(qType, qSearch, e.target.value, qCity, false);
+            updateQueryParam('qSort', e.target.value);
             setPageSearch(0);
-            setPage(0);
           }}
-          defaultValue={qSort}
         >
           <option value='' disabled hidden>
             Ngày đăng sự kiện giảm dần

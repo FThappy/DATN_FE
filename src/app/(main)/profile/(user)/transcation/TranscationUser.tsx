@@ -1,15 +1,5 @@
 import { getTranscation } from '@/actions/getTranscation';
-import { Skeleton } from '@/components/ui/skeleton';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import toastifyUtils from '@/utils/toastify';
 import { TranscationProps } from '@/utils/typeTranscation';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -26,8 +16,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { searchTranscation } from '@/actions/searchTranscation';
 
-type Props = {};
-const TranscationUser = (props: Props) => {
+const TranscationUser = () => {
   const [page, setPage] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -190,24 +179,6 @@ const TranscationUser = (props: Props) => {
                 />
               </PopoverContent>
             </Popover>
-            {/* <select
-              className="flex shadow-beautiful bg-white items-center justify-center gap-2 rounded-[12px] p-2 "
-              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                e.preventDefault();
-                setSort(e.target.value);
-                handlePushParams(date, textSearch, e.target.value);
-                setPage(0);
-                setListTranscation([]);
-                setEndTranscation(false);
-              }}
-              defaultValue={pSort!}
-            >
-              <option value="" disabled hidden>
-                Số tiền tăng dần
-              </option>
-              <option value="asc">Số tiền tăng dần</option>
-              <option value="desc">Số tiền giảm dần </option>
-            </select> */}
           </div>
         </div>
         <div className='h-[80%] w-full px-8 pt-1 flex flex-col items-center'>
